@@ -1,0 +1,40 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres
+    container_name: "blue-database"
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+     - "5432:5432"
+    networks:
+      - fullstack
+    volumes:
+      - database_postgres:/var/lib/postgresql/data
+
+  web:
+    build: .
+    container_name: "blue-website"
+    environment:
+      DB_USERNAME: "postgres"
+      DB_PASSWORD: "postgres"
+      DB_DB: "postgres"
+      DB_HOST: "db"
+      DB_TABLE: "postgres"
+      DB_PORT: "5432"
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    networks:
+      - fullstack
+
+volumes:
+  database_postgres:
+
+networks:
+  fullstack:
+    driver: bridge
