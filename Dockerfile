@@ -12,6 +12,6 @@ ENV PORT 8080
 
 EXPOSE 8080
 
-RUN go build -o blue-justice main.go
+RUN go build -o sigma main.go
 
-CMD ["./blue-justice"]
+CMD ["./sigma"]

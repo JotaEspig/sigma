@@ -3,7 +3,7 @@ version: "3.8"
 services:
   db:
     image: postgres
-    container_name: "blue-database"
+    container_name: "sigma-database"
     environment:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
@@ -17,7 +17,7 @@ services:
 
   web:
     build: .
-    container_name: "blue-website"
+    container_name: "sigma-website"
     environment:
       DB_USERNAME: "postgres"
       DB_PASSWORD: "postgres"
