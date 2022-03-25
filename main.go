@@ -1,7 +1,7 @@
 package main
 
 import (
-	"blue-justice/handlers"
+	"sigma/handlers"
 
 	"github.com/gin-gonic/gin"
 )

@@ -1,4 +1,4 @@
-module blue-justice
+module sigma
 
 go 1.18
 
