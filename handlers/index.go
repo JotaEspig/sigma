@@ -11,7 +11,11 @@ func IndexGet() gin.HandlerFunc {
 		c.HTML(
 			http.StatusOK,
 			"index.html",
-			nil,
+			gin.H{
+				"Texto": gin.H{
+					"Min": "Teste2",
+				},
+			},
 		)
 	}
 }
