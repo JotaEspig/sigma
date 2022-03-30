@@ -102,7 +102,7 @@ input[type="submit"]{
 }
 
 input[type="submit"]:hover{
-  background: #4ab3c6;
+  background: #00d9ff;
 }
 
 
@@ -135,6 +135,8 @@ input[type="submit"]:hover{
  
   -webkit-transition: all 0.4s linear;
   transition: all 0.4s  linear;
+
+  text-shadow: 0 1px 1px #333;
 }
  
 .link a:hover {
@@ -153,7 +155,7 @@ input[type="submit"]:hover{
   background: #f7f7f7;
   border: 1px solid rgba(147, 184, 189,0.8);
    
-  -webkit-box-shadow: 5px;
+  /*-webkit-box-shadow: 5px;*/
   border-radius: 5px;
    
   -webkit-animation-duration: 0.5s;
