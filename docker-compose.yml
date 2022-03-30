@@ -25,6 +25,7 @@ services:
       DB_HOST: "db"
       DB_TABLE: "postgres"
       DB_PORT: "5432"
+      SECRET: "senha1234"
     ports:
       - "8080:8080"
     depends_on:
