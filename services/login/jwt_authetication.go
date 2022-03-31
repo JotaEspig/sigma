@@ -21,7 +21,7 @@ type jwtService struct {
 
 // Values that will be contained in the token
 type authClaims struct {
-	Username string `json:"name"`
+	Username string `json:"username"`
 	jwt.StandardClaims
 }
 
