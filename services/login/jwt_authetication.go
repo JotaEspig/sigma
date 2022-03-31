@@ -11,9 +11,12 @@ type JWTService interface {
 	ValidateToken(string) (*jwt.Token, error)
 }
 
+// Parameters used in jwt authentication
+// 	secretKey : key used in the generation and validation of a token
+// 	issuer : who issued the token
 type jwtService struct {
 	secretKey string
-	issure    string
+	issuer    string
 }
 
 // Values that will be contained in the token
@@ -26,7 +29,7 @@ type authClaims struct {
 func JWTAuthService() *jwtService {
 	return &jwtService{
 		secretKey: getSecretKey(),
-		issure:    "SIGMA",
+		issuer:    "SIGMA",
 	}
 }
 
