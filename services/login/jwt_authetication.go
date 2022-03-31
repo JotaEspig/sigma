@@ -16,6 +16,13 @@ type jwtService struct {
 	issure    string
 }
 
+// Values that will be contained in the token
+type authClaims struct {
+	Username string `json:"name"`
+	jwt.StandardClaims
+}
+
+// Creates a default jwtService struct
 func JWTAuthService() *jwtService {
 	return &jwtService{
 		secretKey: getSecretKey(),
@@ -31,6 +38,7 @@ func getSecretKey() string {
 	return secret
 }
 
+// Generates a token according to
 func (service *jwtService) GenerateToken(username string) string {
 	return ""
 }
