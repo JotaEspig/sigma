@@ -15,8 +15,8 @@ func LoginRedirect() gin.HandlerFunc {
 }
 
 func LoginGet() gin.HandlerFunc {
-	return func(c *gin.Context) {
-		c.HTML(
+	return func(ctx *gin.Context) {
+		ctx.HTML(
 			http.StatusOK, "login.html", nil,
 		)
 	}
