@@ -13,7 +13,7 @@ func main() {
 	router.Static("css/", "css/")
 	router.Static("js/", "js/")
 
-	router.GET("/", handlers.IndexGet())
+	router.GET("/", handlers.LoginGet())
 
 	router.Run()
 }

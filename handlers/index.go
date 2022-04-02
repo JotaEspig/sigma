@@ -6,10 +6,10 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func IndexGet() gin.HandlerFunc {
+func LoginGet() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		c.HTML(
-			http.StatusOK, "index.html", nil,
+			http.StatusOK, "login.html", nil,
 		)
 	}
 }
