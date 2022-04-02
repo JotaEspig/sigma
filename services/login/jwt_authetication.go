@@ -2,6 +2,7 @@ package login
 
 import (
 	"os"
+	"time"
 
 	"github.com/dgrijalva/jwt-go"
 )
@@ -11,15 +12,25 @@ type JWTService interface {
 	ValidateToken(string) (*jwt.Token, error)
 }
 
+// Parameters used in jwt authentication
+// 	secretKey : key used in the generation and validation of a token
+// 	issuer : who issued the token
 type jwtService struct {
 	secretKey string
-	issure    string
+	issuer    string
 }
 
+// Values that will be contained in the token
+type authClaims struct {
+	Username string `json:"username"`
+	jwt.StandardClaims
+}
+
+// Creates a default jwtService struct
 func JWTAuthService() *jwtService {
 	return &jwtService{
 		secretKey: getSecretKey(),
-		issure:    "SIGMA",
+		issuer:    "SIGMA",
 	}
 }
 
@@ -31,7 +42,16 @@ func getSecretKey() string {
 	return secret
 }
 
+// Generates a token according to
 func (service *jwtService) GenerateToken(username string) string {
+	claims := &authClaims{
+		username,
+		jwt.StandardClaims{
+			ExpiresAt: time.Now().Add(time.Hour * 48).Unix(),
+			Issuer:    service.issuer,
+			IssuedAt:  time.Now().Unix(),
+		},
+	}
 	return ""
 }
 
