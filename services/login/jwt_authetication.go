@@ -1,6 +1,7 @@
 package login
 
 import (
+	"fmt"
 	"os"
 	"time"
 
@@ -44,7 +45,7 @@ func getSecretKey() string {
 }
 
 // Generates a token according to
-func (service *jwtService) GenerateToken(username string) string {
+func (service *jwtService) GenerateToken(username string) (string, error) {
 	claims := &authClaims{
 		username,
 		jwt.StandardClaims{
@@ -53,12 +54,22 @@ func (service *jwtService) GenerateToken(username string) string {
 			IssuedAt:  time.Now().Unix(),
 		},
 	}
-	return ""
+	// Creates the token using HS256
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	// Gets the string with the encoded token
+	encodedToken, err := token.SignedString([]byte(service.secretKey))
+	return encodedToken, err
 }
 
 // Validates the token, according to the secret key
 func (service *jwtService) ValidateToken(encodedToken string) (*jwt.Token, error) {
-	return jwt.Parse(encodedToken, func(token *jwt.Token) (interface{}, error) {
-		return nil, nil
-	})
+	// Creates a key function
+	keyFunc := func(token *jwt.Token) (interface{}, error) {
+		_, isValid := token.Method.(*jwt.SigningMethodHMAC)
+		if !isValid {
+			return nil, fmt.Errorf("Invalid token")
+		}
+		return []byte(service.secretKey), nil
+	}
+	return jwt.Parse(encodedToken, keyFunc)
 }
