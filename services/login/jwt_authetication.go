@@ -34,6 +34,7 @@ func JWTAuthService() *jwtService {
 	}
 }
 
+// Returns the secret key set in the environment
 func getSecretKey() string {
 	secret := os.Getenv("SECRET")
 	if secret == "" {
@@ -55,6 +56,7 @@ func (service *jwtService) GenerateToken(username string) string {
 	return ""
 }
 
+// Validates the token, according to the secret key
 func (service *jwtService) ValidateToken(encodedToken string) (*jwt.Token, error) {
 	return jwt.Parse(encodedToken, func(token *jwt.Token) (interface{}, error) {
 		return nil, nil
