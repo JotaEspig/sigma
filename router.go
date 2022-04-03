@@ -14,8 +14,10 @@ func createRouter() *gin.Engine {
 	router.Static("css/", "css/")
 	router.Static("js/", "js/")
 
+	// Login
 	router.GET("/", handlers.LoginRedirect())
 	router.GET("/login", handlers.LoginGet())
+	// Cadastro
 	router.GET("/cadastro", handlers.SignupGet())
 
 	return router
