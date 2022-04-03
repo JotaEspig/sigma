@@ -65,11 +65,14 @@ func (service *jwtService) GenerateToken(username string) (string, error) {
 func (service *jwtService) ValidateToken(encodedToken string) (*jwt.Token, error) {
 	// Creates a key function
 	keyFunc := func(token *jwt.Token) (interface{}, error) {
+		// Checks if the token is valid trying to convert it to HMAC
 		_, isValid := token.Method.(*jwt.SigningMethodHMAC)
 		if !isValid {
 			return nil, fmt.Errorf("Invalid token")
 		}
+		// If it's valid, will return the secret key to the parser
 		return []byte(service.secretKey), nil
 	}
+
 	return jwt.Parse(encodedToken, keyFunc)
 }
