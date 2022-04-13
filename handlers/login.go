@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"net/http"
 	"net/url"
 
@@ -21,5 +22,13 @@ func LoginGET() gin.HandlerFunc {
 		ctx.HTML(
 			http.StatusOK, "login.html", nil,
 		)
+	}
+}
+
+func LoginPOST() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		usern := ctx.Request.FormValue("nome_login")
+		passwd := ctx.Request.FormValue("senha_cad")
+		fmt.Println(usern, passwd)
 	}
 }

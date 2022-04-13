@@ -17,6 +17,7 @@ func createRouter() *gin.Engine {
 	// Login
 	router.GET("/", handlers.LoginRedirect())
 	router.GET("/login", handlers.LoginGET())
+	router.POST("/login", handlers.LoginPOST())
 	// Cadastro
 	router.GET("/cadastro", handlers.SignupGet())
 
