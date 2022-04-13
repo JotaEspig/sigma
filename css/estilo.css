@@ -13,10 +13,15 @@ a.links{
 }
 
 .content{
-  width: 500px;
-  min-height: 560px;    
+  width: auto;
+  /*min-height: 560px;    */
   margin: 0px auto;
-  position: relative;   
+  position: relative;
+  display:flex;
+  align-items: center;
+  flex-flow: column;
+  justify-content: center;   
+  min-height: 100vh;
 }
 
 h1{
@@ -107,7 +112,6 @@ input[type="submit"]:hover{
 
 
 .link{
-  position: absolute;
   background: #e1eaeb;
   color: #7f7c7c;
   left: 0px;
@@ -146,85 +150,16 @@ input[type="submit"]:hover{
 }
 
 #cadastro, 
-#login{
+#login{/*
+
   position: absolute;
   top: 0px;
   width: 88%;   
   padding: 18px 6% 60px 6%;
-  margin: 0 0 35px 0;
+  margin: 0 0 35px 0;*/
+  padding: 5rem;
   background: #f7f7f7;
   border: 1px solid rgba(147, 184, 189,0.8);
    
-  /*-webkit-box-shadow: 5px;*/
-  border-radius: 5px;
-   
-  -webkit-animation-duration: 0.5s;
-  -webkit-animation-timing-function: ease;
-  -webkit-animation-fill-mode: both;
- 
-  animation-duration: 0.5s;
-  animation-timing-function: ease;
-  animation-fill-mode: both;
-}
-
-#paracadastro:target ~ .content #cadastro,
-#paralogin:target ~ .content #login{
-  z-index: 2;
-  -webkit-animation-name: fadeInLeft;
-  animation-name: fadeInLeft;
- 
-  -webkit-animation-delay: .1s;
-  animation-delay: .1s;
-}
- 
-/* Efeito ao clicar no botão ( Cadastre-se ) */
-#registro:target ~ .content #login,
-#paralogin:target ~ .content #cadastro{
-  -webkit-animation-name: fadeOutLeft;
-  animation-name: fadeOutLeft;
-}
-
-@-webkit-keyframes fadeInLeft {
-  0% {
-    opacity: 0;
-    -webkit-transform: translateX(-20px);
-  }
-  100% {
-    opacity: 1;
-    -webkit-transform: translateX(0);
-  }
-}
- 
-@keyframes fadeInLeft {
-  0% {
-    opacity: 0;
-    transform: translateX(-20px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
- 
-/*fadeOutLeft*/
-@-webkit-keyframes fadeOutLeft {
-  0% {
-    opacity: 1;
-    -webkit-transform: translateX(0);
-  }
-  100% {
-    opacity: 0;
-    -webkit-transform: translateX(-20px);
-  }
-}
- 
-@keyframes fadeOutLeft {
-  0% {
-    opacity: 1;
-    transform: translateX(0);
-  }
-  100% {
-    opacity: 0;
-    transform: translateX(-20px);
-  }
+  
 }
