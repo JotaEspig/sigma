@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"sigma/services/login"
 
 	"github.com/gin-gonic/gin"
 )
@@ -30,5 +31,24 @@ func LoginPOST() gin.HandlerFunc {
 		usern := ctx.Request.FormValue("nome_login")
 		passwd := ctx.Request.FormValue("senha_cad")
 		fmt.Println(usern, passwd)
+
+		user := login.DefaultUserInfo()
+		if !user.CheckLogin(usern, passwd) {
+			ctx.HTML(
+				http.StatusOK,
+				"login.html",
+				gin.H{
+					"IsCorrect": "Usuário ou senha incorreta",
+				},
+			)
+		}
+
+		ctx.JSON(
+			http.StatusOK,
+			gin.H{
+				"msg": "Boa dia seu merda",
+			},
+		)
+
 	}
 }

@@ -21,6 +21,9 @@
         <div id="login">
           <form method="post" action="/login"> 
             <h1>Login</h1> 
+            {{if .IsCorrect}}
+            {{.IsCorrect}}
+            {{end}}
             <p> 
               <label for="nome_login">Nome</label>
               <input id="nome_login" name="nome_login" required="required" type="text" placeholder="Nome"/>
