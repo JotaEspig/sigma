@@ -36,7 +36,7 @@ func LoginPOST() gin.HandlerFunc {
 				http.StatusUnauthorized,
 				"login.html",
 				gin.H{
-					"IsCorrect": "Usuário ou senha incorreta",
+					"IsCorrect": "Usuário e/ou senha incorretos",
 				},
 			)
 			return
