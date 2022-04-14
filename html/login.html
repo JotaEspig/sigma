@@ -22,7 +22,7 @@
           <form method="post" action="/login"> 
             <h1>Login</h1> 
             {{if .IsCorrect}}
-            {{.IsCorrect}}
+            <p style="text-align: center; color: red;">{{.IsCorrect}}</p>
             {{end}}
             <p> 
               <label for="nome_login">Nome</label>

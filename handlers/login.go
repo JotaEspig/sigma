@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"fmt"
 	"net/http"
 	"net/url"
 	"sigma/services/login"
@@ -30,17 +29,17 @@ func LoginPOST() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		usern := ctx.Request.FormValue("nome_login")
 		passwd := ctx.Request.FormValue("senha_cad")
-		fmt.Println(usern, passwd)
 
 		user := login.DefaultUserInfo()
 		if !user.CheckLogin(usern, passwd) {
 			ctx.HTML(
-				http.StatusOK,
+				http.StatusUnauthorized,
 				"login.html",
 				gin.H{
 					"IsCorrect": "Usuário ou senha incorreta",
 				},
 			)
+			return
 		}
 
 		ctx.JSON(
