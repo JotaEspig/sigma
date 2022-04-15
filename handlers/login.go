@@ -22,8 +22,8 @@ func LoginGET(ctx *gin.Context) {
 }
 
 func LoginPOST(ctx *gin.Context) {
-	usern := ctx.Request.FormValue("nome_login")
-	passwd := ctx.Request.FormValue("senha_cad")
+	usern := ctx.PostForm("nome_login")
+	passwd := ctx.PostForm("senha_cad")
 
 	user := login.DefaultUserInfo()
 	if !user.CheckLogin(usern, passwd) {
