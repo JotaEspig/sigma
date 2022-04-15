@@ -10,11 +10,6 @@ import (
 
 var JWTDefault = JWTAuthService()
 
-type JWTService interface {
-	GenerateToken(string) (string, error)
-	ValidateToken(string) (*jwt.Token, error)
-}
-
 // Parameters used in jwt authentication
 // 	secretKey : key used in the generation and validation of a token
 // 	issuer : who issued the token
@@ -30,7 +25,7 @@ type authClaims struct {
 }
 
 // Creates a default jwtService struct
-func JWTAuthService() JWTService {
+func JWTAuthService() *jwtService {
 	return &jwtService{
 		secretKey: getSecretKey(),
 		issuer:    "SIGMA",
