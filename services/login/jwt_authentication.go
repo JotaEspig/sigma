@@ -8,8 +8,10 @@ import (
 	"github.com/dgrijalva/jwt-go"
 )
 
+var JWTDefault = JWTAuthService()
+
 type JWTService interface {
-	GenerateToken(string) string
+	GenerateToken(string) (string, error)
 	ValidateToken(string) (*jwt.Token, error)
 }
 
@@ -28,7 +30,7 @@ type authClaims struct {
 }
 
 // Creates a default jwtService struct
-func JWTAuthService() *jwtService {
+func JWTAuthService() JWTService {
 	return &jwtService{
 		secretKey: getSecretKey(),
 		issuer:    "SIGMA",
