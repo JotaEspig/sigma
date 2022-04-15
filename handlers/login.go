@@ -28,8 +28,7 @@ func LoginPOST(ctx *gin.Context) {
 	user := login.DefaultUserInfo()
 	if !user.CheckLogin(usern, passwd) {
 		ctx.HTML(
-			http.StatusUnauthorized,
-			"login.html",
+			http.StatusUnauthorized, "login.html",
 			gin.H{
 				"ServerResponse": "Usuário e/ou senha incorretos",
 			},
@@ -40,8 +39,7 @@ func LoginPOST(ctx *gin.Context) {
 	token, err := login.JWTDefault.GenerateToken(usern)
 	if err != nil || token == "" {
 		ctx.HTML(
-			http.StatusBadGateway,
-			"login.html",
+			http.StatusBadGateway, "login.html",
 			gin.H{
 				"ServerResponse": "Ocorreu um erro. Tente novamente.",
 			},
@@ -49,4 +47,16 @@ func LoginPOST(ctx *gin.Context) {
 		return
 	}
 
+	ctx.SetCookie("auth", token, 60*60*48, "/", "", false, false) // Expires in 48 hours
+	/*Works in the same way as:
+	http.SetCookie(ctx.Writer, &http.Cookie{
+		Name:     "auth",
+		Value:    token,
+		MaxAge:   60*60*48,
+		Secure:   false,
+		HttpOnly: false,
+	})*/
+
+	//location := url.URL{Path: "/test"}
+	//ctx.Redirect(http.StatusFound, location.RequestURI())
 }
