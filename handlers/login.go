@@ -31,16 +31,22 @@ func LoginPOST(ctx *gin.Context) {
 			http.StatusUnauthorized,
 			"login.html",
 			gin.H{
-				"IsCorrect": "Usuário e/ou senha incorretos",
+				"ServerResponse": "Usuário e/ou senha incorretos",
 			},
 		)
 		return
 	}
 
-	ctx.JSON(
-		http.StatusOK,
-		gin.H{
-			"msg": "Boa dia seu merda",
-		},
-	)
+	token, err := login.JWTDefault.GenerateToken(usern)
+	if err != nil || token == "" {
+		ctx.HTML(
+			http.StatusBadGateway,
+			"login.html",
+			gin.H{
+				"ServerResponse": "Ocorreu um erro. Tente novamente.",
+			},
+		)
+		return
+	}
+
 }
