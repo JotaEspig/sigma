@@ -21,8 +21,8 @@
         <div id="login">
           <form method="post" action="/login"> 
             <h1>Login</h1> 
-            {{if .IsCorrect}}
-            <p style="text-align: center; color: red;">{{.IsCorrect}}</p>
+            {{if .ServerResponse}}
+            <p style="text-align: center; color: red;">{{.ServerResponse}}</p>
             {{end}}
             <p> 
               <label for="nome_login">Nome</label>
