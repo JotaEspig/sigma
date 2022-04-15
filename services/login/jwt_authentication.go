@@ -41,7 +41,8 @@ func getSecretKey() string {
 	return secret
 }
 
-// Generates a token according to
+// Generates a token according to the username.
+// Returns error if an error has occurred in getting the signed token
 func (service *jwtService) GenerateToken(username string) (string, error) {
 	claims := &authClaims{
 		username,
