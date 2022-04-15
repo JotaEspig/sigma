@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOGADO</title>
+</head>
+<body>
+
+    {{if .ServerResponse}}
+        <script type="text/javascript">
+            alert("{{.ServerResponse}}")
+            window.location = "/login"
+        </script>
+    {{end}}
+
+    <h1>VOCÊ ESTÁ LOGADO</h1>
+    
+</body>
+</html>
