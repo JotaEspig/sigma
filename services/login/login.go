@@ -12,6 +12,6 @@ func DefaultUserInfo() *UserInfo {
 	}
 }
 
-func (u *UserInfo) CheckLogin(userInput, passInput string) bool {
+func (u *UserInfo) Validate(userInput, passInput string) bool {
 	return u.username == userInput && u.password == passInput
 }

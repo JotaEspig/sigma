@@ -26,7 +26,7 @@ func LoginPOST(ctx *gin.Context) {
 	passwd := ctx.PostForm("senha_cad")
 
 	user := login.DefaultUserInfo()
-	if !user.CheckLogin(usern, passwd) {
+	if !user.Validate(usern, passwd) {
 		ctx.HTML(
 			http.StatusUnauthorized, "login.html",
 			gin.H{
