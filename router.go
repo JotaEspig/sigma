@@ -17,11 +17,11 @@ func createRouter() *gin.Engine {
 	router.Static("js/", "js/")
 
 	// Login
-	router.GET("/", handlers.LoginRedirect)
-	router.GET("/login", handlers.LoginGET)
+	router.GET("/", handlers.LoginRedirect())
+	router.GET("/login", handlers.LoginGET())
 	router.POST("/login", handlers.LoginPOST)
 	// Cadastro
-	router.GET("/cadastro", handlers.SignupGet)
+	router.GET("/cadastro", handlers.SignupGet())
 
 	router.GET("/test", func(ctx *gin.Context) {
 		token, err := ctx.Cookie("auth")

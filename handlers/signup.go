@@ -7,8 +7,10 @@ import (
 )
 
 // At the moment, this function just serves the html file
-func SignupGet(ctx *gin.Context) {
-	ctx.HTML(
-		http.StatusOK, "cadastro.html", nil,
-	)
+func SignupGet() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		ctx.HTML(
+			http.StatusOK, "cadastro.html", nil,
+		)
+	}
 }
