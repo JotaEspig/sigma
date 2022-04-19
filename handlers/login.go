@@ -25,42 +25,48 @@ func LoginGET() gin.HandlerFunc {
 	}
 }
 
-func LoginPOST(ctx *gin.Context) {
-	usern := ctx.PostForm("nome_login")
-	passwd := ctx.PostForm("senha_cad")
+func LoginPOST() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		usern := ctx.PostForm("nome_login")
+		passwd := ctx.PostForm("senha_cad")
 
-	user := login.DefaultUserInfo()
-	if !user.Validate(usern, passwd) {
-		ctx.HTML(
-			http.StatusUnauthorized, "login.html",
+		user := login.DefaultUserInfo()
+		if !user.Validate(usern, passwd) {
+			ctx.JSON(
+				http.StatusUnauthorized,
+				nil,
+			)
+			return
+		}
+
+		token, err := login.JWTDefault.GenerateToken(usern)
+		if err != nil || token == "" {
+			ctx.JSON(
+				http.StatusBadGateway,
+				nil,
+			)
+			return
+		}
+
+		ctx.JSON(
+			http.StatusOK,
 			gin.H{
-				"ServerResponse": "Usuário e/ou senha incorretos",
+				"token": token,
 			},
 		)
-		return
+
+		// ctx.SetCookie("auth", token, 60*60*48, "/", "", false, false) // Expires in 48 hours
+		/*Works in the same way as:
+		http.SetCookie(ctx.Writer, &http.Cookie{
+			Name:     "auth",
+			Value:    token,
+			MaxAge:   60*60*48,
+			Secure:   false,
+			HttpOnly: false,
+		})*/
+
+		//location := url.URL{Path: "/test"}
+		//ctx.Redirect(http.StatusFound, location.RequestURI())
 	}
 
-	token, err := login.JWTDefault.GenerateToken(usern)
-	if err != nil || token == "" {
-		ctx.HTML(
-			http.StatusBadGateway, "login.html",
-			gin.H{
-				"ServerResponse": "Ocorreu um erro. Tente novamente.",
-			},
-		)
-		return
-	}
-
-	ctx.SetCookie("auth", token, 60*60*48, "/", "", false, false) // Expires in 48 hours
-	/*Works in the same way as:
-	http.SetCookie(ctx.Writer, &http.Cookie{
-		Name:     "auth",
-		Value:    token,
-		MaxAge:   60*60*48,
-		Secure:   false,
-		HttpOnly: false,
-	})*/
-
-	//location := url.URL{Path: "/test"}
-	//ctx.Redirect(http.StatusFound, location.RequestURI())
 }
