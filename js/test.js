@@ -10,8 +10,10 @@ $(document).ready(function () {
             data: serializedData,
             dataType: "json",
             success: function (response) {
-                if (response != "") {
-                    document.cookie = "auth=" + response["token"]
+                token = response["token"]
+                if (token != "") {
+                    setCookie("auth", token, 48 * 60) // 48 (hours) * 60 (minutes) = 2 days
+                    alert("Cookie with the token has been set")
                 }
             },
             error: function() {
