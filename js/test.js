@@ -17,7 +17,8 @@ $(document).ready(function () {
                 }
             },
             error: function() {
-                alert("FUDEU")
+                elem = document.getElementById("Erro")
+                elem.innerHTML = "Usuário e/ou senha incorretos"
             }
         });
     });
