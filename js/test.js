@@ -17,8 +17,7 @@ $(document).ready(function () {
                 }
             },
             error: function() {
-                elem = document.getElementById("Erro")
-                elem.innerHTML = "Usuário e/ou senha incorretos"
+                $("#Erro").html("Usuário e/ou senha incorretos");
             }
         });
     });
