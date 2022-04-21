@@ -5,14 +5,14 @@ import (
 )
 
 type User struct {
-	id             int
-	username       string
+	ID             int
+	Username       string
 	hashedPassword string
 }
 
 func DefaultUser() *User {
 	return &User{
-		username:       "teste",
+		Username:       "teste",
 		hashedPassword: "$2a$10$CsTxuGv/5Y7KUl65AdspPeT1jMjpJePt6Hoi9uKGrsWt3mVdSZK/W",
 	}
 }
@@ -20,7 +20,7 @@ func DefaultUser() *User {
 func (u *User) Validate(userInput, passInput string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(u.hashedPassword), []byte(passInput))
 	println(len(u.hashedPassword))
-	return u.username == userInput && err == nil
+	return u.Username == userInput && err == nil
 }
 
 /*password := []byte("MyDarkSecret")
