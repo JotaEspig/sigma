@@ -14,6 +14,7 @@ func createRouter() *gin.Engine {
 
 	router.LoadHTMLGlob("html/*.html")
 
+	// Loads the css and js folders
 	router.Static("css/", "css/")
 	router.Static("js/", "js/")
 
