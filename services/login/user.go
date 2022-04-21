@@ -4,19 +4,19 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-type UserInfo struct {
+type User struct {
 	username       string
 	hashedPassword string
 }
 
-func DefaultUserInfo() *UserInfo {
-	return &UserInfo{
+func DefaultUser() *User {
+	return &User{
 		username:       "teste",
 		hashedPassword: "$2a$10$CsTxuGv/5Y7KUl65AdspPeT1jMjpJePt6Hoi9uKGrsWt3mVdSZK/W",
 	}
 }
 
-func (u *UserInfo) Validate(userInput, passInput string) bool {
+func (u *User) Validate(userInput, passInput string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(u.hashedPassword), []byte(passInput))
 	println(len(u.hashedPassword))
 	return u.username == userInput && err == nil
