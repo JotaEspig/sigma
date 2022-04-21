@@ -28,7 +28,7 @@ func LoginGET() gin.HandlerFunc {
 func LoginPOST() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		usern := ctx.PostForm("username")
-		passwd := ctx.PostForm("senha_cad")
+		passwd := ctx.PostForm("password")
 
 		user := login.DefaultUserInfo()
 		if !user.Validate(usern, passwd) {
