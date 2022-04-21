@@ -4,18 +4,19 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- javascript -->
+    <script src="js/test.js"></script>
+    <script src="js/cookies.js"></script>
+
     <title>LOGADO</title>
 </head>
 <body>
 
-    {{if .ServerResponse}}
-        <script type="text/javascript">
-            alert("{{.ServerResponse}}")
-            window.location = "/login"
-        </script>
-    {{end}}
-
     <h1>VOCÊ ESTÁ LOGADO</h1>
+    <h2 id="username"></h2>
     
 </body>
 </html>

@@ -4,7 +4,7 @@ $(document).ready(function () {
         
         var serializedData = $(this).serialize();
 
-        request = $.ajax({
+        $.ajax({
             type: "post",
             url: "http://127.0.0.1:8080/login",
             data: serializedData,
