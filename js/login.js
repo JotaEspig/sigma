@@ -4,7 +4,7 @@ $(document).ready(function () {
         
         var serializedData = $(this).serialize();
 
-        $.ajax({
+        request = $.ajax({
             type: "post",
             url: "http://127.0.0.1:8080/login",
             data: serializedData,
@@ -13,12 +13,19 @@ $(document).ready(function () {
                 token = response["token"]
                 if (token != "") {
                     setCookie("auth", token, 48 * 60) // 48 (hours) * 60 (minutes) = 2 days
-                    alert("Cookie with the token has been set")
+                    window.location = "/test"
                 }
             },
-            error: function() {
-                $("#Erro").html("Usuário e/ou senha incorretos");
-            }
+            statusCode: {
+                401: function() {
+                    $("#Erro").html("Usuário e/ou senha incorretos");
+                    $("#senha_cad").val("");
+                },
+                502: function() {
+                    alert("Ocorreu um erro no servidor. Tente novamente.")
+                    $("#senha_cad").val("");
+                }
+            },
         });
     });
 });
