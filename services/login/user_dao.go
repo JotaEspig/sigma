@@ -1,12 +1,12 @@
 package login
 
-import "sigma/services/db"
+import "database/sql"
 
 // Gets a user from the database
-func GetUser(username string) (*User, error) {
+func GetUser(db *sql.DB, username string) (*User, error) {
 	var u User
 
-	err := db.DB.QueryRow(
+	err := db.QueryRow(
 		"SELECT * FROM \"user\" WHERE \"username\" = $1",
 		username,
 	).Scan(&u.ID, &u.Username, &u.hashedPassword)
