@@ -25,6 +25,7 @@ func LoginGET() gin.HandlerFunc {
 	}
 }
 
+// Does the login process, it validates the user and password and return a token in JSON
 func LoginPOST() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		usern := ctx.PostForm("username")
