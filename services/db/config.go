@@ -5,6 +5,8 @@ import (
 	"os"
 )
 
+// Checks if there is a environment variable and return its value,
+// if not exists it returns a default value
 func checkEnv(envName string, defaultVal string) string {
 	if env := os.Getenv(envName); env != "" {
 		return env
