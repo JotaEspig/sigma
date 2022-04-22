@@ -30,8 +30,8 @@ func LoginPOST() gin.HandlerFunc {
 		usern := ctx.PostForm("username")
 		passwd := ctx.PostForm("password")
 
-		user := login.DefaultUser()
-		if !user.Validate(usern, passwd) {
+		user, err := login.GetUser(usern)
+		if err != nil || !user.Validate(usern, passwd) {
 			ctx.JSON(
 				http.StatusUnauthorized,
 				nil,
