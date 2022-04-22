@@ -11,6 +11,12 @@ $(document).ready(function () {
         dataType: "json",
         success: function (response) {
             $("#username").html(response["username"]);
-        }
+        },
+        statusCode: {
+            401: function() {
+                alert("Você não está logado no sistema!")
+                window.location = "/login"
+            }
+        },
     });
 });
