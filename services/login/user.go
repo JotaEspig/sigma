@@ -19,12 +19,10 @@ func DefaultUser() *User {
 
 func (u *User) Validate(userInput, passInput string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(u.hashedPassword), []byte(passInput))
-	println(len(u.hashedPassword))
 	return u.Username == userInput && err == nil
 }
 
-/*password := []byte("MyDarkSecret")
-
+/*
 // Hashing the password with the default cost of 10
 hashedPassword, err := bcrypt.GenerateFromPassword(password, bcrypt.DefaultCost)
 if err != nil {
