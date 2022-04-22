@@ -23,7 +23,9 @@ and do the rest
 CREATE TABLE "user" (
   "id" SERIAL PRIMARY KEY,
   "username" varchar(50) UNIQUE NOT NULL,
-  "password" varchar(60) NOT NULL
+  "password" varchar(60) NOT NULL,
+  "email" varchar(40) NOT NULL,
+  "name" varchar(100) NOT NULL
 );
 
 CREATE TABLE "user_class" (
