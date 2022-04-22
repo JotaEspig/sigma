@@ -2,6 +2,7 @@ package login
 
 import "sigma/services/db"
 
+// Gets a user from the database
 func GetUser(username string) (*User, error) {
 	var u User
 

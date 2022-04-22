@@ -17,6 +17,8 @@ func DefaultUser() *User {
 	}
 }
 
+// Validates the user. It compares the hashed password in the database
+// to the password that the user input
 func (u *User) Validate(userInput, passInput string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(u.hashedPassword), []byte(passInput))
 	return u.Username == userInput && err == nil

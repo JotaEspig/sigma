@@ -9,6 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// Configures and creates a router
 func createRouter() *gin.Engine {
 	router := gin.Default()
 

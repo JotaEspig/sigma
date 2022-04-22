@@ -8,6 +8,7 @@ import (
 
 var DB *sql.DB = connect()
 
+// Connects with a database
 func connect() *sql.DB {
 	driver, connStr := getConfig()
 	db, err := sql.Open(driver, connStr)

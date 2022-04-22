@@ -14,6 +14,7 @@ func checkEnv(envName string, defaultVal string) string {
 	return defaultVal
 }
 
+// Gets the config to open the database
 func getConfig() (string, string) {
 	postgresDriver := "postgres"
 	user := checkEnv("DB_USERNAME", "postgres")
