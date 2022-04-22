@@ -1,8 +1,13 @@
 
 /*
 Contains the query for the creation of the tables
-To configure the database correctly, you must run these commands
+To configure the database correctly, you must create these environment variables:
+- DB_USERNAME
+- DB_PASSWORD
+- DB_HOST
+- DB_PORT
 
+And you must run these commands:
 1- Create a database and add its name to a env variable called 'DB_DB'
 2- Access the database (\c <dbname>)
 3- Run these commands (you can just copy and paste)
