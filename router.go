@@ -25,6 +25,7 @@ func createRouter() *gin.Engine {
 	router.POST("/login", handlers.LoginPOST())
 	// Cadastro
 	router.GET("/cadastro", handlers.SignupGET())
+	router.POST("/cadastro", handlers.SignupPOST())
 
 	router.GET("/test", func(ctx *gin.Context) {
 		ctx.HTML(
