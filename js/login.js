@@ -11,10 +11,10 @@ $(document).ready(function () {
             data: serializedData,
             dataType: "json",
             success: function (response) {
-                token = response["token"]
+                token = response["token"];
                 if (token != "") {
-                    setCookie("auth", token, 48 * 60) // 48 (hours) * 60 (minutes) = 2 days
-                    window.location = "/test"
+                    setCookie("auth", token, 48 * 60); // 48 (hours) * 60 (minutes) = 2 days
+                    window.location = "/test";
                 }
             },
             statusCode: {
@@ -23,7 +23,7 @@ $(document).ready(function () {
                     $("#senha_cad").val("");
                 },
                 502: function() {
-                    alert("Ocorreu um erro no servidor. Tente novamente.")
+                    alert("Ocorreu um erro no servidor. Tente novamente.");
                     $("#senha_cad").val("");
                 }
             },
