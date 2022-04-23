@@ -9,7 +9,7 @@ func GetUser(db *sql.DB, username string) (*User, error) {
 	err := db.QueryRow(
 		"SELECT * FROM \"user\" WHERE \"username\" = $1",
 		username,
-	).Scan(u.ID, u.Username, u.hashedPassword)
+	).Scan(u.ID, u.Username, u.hashedPassword, u.Email, u.Name)
 
 	return u, err
 }
