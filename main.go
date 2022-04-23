@@ -1,19 +1,10 @@
 package main
 
-import (
-	"sigma/handlers"
-
-	"github.com/gin-gonic/gin"
-)
+import "sigma/services/db"
 
 func main() {
-	router := gin.Default()
+	defer db.DB.Close()
 
-	router.LoadHTMLGlob("html/*.html")
-	router.Static("css/", "css/")
-	router.Static("js/", "js/")
-
-	router.GET("/", handlers.IndexGet())
-
+	router := createRouter()
 	router.Run()
 }

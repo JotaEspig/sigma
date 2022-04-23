@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="css/estilo.css" rel="stylesheet">
+
+    <!-- css -->
+    <link href="css/estilo.css" rel="stylesheet">
+
+    <!-- jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- javascript -->
+    <script src="js/signup.js"></script>
+    <!-- 
+      Comando para o icone da pagina 
+      <link rel="icon" type="jpg" href="" /> 
+    -->
+    <title>SIGMA</title>
+</head>
+<body>
+    <div class="content">
+      <!--FORMULÁRIO DE LOGIN-->
+      <div id="cadastro">  
+        <form id="cadastroForm" method="post"> 
+          <h1>Cadastro</h1> 
+           
+          <p> 
+            <label for="nome_cad">Seu nome</label>
+            <input id="nome_cad" name="name" required="required" type="text" placeholder="Nome" />
+          </p>
+
+          <p> 
+            <label for="username_cad">Seu nome de usuário</label>
+            <input id="username_cad" name="username" required="required" type="text" placeholder="Nome de usuário"/>
+          </p>
+           
+          <p> 
+            <label for="email_cad">Seu e-mail</label>
+            <input id="email_cad" name="email" required="required" type="email" placeholder="ex. maria@gmail.com"/> 
+          </p>
+           
+          <p> 
+            <label for="senha_cad">Sua senha</label>
+            <input id="senha_cad" name="password" required="required" type="password" placeholder="ex. C4rL0ta D!v 928"/>
+          </p>
+           
+          <p> 
+            <input type="submit" value="Cadastrar"/> 
+          </p>
+           
+          <p class="link">  
+            Já tem conta?
+            <a href="/login"> Ir para Login </a>
+          </p>
+        </form>
+      </div>
+    </div>  
+
+</body>
+</html>
