@@ -4,14 +4,14 @@ import "database/sql"
 
 // Gets a user from the database
 func GetUser(db *sql.DB, username string) (*User, error) {
-	u := &User{}
+	var u User
 
 	err := db.QueryRow(
 		"SELECT * FROM \"user\" WHERE \"username\" = $1",
 		username,
-	).Scan(u.ID, u.Username, u.hashedPassword, u.Email, u.Name)
+	).Scan(&u.ID, &u.Username, &u.hashedPassword, &u.Email, &u.Name)
 
-	return u, err
+	return &u, err
 }
 
 func AddUser(db *sql.DB, u *User) error {
