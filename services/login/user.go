@@ -12,11 +12,17 @@ type User struct {
 	hashedPassword string
 }
 
-func DefaultUser() *User {
-	return &User{
-		Username:       "teste",
-		hashedPassword: "$2a$10$CsTxuGv/5Y7KUl65AdspPeT1jMjpJePt6Hoi9uKGrsWt3mVdSZK/W",
+func InitUser(usern, email, name, password string) *User {
+	u := &User{
+		Username: usern,
+		Email:    email,
+		Name:     name,
 	}
+	hashedPasswd, _ := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+	u.hashedPassword = string(hashedPasswd)
+
+	return u
+
 }
 
 // Validates the user. It compares the hashed password in the database
