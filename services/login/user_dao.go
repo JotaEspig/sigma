@@ -15,12 +15,16 @@ func GetUser(db *sql.DB, username string) (*User, error) {
 }
 
 func AddUser(db *sql.DB, u *User) error {
-	stmt, err := db.Prepare(`INSERT INTO "user"(username, password)
-		VALUES($1, $2)`)
+	stmt, err := db.Prepare(
+		`INSERT INTO "user"(username, password, email, name)
+		VALUES($1, $2, $3, $4)`,
+	)
 	if err != nil {
 		return err
 	}
 
-	_, err = stmt.Exec(u.Username, u.hashedPassword)
+	_, err = stmt.Exec(
+		u.Username, u.hashedPassword, u.Email, u.Name,
+	)
 	return err
 }
