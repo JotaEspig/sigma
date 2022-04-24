@@ -1,11 +1,9 @@
 package main
 
-import "sigma/services/db"
+import "sigma/services/database"
 
 func main() {
-	// Configures and connects to the database
-	db.DB = db.Connect()
-	defer db.DB.Close()
+	defer database.Conn.CloseDB()
 
 	// Creates and runs the router
 	router := createRouter()
