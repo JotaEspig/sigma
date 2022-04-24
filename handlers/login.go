@@ -55,19 +55,5 @@ func LoginPOST() gin.HandlerFunc {
 				"token": token,
 			},
 		)
-
-		// ctx.SetCookie("auth", token, 60*60*48, "/", "", false, false) // Expires in 48 hours
-		/*Works in the same way as:
-		http.SetCookie(ctx.Writer, &http.Cookie{
-			Name:     "auth",
-			Value:    token,
-			MaxAge:   60*60*48,
-			Secure:   false,
-			HttpOnly: false,
-		})*/
-
-		//location := url.URL{Path: "/test"}
-		//ctx.Redirect(http.StatusFound, location.RequestURI())
 	}
-
 }
