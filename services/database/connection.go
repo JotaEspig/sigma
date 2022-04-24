@@ -23,10 +23,12 @@ func (c *Connection) connectDB() {
 	c.db = newDB
 }
 
+// Gets the database variable from the connection
 func (c *Connection) GetDB() *sql.DB {
 	return c.db
 }
 
+// Closes the database connection
 func (c *Connection) CloseDB() {
 	c.db.Close()
 }

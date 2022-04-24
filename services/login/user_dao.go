@@ -2,7 +2,7 @@ package login
 
 import "database/sql"
 
-// Gets a user from the database
+// Gets a user from a database
 func GetUser(db *sql.DB, username string) (*User, error) {
 	var u User
 
@@ -14,6 +14,7 @@ func GetUser(db *sql.DB, username string) (*User, error) {
 	return &u, err
 }
 
+// Adds an user to a database
 func AddUser(db *sql.DB, u *User) error {
 	stmt, err := db.Prepare(
 		`INSERT INTO "user"(username, password, email, name)
