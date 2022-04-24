@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"net/http"
-	"sigma/services/db"
 	"sigma/services/login"
 
 	"github.com/gin-gonic/gin"
@@ -26,7 +25,7 @@ func SignupPOST() gin.HandlerFunc {
 		passwd := ctx.PostForm("password")
 
 		u := login.InitUser(usern, email, name, passwd)
-		err := login.AddUser(db.DB, u)
+		err := login.AddUser(db, u)
 		if err != nil {
 			ctx.JSON(
 				http.StatusConflict, nil,
