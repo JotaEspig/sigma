@@ -3,7 +3,7 @@ package main
 import (
 	"net/http"
 	"sigma/handlers"
-	"sigma/services/login"
+	auth "sigma/services/authentication"
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
@@ -48,7 +48,7 @@ func createRouter() *gin.Engine {
 			return
 		}
 
-		dtoken, err := login.JWTDefault.ValidateToken(resp.Token)
+		dtoken, err := auth.JWTDefault.ValidateToken(resp.Token)
 		if err != nil || !dtoken.Valid {
 			ctx.JSON(
 				http.StatusUnauthorized,
