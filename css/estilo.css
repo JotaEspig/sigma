@@ -87,17 +87,18 @@ input:not([type="checkbox"]){
   transition: all 0.2s linear;
 }
  
-/*estilo do botão submit */
+/*estilo do botão submit para ambas paginas*/
 input[type="submit"]{
+  font-weight: bold;
   width: 100%!important;
   cursor: pointer;  
   background: rgb(61, 157, 179);
   padding: 8px 5px;
-  color: #fff;
+  color: rgb(255, 255, 255);
   font-size: 20px;  
-  border: 1px solid #fff;   
+  border: 1px solid #4ab3c6;   
   margin-bottom: 10px;  
-  text-shadow: 0 1px 1px #333;
+  text-shadow: 0 2px 2px #333;
  
   -webkit-border-radius: 5px;
   border-radius: 5px;
@@ -105,8 +106,21 @@ input[type="submit"]{
   transition: all 0.2s linear;
 }
 
+/* troca de cor do botao login/cadastrar*/
 input[type="submit"]:hover{
-  background: #00d9ff;
+  font-weight: bold;
+  background: #fff;
+  padding: 8px 5px;
+  color: rgb(61, 157, 179);
+  font-size: 20px;  
+  border: 1px solid #4ab3c6;   
+  margin-bottom: 10px;  
+  text-shadow: 0 2px 1px #333;
+ 
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+ 
+  transition: all 0.2s linear;
 }
 
 
@@ -131,7 +145,7 @@ input[type="submit"]:hover{
   padding: 6px;
   color: #ffffff;
   margin-left: 10px;
-  border: 1px solid #1b01af;
+  border: 1px solid #4ab3c6;
  
   -webkit-border-radius: 4px;
   border-radius: 4px;  

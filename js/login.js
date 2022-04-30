@@ -20,11 +20,11 @@ $(document).ready(function () {
             statusCode: {
                 401: function() {
                     $("#Erro").html("Usuário e/ou senha incorretos");
-                    $("#senha_cad").val("");
+                    $("#senha_login").val("");
                 },
                 502: function() {
                     alert("Ocorreu um erro no servidor. Tente novamente.");
-                    $("#senha_cad").val("");
+                    $("#senha_login").val("");
                 }
             },
         });
