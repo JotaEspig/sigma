@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"net/http"
-	auth "sigma/services/authentication"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
@@ -32,7 +31,7 @@ func ValidateUser() gin.HandlerFunc {
 		}
 
 		//dToken means decoded token
-		dToken, err := auth.JWTDefault.ValidateToken(response.Token)
+		dToken, err := defaultJWT.ValidateToken(response.Token)
 		if err != nil || !dToken.Valid {
 			unauthorizedJSON(nil)
 			return
