@@ -29,5 +29,19 @@ $(document).ready(function () {
             },
         });
     });
+
+    $.ajax({
+        type: "post",
+        url: "http://127.0.0.1:8080/test",
+        data: JSON.stringify({
+            token: getCookie("auth")
+        }),
+        dataType: "json",
+        statusCode: {
+            200: function() {
+                window.location = "/test";
+            }
+        }
+    });
 });
 
