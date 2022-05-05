@@ -8,8 +8,6 @@ import (
 	"github.com/dgrijalva/jwt-go"
 )
 
-var JWTDefault = JWTAuthService()
-
 // Parameters used in jwt authentication
 // 	secretKey : key used in the generation and validation of a token
 // 	issuer : who issued the token
