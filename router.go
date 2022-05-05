@@ -1,11 +1,8 @@
 package main
 
 import (
-	"net/http"
 	"sigma/handlers"
-	auth "sigma/services/authentication"
 
-	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 )
 
@@ -35,37 +32,7 @@ func createRouter() *gin.Engine {
 		)
 	})
 
-	router.POST("/test", func(ctx *gin.Context) {
-		resp := struct {
-			Token string `json:"token"`
-		}{}
-		ctx.BindJSON(&resp)
-		if resp.Token == "" {
-			ctx.JSON(
-				http.StatusUnauthorized,
-				nil,
-			)
-			return
-		}
-
-		dtoken, err := auth.JWTDefault.ValidateToken(resp.Token)
-		if err != nil || !dtoken.Valid {
-			ctx.JSON(
-				http.StatusUnauthorized,
-				nil,
-			)
-			return
-		}
-
-		claims := dtoken.Claims.(jwt.MapClaims)
-
-		ctx.JSON(
-			http.StatusOK,
-			gin.H{
-				"username": claims["username"],
-			},
-		)
-	})
+	router.POST("/test", handlers.ValidateUser())
 
 	return router
 }
