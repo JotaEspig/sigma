@@ -20,9 +20,13 @@ func createRouter() *gin.Engine {
 	router.GET("/", handlers.LoginRedirect())
 	router.GET("/login", handlers.LoginGET())
 	router.POST("/login", handlers.LoginPOST())
+
 	// Cadastro
 	router.GET("/cadastro", handlers.SignupGET())
 	router.POST("/cadastro", handlers.SignupPOST())
+
+	// Validate User
+	router.POST("/validate_user", handlers.ValidateUser())
 
 	router.GET("/test", func(ctx *gin.Context) {
 		ctx.HTML(
@@ -31,7 +35,6 @@ func createRouter() *gin.Engine {
 			nil,
 		)
 	})
-
 	router.POST("/test", handlers.ValidateUser())
 
 	return router
