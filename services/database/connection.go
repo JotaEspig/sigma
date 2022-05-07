@@ -20,6 +20,10 @@ func (c *Connection) connectDB() {
 		panic(err.Error())
 	}
 
+	if newDB.Ping() != nil {
+		panic(err.Error())
+	}
+
 	c.db = newDB
 }
 
