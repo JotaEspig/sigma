@@ -1,5 +1,7 @@
 $(document).ready(function () {
 
+    var host = window.location.protocol + "//" + window.location.host
+
     $("#loginForm").submit(function (e) { 
         e.preventDefault();
         
@@ -7,7 +9,7 @@ $(document).ready(function () {
 
         $.ajax({
             type: "post",
-            url: "http://127.0.0.1:8080/login",
+            url: `{host}:8080/login`,
             data: serializedData,
             dataType: "json",
             success: function (response) {
@@ -32,7 +34,7 @@ $(document).ready(function () {
 
     $.ajax({
         type: "post",
-        url: "http://127.0.0.1:8080/validate_user",
+        url: `{host}:8080/validate_user`,
         data: JSON.stringify({
             token: getCookie("auth")
         }),

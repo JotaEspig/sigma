@@ -1,4 +1,7 @@
 $(document).ready(function () {
+
+    var host = window.location.protocol + "//" + window.location.host
+
     $("#cadastroForm").submit(function (e) { 
         e.preventDefault();
         
@@ -6,7 +9,7 @@ $(document).ready(function () {
 
         $.ajax({
             type: "post",
-            url: "http://127.0.0.1:8080/cadastro",
+            url: `{host}:8080/cadastro`,
             data: serializedData,
             dataType: "json",
             statusCode: {
