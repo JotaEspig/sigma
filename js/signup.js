@@ -15,8 +15,15 @@ $(document).ready(function () {
             dataType: "json",
             statusCode: {
                 200: function() {
-                    alert("Usuário criado!");
-                    window.location = "/login";
+                    swal({
+                        text: "Usuário criado",
+                        icon: "success",
+                        button: "OK",
+                    })
+                    .then(() => {
+                            window.location = "/login";
+                        }
+                    );
                 },
                 409: function() {
                     alert("Esse nome de usuário já existe");
