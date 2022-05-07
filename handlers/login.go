@@ -33,19 +33,13 @@ func LoginPOST() gin.HandlerFunc {
 
 		user, err := auth.GetUser(db, usern)
 		if err != nil || !user.Validate(usern, passwd) {
-			ctx.JSON(
-				http.StatusUnauthorized,
-				nil,
-			)
+			ctx.Status(http.StatusUnauthorized)
 			return
 		}
 
 		token, err := defaultJWT.GenerateToken(usern)
 		if err != nil || token == "" {
-			ctx.JSON(
-				http.StatusBadGateway,
-				nil,
-			)
+			ctx.Status(http.StatusBadGateway)
 			return
 		}
 
