@@ -46,9 +46,6 @@ func ValidateUser() gin.HandlerFunc {
 			return
 		}
 
-		// TODO Jota: Remove the "exp", "iss" and "iat" from the map
-		// Because it's not necessary at the moment
-		// Perhaps, "exp" is necessary if we decide to show user this
 		content := make(gin.H)
 		for key, value := range claims {
 			content[key] = value
