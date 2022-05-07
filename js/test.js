@@ -6,7 +6,7 @@ $(document).ready(function () {
 
     $.ajax({
         type: "post",
-        url: "http://127.0.0.1:8080/test",
+        url: "/test",
         data: serializedData,
         dataType: "json",
         success: function (response) {
