@@ -20,18 +20,14 @@ func ValidateUser() gin.HandlerFunc {
 			)
 		}
 
-		response := struct {
-			Token string `json:"token"`
-		}{}
-
-		ctx.BindJSON(&response)
-		if response.Token == "" {
+		token := ctx.Query("token")
+		if token == "" {
 			unauthorizedJSON(nil)
 			return
 		}
 
 		//dToken means decoded token
-		dToken, err := defaultJWT.ValidateToken(response.Token)
+		dToken, err := defaultJWT.ValidateToken(token)
 		if err != nil || !dToken.Valid {
 			unauthorizedJSON(nil)
 			return

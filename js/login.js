@@ -33,11 +33,11 @@ $(document).ready(function () {
     if (getCookie("auth") != null) {
         // Does a request to check if the cookie is legit and hasn't expired
         $.ajax({
-            type: "post",
+            type: "get",
             url: "/validate_user",
-            data: JSON.stringify({
+            data: {
                 token: getCookie("auth")
-            }),
+            },
             dataType: "json",
             statusCode: {
                 200: function() {

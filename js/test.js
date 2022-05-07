@@ -1,13 +1,11 @@
 $(document).ready(function () {
 
-    var serializedData = JSON.stringify({
-        token: getCookie("auth")
-    });
-
     $.ajax({
-        type: "post",
-        url: "/test",
-        data: serializedData,
+        type: "get",
+        url: "/validate_user",
+        data: {
+            token: getCookie("auth")
+        },
         dataType: "json",
         success: function (response) {
             $("#username").html(response["username"]);
