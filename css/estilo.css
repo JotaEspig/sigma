@@ -1,3 +1,9 @@
+/*TODO Samuel: Separar CSS em arquivos*/
+
+/*TODO Samuel: Usar paletas de cores novas::after
+ex.:  https://paletton.com/#uid=13q0u0kiCFn8GVde7NVmtwSqXtg
+      https://paletton.com/#uid=13q0u0kbRt14+E48dwffUpTkImm*/
+
 @import url('https://fonts.googleapis.com/css2?family=Comic+Neue&family=Dongle:wght@300&display=swap');
 
 *, *:before, *:after { 
@@ -25,6 +31,9 @@ a.links{
   min-height: 100vh;
 }
 
+/*TODO Samuel: Mudar fonte do título para uma mais "quadrada"
+ex.:  https://fonts.google.com/specimen/Lato#standard-styles
+      https://fonts.google.com/specimen/Montserrat#standard-styles*/
 h1{
   font-size: 100px;
   color: #00e5fff8;

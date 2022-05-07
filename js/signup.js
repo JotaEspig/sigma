@@ -1,3 +1,6 @@
+// TODO Eduardo: Adicionar um verificador de cadastro
+// mínimo de 4 letras pro nome, username, senha, etc
+
 $(document).ready(function () {
 
     $("#cadastroForm").submit(function (e) { 
