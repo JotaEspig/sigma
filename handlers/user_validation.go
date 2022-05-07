@@ -57,7 +57,7 @@ func ValidateUser() gin.HandlerFunc {
 		ctx.JSON(
 			http.StatusOK,
 			gin.H{
-				"username": claims["username"],
+				"user": content,
 			},
 		)
 	}
