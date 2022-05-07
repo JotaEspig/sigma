@@ -30,18 +30,21 @@ $(document).ready(function () {
         });
     });
 
-    $.ajax({
-        type: "post",
-        url: "/validate_user",
-        data: JSON.stringify({
-            token: getCookie("auth")
-        }),
-        dataType: "json",
-        statusCode: {
-            200: function() {
-                window.location = "/test";
+    if (getCookie("auth") != null) {
+        // Does a request to check if the cookie is legit and hasn't expired
+        $.ajax({
+            type: "post",
+            url: "/validate_user",
+            data: JSON.stringify({
+                token: getCookie("auth")
+            }),
+            dataType: "json",
+            statusCode: {
+                200: function() {
+                    window.location = "/test";
+                }
             }
-        }
-    });
+        });
+    }
 });
 
