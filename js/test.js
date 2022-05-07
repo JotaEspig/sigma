@@ -4,7 +4,7 @@ $(document).ready(function () {
         type: "get",
         url: "/validate_user",
         success: function (response) {
-            $("#username").html(response["user"]["username"]);
+            $("#username").html(response["claims"]["username"]);
         },
         statusCode: {
             401: function() {
