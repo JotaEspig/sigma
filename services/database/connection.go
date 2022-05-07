@@ -6,10 +6,14 @@ import (
 	_ "github.com/lib/pq"
 )
 
-var Conn *Connection
-
 type Connection struct {
 	db *sql.DB
+}
+
+func ConnInit() *Connection {
+	conn := &Connection{}
+	conn.connectDB()
+	return conn
 }
 
 // Connects with a database
@@ -35,9 +39,4 @@ func (c *Connection) GetDB() *sql.DB {
 // Closes the database connection
 func (c *Connection) CloseDB() {
 	c.db.Close()
-}
-
-func init() {
-	Conn = &Connection{}
-	Conn.connectDB()
 }

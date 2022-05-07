@@ -6,7 +6,7 @@ import (
 )
 
 // Database variable
-var db = database.Conn.GetDB()
+var db = database.ConnInit().GetDB()
 
 // jwtService variable
 var defaultJWT = auth.JWTAuthService()
