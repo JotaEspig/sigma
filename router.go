@@ -8,8 +8,6 @@ import (
 
 // Configures and creates a router
 func createRouter() *gin.Engine {
-	defer handlers.Conn.CloseDB()
-
 	router := gin.Default()
 
 	router.LoadHTMLGlob("html/*.html")
