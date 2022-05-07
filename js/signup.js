@@ -16,19 +16,27 @@ $(document).ready(function () {
             statusCode: {
                 200: function() {
                     swal({
+                        title: "Sucesso!",
                         text: "Usuário criado",
                         icon: "success",
                         button: "OK",
                     })
                     .then(() => {
-                            window.location = "/login";
-                        }
-                    );
+                        eraseCookie("auth");
+                        window.location = "/login";
+                    });
                 },
                 409: function() {
-                    alert("Esse nome de usuário já existe");
-                    $("#senha_cad").val("");
-                    $("#username_cad").val("");
+                    swal({
+                        title: "Algo deu errado!",
+                        text: "Nome de usuário já existe!",
+                        icon: "error",
+                        button: "OK"
+                    })
+                    .then(() => {
+                        $("#senha_cad").val("");
+                        $("#username_cad").val("");
+                    });
                 }
             }
         });
