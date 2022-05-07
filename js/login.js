@@ -35,10 +35,6 @@ $(document).ready(function () {
         $.ajax({
             type: "get",
             url: "/validate_user",
-            data: {
-                token: getCookie("auth")
-            },
-            dataType: "json",
             statusCode: {
                 200: function() {
                     window.location = "/test";

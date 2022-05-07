@@ -3,10 +3,6 @@ $(document).ready(function () {
     $.ajax({
         type: "get",
         url: "/validate_user",
-        data: {
-            token: getCookie("auth")
-        },
-        dataType: "json",
         success: function (response) {
             $("#username").html(response["username"]);
         },

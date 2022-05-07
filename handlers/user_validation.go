@@ -20,8 +20,8 @@ func ValidateUser() gin.HandlerFunc {
 			)
 		}
 
-		token := ctx.Query("token")
-		if token == "" {
+		token, err := ctx.Cookie("auth")
+		if token == "" || err != nil {
 			unauthorizedJSON(nil)
 			return
 		}
