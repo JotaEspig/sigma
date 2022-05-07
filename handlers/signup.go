@@ -27,9 +27,7 @@ func SignupPOST() gin.HandlerFunc {
 		u := auth.InitUser(usern, email, name, passwd)
 		err := auth.AddUser(db, u)
 		if err != nil {
-			ctx.JSON(
-				http.StatusConflict, nil,
-			)
+			ctx.Status(http.StatusConflict)
 			return
 		}
 
