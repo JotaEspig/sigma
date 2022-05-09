@@ -46,15 +46,10 @@ func ValidateUser() gin.HandlerFunc {
 			return
 		}
 
-		content := make(gin.H)
-		for key, value := range claims {
-			content[key] = value
-		}
-
 		ctx.JSON(
 			http.StatusOK,
 			gin.H{
-				"claims": content,
+				"claims": claims,
 			},
 		)
 	}
