@@ -5,9 +5,61 @@ $(document).ready(function () {
 
     $("#cadastroForm").submit(function (e) { 
         e.preventDefault();
-        
-        var serializedData = $(this).serialize();
 
+        var name = $("#nome_cad").val()
+        var username = $("#username_cad").val()
+        var password = $("#senha_cad").val()
+        var confirmPassword = $("confimar_senha_cad")
+        
+        if(name.length < 4){
+            swal({
+                title: "Erro",
+                text: "nome pequeno, deve ter pelo menos 4 caracteres ",
+                icon: "error",
+                button: "OK"
+            })
+            $("senha_cad").val("")
+            $("confirmar_senha_cad").val("")
+            return
+
+        }
+
+        if(username.length < 4){
+            swal({
+                title: "Erro",
+                text: "nome de usuário pequeno, deve ter pelo menos 4 caracteres ",
+                icon: "error",
+                button: "OK"
+            })
+            $("senha_cad").val("")
+            $("confirmar_senha_cad").val("")
+            return
+        }
+
+        if(password.length < 4){
+            swal({
+                title: "Erro",
+                text: "senha pequena, deve ter pelo menos 4 caracteres ",
+                icon: "error",
+                button: "OK"
+            })
+            $("senha_cad").val("")
+            $("confirmar_senha_cad").val("")
+            return
+        }
+
+        if(password != confirmPassword){
+            swal({
+                title: "Erro",
+                text: "Senhas incompativeis",
+                icon: "error"
+            })
+            $("senha_cad").val("")
+            $("confirmar_senha_cad").val("")
+            return
+        }
+        var serializedData = $(this).serialize();
+        
         $.ajax({
             type: "post",
             url: "/cadastro",
