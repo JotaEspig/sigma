@@ -5,13 +5,11 @@ $(document).ready(function () {
 
     $("#cadastroForm").submit(function (e) { 
         e.preventDefault();
-        
-        var serializedData = $(this).serialize();
 
         $.ajax({
             type: "post",
             url: "/cadastro",
-            data: serializedData,
+            data: $(this).serialize(),
             dataType: "json",
             statusCode: {
                 200: function() {
@@ -37,6 +35,9 @@ $(document).ready(function () {
                         $("#senha_cad").val("");
                         $("#username_cad").val("");
                     });
+                },
+                default: function() {
+                    alert("Ocorreu um erro interno inesperado. Tente novamente!");
                 }
             }
         });
