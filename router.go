@@ -28,10 +28,10 @@ func createRouter() *gin.Engine {
 	// Validate User
 	router.GET("/validate_user", handlers.ValidateUser())
 
-	router.GET("/test", func(ctx *gin.Context) {
+	router.GET("/aluno", func(ctx *gin.Context) {
 		ctx.HTML(
 			200,
-			"logintest.html",
+			"aluno.html",
 			nil,
 		)
 	})

@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"net/http"
+	auth "sigma/services/authentication"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
@@ -46,15 +47,19 @@ func ValidateUser() gin.HandlerFunc {
 			return
 		}
 
-		content := make(gin.H)
-		for key, value := range claims {
-			content[key] = value
+		user, err := auth.GetUser(db, claims["username"].(string))
+		if err != nil {
+			ctx.Status(http.StatusBadGateway)
+			return
 		}
+
+		userInfo := user.ToMap()
 
 		ctx.JSON(
 			http.StatusOK,
 			gin.H{
-				"claims": content,
+				"claims": claims,
+				"user":   userInfo,
 			},
 		)
 	}
