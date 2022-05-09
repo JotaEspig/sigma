@@ -5,9 +5,9 @@ import (
 	"sigma/services/database"
 )
 
-// Database variable
+// Connection and database variables
 var Conn = database.ConnInit()
 var db = Conn.GetDB()
 
-// jwtService variable
+// JWTService variable
 var defaultJWT = auth.JWTAuthService()
