@@ -1,0 +1,16 @@
+body{
+    background-color: #e1f1f7;
+}
+a{
+    text-decoration: none;
+}
+
+a.links{
+    display: none;
+}
+
+*, *:before, *:after { 
+    margin:0;
+    padding:0;
+    font-family: Arial,sans-serif;
+}
