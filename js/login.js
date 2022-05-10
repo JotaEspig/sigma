@@ -10,14 +10,14 @@ $(document).ready(function () {
             url: "/login",
             data: serializedData,
             dataType: "json",
-            success: function (response) {
-                token = response["token"];
-                if (token != "") {
-                    setCookie("auth", token, 48 * 60); // 48 (hours) * 60 (minutes) = 2 days
-                    window.location = "/test";
-                }
-            },
             statusCode: {
+                200: function(response) {
+                    token = response["token"];
+                    if (token != "") {
+                        setCookie("auth", token, 48 * 60); // 48 (hours) * 60 (minutes) = 2 days
+                        window.location = "/test";
+                    }
+                },
                 401: function() {
                     $("#Erro").html("Usuário e/ou senha incorretos");
                     $("#senha_login").val("");
