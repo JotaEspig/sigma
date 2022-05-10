@@ -30,8 +30,8 @@ func SignupPOST() gin.HandlerFunc {
 		name := ctx.PostForm("name")
 		passwd := ctx.PostForm("password")
 
-		u := auth.InitUser(usern, email, name, passwd)
-		err := auth.AddUser(db, u)
+		user := auth.InitUser(usern, email, name, passwd)
+		err := auth.AddUser(db, user)
 		if err != nil {
 			var pqError *pq.Error
 			errors.As(err, &pqError)
