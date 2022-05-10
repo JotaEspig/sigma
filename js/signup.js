@@ -17,9 +17,9 @@ $(document).ready(function () {
                 text: "nome pequeno, deve ter pelo menos 4 caracteres ",
                 icon: "error",
                 button: "OK"
-            })
-            $("senha_cad").val("")
-            $("confirmar_senha_cad").val("")
+            });
+            $("#senha_cad").val("");
+            $("#confirmar_senha_cad").val("");
             return
 
         }
@@ -42,9 +42,9 @@ $(document).ready(function () {
                 text: "senha pequena, deve ter pelo menos 4 caracteres ",
                 icon: "error",
                 button: "OK"
-            })
-            $("senha_cad").val("")
-            $("confirmar_senha_cad").val("")
+            });
+            $("#senha_cad").val("");
+            $("#confirmar_senha_cad").val("");
             return
         }
 
@@ -53,9 +53,9 @@ $(document).ready(function () {
                 title: "Erro",
                 text: "Senhas incompativeis",
                 icon: "error"
-            })
-            $("senha_cad").val("")
-            $("confirmar_senha_cad").val("")
+            });
+            $("#senha_cad").val("");
+            $("#confirmar_senha_cad").val("");
             return
         }
         var serializedData = $(this).serialize();
