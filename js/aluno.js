@@ -4,6 +4,7 @@ $(document).ready(function () {
         type: "get",
         url: "/validate_user",
         success: function (response) {
+            $("#username").html(response["user"]["username"]);
             document.title = response["user"]["username"];
         },
         statusCode: {
