@@ -37,7 +37,7 @@ $(document).ready(function () {
             url: "/validate_user",
             statusCode: {
                 200: function() {
-                    window.location = "/test";
+                    window.location = "/aluno";
                 }
             }
         });
