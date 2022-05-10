@@ -9,6 +9,10 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+const (
+	errNoResult = "sql: no rows in result set"
+)
+
 // Gets the token and sends a JSON containing information about the user to the browser
 // if the token is valid
 func ValidateUser() gin.HandlerFunc {
@@ -49,17 +53,19 @@ func ValidateUser() gin.HandlerFunc {
 
 		user, err := auth.GetUser(db, claims["username"].(string))
 		if err != nil {
+			if err.Error() == errNoResult {
+				ctx.Status(http.StatusUnauthorized)
+				return
+			}
 			ctx.Status(http.StatusInternalServerError)
 			return
 		}
-
-		userInfo := user.ToMap()
 
 		ctx.JSON(
 			http.StatusOK,
 			gin.H{
 				"claims": claims,
-				"user":   userInfo,
+				"user":   user.ToMap(),
 			},
 		)
 	}
