@@ -90,7 +90,7 @@ $(document).ready(function () {
                         $("#username_cad").val("");
                     });
                 },
-                default: function() {
+                500: function() {
                     alert("Ocorreu um erro interno inesperado. Tente novamente!");
                 }
             }
