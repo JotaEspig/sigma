@@ -5,13 +5,11 @@ $(document).ready(function () {
 
     $("#cadastroForm").submit(function (e) { 
         e.preventDefault();
-<<<<<<< HEAD
-=======
 
-        var name = $("#nome_cad").val()
-        var username = $("#username_cad").val()
-        var password = $("#senha_cad").val()
-        var confirmPassword = $("confimar_senha_cad")
+        var name = $("#nome_cad").val();
+        var username = $("#username_cad").val();
+        var password = $("#senha_cad").val();
+        var confirmPassword = $("#confirmar_senha_cad   ").val();
         
         if(name.length < 4){
             swal({
@@ -32,12 +30,11 @@ $(document).ready(function () {
                 text: "nome de usuário pequeno, deve ter pelo menos 4 caracteres ",
                 icon: "error",
                 button: "OK"
-            })
-            $("senha_cad").val("")
-            $("confirmar_senha_cad").val("")
+            });
+            $("#senha_cad").val("");
+            $("#confirmar_senha_cad").val("");
             return
         }
->>>>>>> 0a67e0d04ac693f67a79f7e52d06b6983bacd90a
 
         if(password.length < 4){
             swal({
