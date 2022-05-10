@@ -42,10 +42,6 @@ func ValidateUser() gin.HandlerFunc {
 
 		now := time.Now().Unix()
 		expiresAt := claims["exp"].(float64)
-		if err != nil {
-			unauthorizedJSON(nil)
-			return
-		}
 		if float64(now) > expiresAt {
 			unauthorizedJSON(nil)
 			return
