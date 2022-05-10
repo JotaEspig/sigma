@@ -15,7 +15,7 @@ $(document).ready(function () {
                     token = response["token"];
                     if (token != "") {
                         setCookie("auth", token, 48 * 60); // 48 (hours) * 60 (minutes) = 2 days
-                        window.location = "/test";
+                        window.location = "/aluno";
                     }
                 },
                 401: function() {
