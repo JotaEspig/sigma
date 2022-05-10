@@ -49,7 +49,7 @@ func ValidateUser() gin.HandlerFunc {
 
 		user, err := auth.GetUser(db, claims["username"].(string))
 		if err != nil {
-			ctx.Status(http.StatusBadGateway)
+			ctx.Status(http.StatusInternalServerError)
 			return
 		}
 

@@ -39,7 +39,7 @@ func LoginPOST() gin.HandlerFunc {
 
 		token, err := defaultJWT.GenerateToken(usern)
 		if err != nil || token == "" {
-			ctx.Status(http.StatusBadGateway)
+			ctx.Status(http.StatusInternalServerError)
 			return
 		}
 
