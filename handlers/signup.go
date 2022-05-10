@@ -1,10 +1,16 @@
 package handlers
 
 import (
+	"errors"
 	"net/http"
 	auth "sigma/services/authentication"
 
 	"github.com/gin-gonic/gin"
+	"github.com/lib/pq"
+)
+
+const (
+	codeDuplicateKey = "23505"
 )
 
 // At the moment, this function just serves the html file
@@ -27,7 +33,13 @@ func SignupPOST() gin.HandlerFunc {
 		u := auth.InitUser(usern, email, name, passwd)
 		err := auth.AddUser(db, u)
 		if err != nil {
-			ctx.Status(http.StatusConflict)
+			var pqError *pq.Error
+			errors.As(err, &pqError)
+			if pqError.Code == codeDuplicateKey {
+				ctx.Status(http.StatusConflict)
+				return
+			}
+			ctx.Status(http.StatusBadGateway)
 			return
 		}
 
