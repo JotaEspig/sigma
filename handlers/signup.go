@@ -39,7 +39,7 @@ func SignupPOST() gin.HandlerFunc {
 				ctx.Status(http.StatusConflict)
 				return
 			}
-			ctx.Status(http.StatusBadGateway)
+			ctx.Status(http.StatusInternalServerError)
 			return
 		}
 
