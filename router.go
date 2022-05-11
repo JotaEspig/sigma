@@ -15,6 +15,7 @@ func createRouter() *gin.Engine {
 	// Loads the css and js folders
 	router.Static("css/", "css/")
 	router.Static("js/", "js/")
+	router.Static("img/", "img/")
 
 	// Login
 	router.GET("/", handlers.LoginRedirect())

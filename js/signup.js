@@ -9,7 +9,7 @@ $(document).ready(function () {
         var name = $("#nome_cad").val();
         var username = $("#username_cad").val();
         var password = $("#senha_cad").val();
-        var confirmPassword = $("#confirmar_senha_cad   ").val();
+        var confirmPassword = $("#confirmar_senha_cad").val();
         
         if(name.length < 4){
             swal({
@@ -31,6 +31,7 @@ $(document).ready(function () {
                 icon: "error",
                 button: "OK"
             });
+            $("#username_cad").val("");
             $("#senha_cad").val("");
             $("#confirmar_senha_cad").val("");
             return
@@ -58,7 +59,6 @@ $(document).ready(function () {
             $("#confirmar_senha_cad").val("");
             return
         }
-        var serializedData = $(this).serialize();
         
         $.ajax({
             type: "post",
@@ -87,11 +87,13 @@ $(document).ready(function () {
                     })
                     .then(() => {
                         $("#senha_cad").val("");
-                        $("#username_cad").val("");
+                        $("#confirmar_senha_cad").val("");
                     });
                 },
                 500: function() {
                     alert("Ocorreu um erro interno inesperado. Tente novamente!");
+                    $("#senha_cad").val("");
+                    $("#confirmar_senha_cad").val("");
                 }
             }
         });
