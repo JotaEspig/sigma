@@ -13,7 +13,7 @@ import (
 func createRouter() *gin.Engine {
 	router := gin.Default()
 
-	router.LoadHTMLGlob("html/*.html")
+	router.LoadHTMLGlob("static/html/*.html")
 
 	// These lines add a route to every HTML file inside ./html
 	pwd, err := os.Getwd()
@@ -22,7 +22,7 @@ func createRouter() *gin.Engine {
 	}
 
 	// Walks inside the folder, checks the filename and then adds as GET
-	filepath.Walk(pwd+"/html/", func(path string, info os.FileInfo, err error) error {
+	filepath.Walk(pwd+"/static/html/", func(path string, info os.FileInfo, err error) error {
 		if len(info.Name()) < 6 {
 			return nil
 		}
@@ -42,9 +42,9 @@ func createRouter() *gin.Engine {
 	})
 
 	// Loads the css and js folders
-	router.Static("css/", "css/")
-	router.Static("js/", "js/")
-	router.Static("img/", "img/")
+	router.Static("css/", "static/css/")
+	router.Static("js/", "static/js/")
+	router.Static("img/", "static/img/")
 
 	// Login
 	router.GET("/", handlers.LoginRedirect())
