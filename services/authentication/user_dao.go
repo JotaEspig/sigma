@@ -8,6 +8,8 @@ import (
 func GetUser(db *sqlx.DB, username string) (*User, error) {
 	u := User{}
 
+	// TODO Jota: Filter results using and array of wanted attributes or whatever
+
 	err := db.Get(&u, "SELECT * FROM \"user\" WHERE username=$1", username)
 
 	return &u, err
