@@ -71,7 +71,7 @@ func createRouter() *gin.Engine {
 	router.POST("/cadastro", handlers.SignupPOST())
 
 	// Validate User
-	router.GET("/validate_user", handlers.ValidateUser())
+	router.GET("/validateuser", handlers.ValidateUser())
 
 	return router
 }
