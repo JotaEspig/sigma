@@ -1,3 +1,5 @@
+@import "../css/padrao.css";
+
 .content{
     width: auto;
     margin: 0px auto;
@@ -13,7 +15,7 @@
   
 h1{
     font-size: 70px;
-    color: #00e5fff8;
+    color: var(--titulo);
     text-shadow: 0 2px 2px rgb(10, 114, 138);
     padding: 2px 0 5px 0;
     font-family: 'Ubuntu', sans-serif;
