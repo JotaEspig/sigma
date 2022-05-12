@@ -41,7 +41,7 @@ func createRouter() *gin.Engine {
 		return nil
 	})
 
-	// Loads the css and js folders
+	// Loads the img, css and js folders
 	router.Static("css/", "static/css/")
 	router.Static("js/", "static/js/")
 	router.Static("img/", "static/img/")
