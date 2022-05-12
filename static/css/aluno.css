@@ -71,7 +71,7 @@ ul{
 
 a{
     display: block;
-    padding: 20px 5px;
+    padding: 17px 5px;
     color: white;
     background: var(--bg_botao);
     text-shadow: 0 1px 1px #333;
@@ -82,10 +82,9 @@ a{
 
 a:hover{
     background: var(--bg);
-    padding: 8px 5px;
+    padding: 20px 5px;
     color: var(--titulo);
-    font-size: 20px;     
-    margin-bottom: 10px;  
+    font-size: 20px;      
     text-shadow: 0 1px 1px #333;
     transition: all 0.2s linear;
 }
