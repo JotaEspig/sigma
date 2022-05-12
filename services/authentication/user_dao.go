@@ -1,6 +1,8 @@
 package auth
 
-import "database/sql"
+import (
+	"database/sql"
+)
 
 // Gets a user from a database
 func GetUser(db *sql.DB, username string) (*User, error) {
@@ -9,7 +11,7 @@ func GetUser(db *sql.DB, username string) (*User, error) {
 	err := db.QueryRow(
 		"SELECT * FROM \"user\" WHERE \"username\" = $1",
 		username,
-	).Scan(&u.ID, &u.Username, &u.hashedPassword, &u.Email, &u.Name)
+	).Scan(&u.ID, &u.Username, &u.password, &u.Email, &u.Name)
 
 	return &u, err
 }
@@ -25,7 +27,7 @@ func AddUser(db *sql.DB, u *User) error {
 	}
 
 	_, err = stmt.Exec(
-		u.Username, u.hashedPassword, u.Email, u.Name,
+		u.Username, u.password, u.Email, u.Name,
 	)
 	return err
 }

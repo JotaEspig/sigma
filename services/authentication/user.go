@@ -5,11 +5,11 @@ import (
 )
 
 type User struct {
-	ID             int
-	Username       string
-	Email          string
-	Name           string
-	hashedPassword string
+	ID       int
+	Username string
+	Email    string
+	Name     string
+	password string
 }
 
 func InitUser(usern, email, name, password string) *User {
@@ -18,8 +18,8 @@ func InitUser(usern, email, name, password string) *User {
 		Email:    email,
 		Name:     name,
 	}
-	hashedPasswd, _ := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
-	u.hashedPassword = string(hashedPasswd)
+	passwd, _ := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+	u.password = string(passwd)
 
 	return u
 
@@ -28,11 +28,11 @@ func InitUser(usern, email, name, password string) *User {
 // Validates the user. It compares the hashed password in the database
 // to the password that the user input
 func (u *User) Validate(userInput, passInput string) bool {
-	err := bcrypt.CompareHashAndPassword([]byte(u.hashedPassword), []byte(passInput))
+	err := bcrypt.CompareHashAndPassword([]byte(u.password), []byte(passInput))
 	return u.Username == userInput && err == nil
 }
 
-// Returns a map containing user info WITHOUT hashedPassword.
+// Returns a map containing user info WITHOUT password.
 // This map will be send in /validate_user
 func (u *User) ToMap() map[string]interface{} {
 	return map[string]interface{}{
