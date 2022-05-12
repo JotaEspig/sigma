@@ -53,7 +53,8 @@ $(document).ready(function () {
             swal({
                 title: "Erro",
                 text: "Senhas incompativeis",
-                icon: "error"
+                icon: "error",
+                button: "OK"
             });
             $("#senha_cad").val("");
             $("#confirmar_senha_cad").val("");
