@@ -9,6 +9,17 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// Checks if file needs to be route
+// It needed by default, and it's not when the filename is in the notToRoute
+func isHTMLToRoute(filename string, notToRoute []string) bool {
+	for _, val := range notToRoute {
+		if val == filename {
+			return false
+		}
+	}
+	return true
+}
+
 // Configures and creates a router
 func createRouter() *gin.Engine {
 	router := gin.Default()
@@ -21,9 +32,15 @@ func createRouter() *gin.Engine {
 		panic(err)
 	}
 
+	notToRoute := []string{
+		"alunoinfo.html",
+	}
 	// Walks inside the folder, checks the filename and then adds as GET
 	filepath.Walk(pwd+"/static/html/", func(path string, info os.FileInfo, err error) error {
 		if len(info.Name()) < 6 {
+			return nil
+		}
+		if !isHTMLToRoute(info.Name(), notToRoute) {
 			return nil
 		}
 
