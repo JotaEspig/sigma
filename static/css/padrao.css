@@ -3,12 +3,12 @@ ex.:  https://paletton.com/#uid=13q0u0kiCFn8GVde7NVmtwSqXtg
       https://paletton.com/#uid=13q0u0kbRt14+E48dwffUpTkImm*/
 :root{
     --titulo: #00e5fff8;
-    --back_botao: #3d9db3;
+    --bg_botao: #3d9db3;
     --enquadro: #f7f7f7;
     --borda: #4ab3c6;
     --letra_transition: #39bfd7;
     --letras_label: rgba(147,184,189,0.8) 20%;
-
+    --bg: #f2fbff;
 }
 
 body{
