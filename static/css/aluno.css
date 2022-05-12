@@ -10,44 +10,31 @@
     justify-content: center;   
     min-height: 100vh;
 }
-
-
   
 h1{
     font-size: 70px;
     color: var(--titulo);
-    text-shadow: 0 2px 2px rgb(10, 114, 138);
+    text-shadow: 0 2px 2px #0a728a;
     padding: 2px 0 5px 0;
     font-family: 'Ubuntu', sans-serif;
     font-weight: bold;
     text-align: center;
-    padding-bottom: 30px; /*margim de baixo do risco abaixo do cadastro/loguin */
 }
-
-
 
 h2{
     font-size: 70px;
-    color: #00e5fff8;
-    text-shadow: 0 2px 2px rgb(10, 114, 138);
+    color: var(--titulo);
+    text-shadow: 0 2px 2px #0a728a;
     padding: 2px 0 5px 0;
     font-family: 'Ubuntu', sans-serif;
     font-weight: bold;
     text-align: center;
-    padding-bottom: 30px; /*margim de baixo do risco abaixo do cadastro/loguin */
-
 }
 
 table, th, td {
     border: 1px solid black;
 }
 
-#aluno{   
-    padding: 18px 1.5% 60px 1.5%;
-    margin: 0 0 35px 0;
-    background: #f7f7f7;
-    border: 1px solid rgba(147, 184, 189,0.8);
-  }
 
 /* css do menu   */
 img{
@@ -62,20 +49,17 @@ input[type="checkbox"]
 
 input[type="checkbox"]:checked ~ nav
 {
-    transform: translateX(550px);
+    transform: translateX(300px);
 }
 
 nav{
-    top: 140px;
-    width: 250px;
-    left: -250px;
+    background-color: var(--bg_botao);
+    width: 280px;   
+    left: -300px;
+    top: 10px;
     height: 100%;
     position: absolute;
-    /* isso era para dar uma 
-    trasição mas n funca sla
-    transition: all 10;
-    */
-
+    transition: all 0.2;
 }
 
 ul{
@@ -89,35 +73,27 @@ a{
     display: block;
     padding: 20px 5px;
     color: white;
-    background: rgb(61, 157, 179);
-    border: 1px solid #000000;
+    background: var(--bg_botao);
     text-shadow: 0 1px 1px #333;
-
-    -webkit-border-radius: 3px;
-    border-radius: 3px;
    
     -webkit-box-shadow: 0px 1px 4px 0px rgba(168, 168, 168, 0.6) inset;
     box-shadow: 0px 1px 4px 0px rgba(168, 168, 168, 0.6) inset;
 }
 
 a:hover{
-    background: #00e5fff8;
-    border: 1px solid #000000;
+    background: var(--bg);
+    padding: 8px 5px;
+    color: var(--titulo);
+    font-size: 20px;     
+    margin-bottom: 10px;  
     text-shadow: 0 1px 1px #333;
-
-    -webkit-border-radius: 3px;
-    border-radius: 3px;
-   
-    -webkit-box-shadow: 0px 1px 4px 0px rgba(168, 168, 168, 0.6) inset;
-    box-shadow: 0px 1px 4px 0px rgba(168, 168, 168, 0.6) inset;
-   
-    -webkit-transition: all 0.2s linear;
     transition: all 0.2s linear;
 }
 
 label{
     padding: 15px;
-    top: 150px;
+    top: 0px;
+    left: 0px;
     position: absolute;
     z-index: 1;
 }
