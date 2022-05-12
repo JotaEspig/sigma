@@ -9,17 +9,17 @@ type User struct {
 	Username string
 	Email    string
 	Name     string
-	password string
+	Password string
 }
 
-func InitUser(usern, email, name, password string) *User {
+func InitUser(usern, email, name, Password string) *User {
 	u := &User{
 		Username: usern,
 		Email:    email,
 		Name:     name,
 	}
-	passwd, _ := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
-	u.password = string(passwd)
+	passwd, _ := bcrypt.GenerateFromPassword([]byte(u.Password), bcrypt.DefaultCost)
+	u.Password = string(passwd)
 
 	return u
 
@@ -28,7 +28,7 @@ func InitUser(usern, email, name, password string) *User {
 // Validates the user. It compares the hashed password in the database
 // to the password that the user input
 func (u *User) Validate(userInput, passInput string) bool {
-	err := bcrypt.CompareHashAndPassword([]byte(u.password), []byte(passInput))
+	err := bcrypt.CompareHashAndPassword([]byte(u.Password), []byte(passInput))
 	return u.Username == userInput && err == nil
 }
 
