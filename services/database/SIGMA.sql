@@ -1,5 +1,6 @@
-
 /*
+link for diagram: https://dbdiagram.io/d/62616cbe1072ae0b6ac6170f
+
 Contains the query for the creation of the tables
 To configure the database correctly, you must create these environment variables:
 - DB_USERNAME
