@@ -19,6 +19,8 @@ and do the rest
 
 ** The database is not complete ** 
 
+TODO jota: it's needed to separate the table user to "admin", "teacher", "student"
+
 */
 
 CREATE TABLE "user" (
