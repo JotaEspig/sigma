@@ -17,6 +17,12 @@ func checkEnv(envName string, defaultVal string) string {
 // Gets the config to open the database
 func getConfig() (string, string) {
 	postgresDriver := "postgres"
+
+	// Checks if it's running on heroku
+	if url := os.Getenv("DATABASE_URL"); url != "" {
+		return postgresDriver, url
+	}
+
 	user := checkEnv("DB_USERNAME", "postgres")
 	password := checkEnv("DB_PASSWORD", "postgres")
 	dbName := checkEnv("DB_DB", "sigma")
