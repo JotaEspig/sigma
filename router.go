@@ -2,70 +2,76 @@ package main
 
 import (
 	"net/http"
+	"os"
+	"path/filepath"
 	"sigma/handlers"
-	"sigma/services/login"
 
-	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 )
+
+// Checks if file needs to be route
+// It needed by default, and it's not when the filename is in the notToRoute
+func isHTMLToRoute(filename string, notToRoute []string) bool {
+	for _, val := range notToRoute {
+		if val == filename {
+			return false
+		}
+	}
+	return true
+}
 
 // Configures and creates a router
 func createRouter() *gin.Engine {
 	router := gin.Default()
 
-	router.LoadHTMLGlob("html/*.html")
+	router.LoadHTMLGlob("static/html/*.html")
 
-	// Loads the css and js folders
-	router.Static("css/", "css/")
-	router.Static("js/", "js/")
+	// These lines add a route to every HTML file inside ./html
+	pwd, err := os.Getwd()
+	if err != nil {
+		panic(err)
+	}
+
+	notToRoute := []string{
+		"alunoinfo.html",
+	}
+	// Walks inside the folder, checks the filename and then adds as GET
+	filepath.Walk(pwd+"/static/html/", func(path string, info os.FileInfo, err error) error {
+		if len(info.Name()) < 6 {
+			return nil
+		}
+		if !isHTMLToRoute(info.Name(), notToRoute) {
+			return nil
+		}
+
+		idxUntilFileExt := len(info.Name()) - 4
+		filePath := "/" + info.Name()
+		filePath = filePath[:idxUntilFileExt]
+
+		router.GET(filePath, func(ctx *gin.Context) {
+			ctx.HTML(
+				http.StatusOK,
+				info.Name(),
+				nil,
+			)
+		})
+		return nil
+	})
+
+	// Loads the img, css and js folders
+	router.Static("css/", "static/css/")
+	router.Static("js/", "static/js/")
+	router.Static("img/", "static/img/")
 
 	// Login
 	router.GET("/", handlers.LoginRedirect())
-	router.GET("/login", handlers.LoginGET())
 	router.POST("/login", handlers.LoginPOST())
+
 	// Cadastro
-	router.GET("/cadastro", handlers.SignupGET())
 	router.POST("/cadastro", handlers.SignupPOST())
 
-	router.GET("/test", func(ctx *gin.Context) {
-		ctx.HTML(
-			200,
-			"logintest.html",
-			nil,
-		)
-	})
-
-	router.POST("/test", func(ctx *gin.Context) {
-		resp := struct {
-			Token string `json:"token"`
-		}{}
-		ctx.BindJSON(&resp)
-		if resp.Token == "" {
-			ctx.JSON(
-				http.StatusUnauthorized,
-				nil,
-			)
-			return
-		}
-
-		dtoken, err := login.JWTDefault.ValidateToken(resp.Token)
-		if err != nil || !dtoken.Valid {
-			ctx.JSON(
-				http.StatusUnauthorized,
-				nil,
-			)
-			return
-		}
-
-		claims := dtoken.Claims.(jwt.MapClaims)
-
-		ctx.JSON(
-			http.StatusOK,
-			gin.H{
-				"username": claims["username"],
-			},
-		)
-	})
+	// Validate User
+	router.GET("/validateuser", handlers.GetUserInfo())
 
 	return router
 }

@@ -1,4 +1,4 @@
-package login
+package auth
 
 import (
 	"fmt"
@@ -8,7 +8,20 @@ import (
 	"github.com/dgrijalva/jwt-go"
 )
 
-var JWTDefault = JWTAuthService()
+// Returns the secret key set in the environment
+func getSecretKey() string {
+	secret := os.Getenv("SECRET")
+	if secret == "" {
+		secret = "secret"
+	}
+	return secret
+}
+
+// Values that will be contained in the token
+type authClaims struct {
+	Username string `json:"username"`
+	jwt.StandardClaims
+}
 
 // Parameters used in jwt authentication
 // 	secretKey : key used in the generation and validation of a token
@@ -18,27 +31,12 @@ type jwtService struct {
 	issuer    string
 }
 
-// Values that will be contained in the token
-type authClaims struct {
-	Username string `json:"username"`
-	jwt.StandardClaims
-}
-
 // Creates a default jwtService struct
 func JWTAuthService() *jwtService {
 	return &jwtService{
 		secretKey: getSecretKey(),
 		issuer:    "SIGMA",
 	}
-}
-
-// Returns the secret key set in the environment
-func getSecretKey() string {
-	secret := os.Getenv("SECRET")
-	if secret == "" {
-		secret = "secret"
-	}
-	return secret
 }
 
 // Generates a token according to the username.
@@ -66,7 +64,7 @@ func (service *jwtService) ValidateToken(encodedToken string) (*jwt.Token, error
 		// Checks if the token is valid trying to convert it to HMAC
 		_, isValid := token.Method.(*jwt.SigningMethodHMAC)
 		if !isValid {
-			return nil, fmt.Errorf("Invalid token")
+			return nil, fmt.Errorf("invalid token")
 		}
 		// If it's valid, will return the secret key to the parser
 		return []byte(service.secretKey), nil

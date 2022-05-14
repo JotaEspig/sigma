@@ -1,0 +1,86 @@
+/*--Obs: sempre verificar o caminho pois o samuel esta
+fazendo pelo sublime--*/
+@import "../css/padrao.css";
+  
+h2{
+    font-size: 70px;
+    color: var(--titulo);
+    text-shadow: 0 2px 2px #0a728a;
+    padding: 2px 0 5px 0; /*--Centralização do titulo--*/
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: bold;
+    text-align: center;
+}
+
+table, th, td {
+    border: 1px solid black;
+}
+
+
+/*--Css do menu--*/
+img{
+    width: 40px;
+}
+
+/*--Esconde o check--*/
+input[type="checkbox"]
+{
+    display: none;
+}
+
+/*--Faz aparecer o menue--*/
+input[type="checkbox"]:checked ~ nav
+{
+    transform: translateX(300px); 
+}
+
+/*--Tabela dos botões--*/
+nav{
+    background-color: var(--bg_botao);
+    width: 280px;   
+    left: -300px;
+    top: 10px;
+    height: 100%;
+    position: absolute;
+    transition: all 0.2;
+}
+
+ul{
+    top: 70px; /*--Distancia do icon até os botões--*/
+    position: absolute;
+    width: 100%;
+    list-style: NONE;
+}
+
+
+/*--Sobre os links no caso botões do menu--*/
+a{
+    display: block;
+    padding: 17px 5px; /*--Altura e largura--*/
+    color: white;
+    background: var(--bg_botao);
+    text-shadow: 0 1px 1px #333;
+   
+    -webkit-box-shadow: 0px 1px 4px 0px rgba(168, 168, 168, 0.6) inset;
+    box-shadow: 0px 1px 4px 0px rgba(168, 168, 168, 0.6) inset;
+}
+
+/*--Transição quando passar o ponteiro--*/
+a:hover{
+    background: var(--bg);
+    padding: 20px 5px;
+    color: var(--titulo);
+    font-size: 20px;      
+    text-shadow: 0 1px 1px #333;
+    transition: all 0.2s linear;
+}
+
+/*--Altera alguns parametros do botao para abrir o menu--*/
+label{
+    padding: 15px;
+    top: 0px;
+    left: 0px;
+    position: absolute;
+    z-index: 1; /*--Esconde o menu--*/
+}
+

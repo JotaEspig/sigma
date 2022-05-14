@@ -1,9 +1,12 @@
 package main
 
-import "sigma/services/database"
+import "os"
 
 func main() {
-	defer database.Conn.CloseDB()
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
 
 	// Creates and runs the router
 	router := createRouter()

@@ -17,6 +17,7 @@ function setCookie(key, value, expiry) {
  * @returns keyValue[2] if keyValue is not null
  */
 function getCookie(key) {
+    // This regex is from stackoverflow, don't ask me how tf this works 
     var keyValue = document.cookie.match('(^|;) ?' + key + '=([^;]*)(;|$)');
     return keyValue ? keyValue[2] : null;
 }

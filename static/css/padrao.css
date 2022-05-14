@@ -1,0 +1,55 @@
+/*
+ex.:  https://paletton.com/#uid=13q0u0kiCFn8GVde7NVmtwSqXtg
+      https://paletton.com/#uid=13q0u0kbRt14+E48dwffUpTkImm*/
+
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@1,700;1,900&family=Ubuntu:ital,wght@1,300&display=swap');
+
+/*--Definições de variaveis--*/
+:root{
+    --titulo: #00e5fff8;
+    --bg_botao: #3d9db3;
+    --enquadro: #f7f7f7;
+    --borda: #4ab3c6;
+    --letra_transition: #39bfd7;
+    --letras_label: rgba(147,184,189,0.8) 20%;
+    --bg: #f2fbff;
+}
+
+/*--Limitações de conteudo--*/
+.content{
+    width: auto;
+    margin: 0px auto;
+    position: relative;
+    display:flex;
+    align-items: center;
+    flex-flow: column;
+    justify-content: center;   
+    min-height: 100vh;
+  }
+
+body{
+    background-color: #f2fbff;
+}
+a{
+    text-decoration: none;
+}
+
+a.links{
+    display: none;
+}
+
+*, *:before, *:after { 
+    margin:0;
+    padding:0;
+    font-family: Arial,sans-serif;
+}
+
+h1{
+    font-size: 70px;
+    color: var(--titulo);
+    text-shadow: 0 2px 2px #0a728a;
+    padding: 2px 0 5px 0; /*--Centralização do titulo--*/
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: bold;
+    text-align: center;
+}
