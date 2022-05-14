@@ -23,3 +23,10 @@ func AddUser(db *sqlx.DB, u *User) {
 		u.Username, u.HashedPassword, u.Email, u.Name,
 	)
 }
+
+func RmUser(db *sqlx.DB, username string) {
+	db.MustExec(
+		`DELETE FROM "user" WHERE username = $1`,
+		username,
+	)
+}
