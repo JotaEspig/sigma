@@ -4,6 +4,9 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
+//TODO jota: it's needed to separate the struct user to "admin", "teacher", "student"
+// Maybe implement something similar to Inheritance
+
 type User struct {
 	ID             int
 	Username       string
@@ -35,10 +38,10 @@ func (u *User) Validate(userInput, passInput string) bool {
 // Returns a map containing user info WITHOUT password.
 // This map will be send in /validate_user
 func (u *User) ToMap() map[string]interface{} {
-	return map[string]interface{}{
-		"id":       u.ID,
-		"username": u.Username,
-		"email":    u.Email,
-		"name":     u.Name,
-	}
+	userMap := make(map[string]interface{})
+	userMap["id"] = u.ID
+	userMap["username"] = u.Username
+	userMap["name"] = u.Name
+	userMap["email"] = u.Email
+	return userMap
 }
