@@ -20,6 +20,13 @@ func AddUser(db *sqlx.DB, u *User) {
 	db.MustExec(
 		`INSERT INTO "user"(username, password, email, name)
 		VALUES($1, $2, $3, $4)`,
-		u.Username, u.Password, u.Email, u.Name,
+		u.Username, u.HashedPassword, u.Email, u.Name,
+	)
+}
+
+func RmUser(db *sqlx.DB, username string) {
+	db.MustExec(
+		`DELETE FROM "user" WHERE username = $1`,
+		username,
 	)
 }
