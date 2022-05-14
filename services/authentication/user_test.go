@@ -7,25 +7,31 @@ import (
 
 var db = database.ConnInit().GetDB()
 
-func TestUserValidate(t *testing.T) {
-	passwd := "admin"
+// Constants to use in tests, def = default
+const (
+	defUsername = "defUsername"
+	defPasswd   = "defPasswd"
+	defEmail    = "defEmail"
+	defName     = "defName"
+)
 
-	u1 := InitUser("admin", "admin@admin.com", "admin", passwd)
-	u2 := InitUser("admin", "admin@admin.com", "admin", passwd)
-	if !u1.Validate(u2.Username, passwd) {
+func TestUserValidate(t *testing.T) {
+	u1 := InitUser(defUsername, defEmail, defName, defPasswd)
+	u2 := InitUser(defUsername, defEmail, defName, defPasswd)
+	if !u1.Validate(u2.Username, defPasswd) {
 		t.Error("validating user: 2 identical users couldn't pass the validation")
 	}
 
 	fakePasswd := "fake passwd"
-	u3 := InitUser("admin", "admin@admin.com", "admin", passwd)
-	u4 := InitUser("admin", "admin@admin.com", "admin", fakePasswd)
-	if !u3.Validate(u4.Username, passwd) {
+	u3 := InitUser(defUsername, defEmail, defName, defPasswd)
+	u4 := InitUser(defUsername, defEmail, defName, fakePasswd)
+	if !u3.Validate(u4.Username, defPasswd) {
 		t.Error("validating user: 2 different users could pass the validation (it's supposed to not)")
 	}
 }
 
 func TestAddUser(t *testing.T) {
-	u := InitUser("admin", "admin@admin.com", "admin", "admin")
+	u := InitUser(defUsername, defEmail, defName, defPasswd)
 
 	func() {
 		defer func() {
@@ -40,10 +46,7 @@ func TestAddUser(t *testing.T) {
 	func() {
 		defer func() {
 			if r := recover(); r == nil {
-				t.Errorf(
-					"adding repeated user (it's not supposed to work): %s",
-					r,
-				)
+				t.Errorf("adding repeated user (it's not supposed to work)")
 			}
 		}()
 		AddUser(db, u)
@@ -51,7 +54,7 @@ func TestAddUser(t *testing.T) {
 }
 
 func TestGetUser(t *testing.T) {
-	_, err := GetUser(db, "admin")
+	_, err := GetUser(db, defUsername)
 	if err != nil {
 		t.Errorf("getting legit user: %s", err)
 	}
@@ -60,4 +63,27 @@ func TestGetUser(t *testing.T) {
 	if err == nil {
 		t.Errorf("getting non existent user (it's not supposed to work): %s", err)
 	}
+}
+
+func TestRmUser(t *testing.T) {
+	u := InitUser(defUsername, defEmail, defName, defPasswd)
+
+	// Adds if user's not added in the database
+	func() {
+		defer func() {
+			if r := recover(); r != nil {
+				return
+			}
+		}()
+		AddUser(db, u)
+	}()
+
+	func() {
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("removing legit user: %s", r)
+			}
+		}()
+		RmUser(db, u.Username)
+	}()
 }
