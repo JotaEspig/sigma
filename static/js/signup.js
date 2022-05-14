@@ -10,7 +10,7 @@ $(document).ready(function () {
         var username = $("#username_cad").val();
         var password = $("#senha_cad").val();
         var confirmPassword = $("#confirmar_senha_cad").val();
-        
+        //if the name is too short
         if(name.length < 4){
             swal({
                 title: "Erro",
@@ -23,7 +23,7 @@ $(document).ready(function () {
             return
 
         }
-
+        // if the username is too short
         if(username.length < 4){
             swal({
                 title: "Erro",
@@ -36,7 +36,7 @@ $(document).ready(function () {
             $("#confirmar_senha_cad").val("");
             return
         }
-
+        // if the password is too short
         if(password.length < 4){
             swal({
                 title: "Erro",
@@ -48,7 +48,7 @@ $(document).ready(function () {
             $("#confirmar_senha_cad").val("");
             return
         }
-
+        // confirming the password
         if(password != confirmPassword){
             swal({
                 title: "Erro",
@@ -60,7 +60,7 @@ $(document).ready(function () {
             $("#confirmar_senha_cad").val("");
             return
         }
-        
+        //sing up, with alert of successful creation of user or unexpected error
         $.ajax({
             type: "post",
             url: "/cadastro",
