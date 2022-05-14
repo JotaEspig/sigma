@@ -10,5 +10,5 @@ func main() {
 
 	// Creates and runs the router
 	router := createRouter()
-	router.Run()
+	router.Run(":" + port)
 }
