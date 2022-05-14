@@ -22,7 +22,15 @@ func isHTMLToRoute(filename string, notToRoute []string) bool {
 
 // Configures and creates a router
 func createRouter() *gin.Engine {
-	router := gin.Default()
+	var router *gin.Engine
+
+	ginMode := os.Getenv("GIN_MODE")
+	if ginMode != "release" {
+		router = gin.New()
+		router.Use(gin.Recovery())
+	} else {
+		router = gin.Default()
+	}
 
 	router.LoadHTMLGlob("static/html/*.html")
 
@@ -46,9 +54,9 @@ func createRouter() *gin.Engine {
 
 		idxUntilFileExt := len(info.Name()) - 4
 		filePath := "/" + info.Name()
-		filePath = filePath[:idxUntilFileExt]
+		filePathWithoutExt := filePath[:idxUntilFileExt]
 
-		router.GET(filePath, func(ctx *gin.Context) {
+		router.GET(filePathWithoutExt, func(ctx *gin.Context) {
 			ctx.HTML(
 				http.StatusOK,
 				info.Name(),
