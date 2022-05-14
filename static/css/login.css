@@ -1,36 +1,13 @@
-/*TODO Samuel: Separar CSS em arquivos*/
-
 /*TODO Samuel: Usar paletas de cores novas::after
 ex.:  https://paletton.com/#uid=13q0u0kiCFn8GVde7NVmtwSqXtg
       https://paletton.com/#uid=13q0u0kbRt14+E48dwffUpTkImm*/
+/*--Obs: sempre verificar o caminho pois o samuel esta
+fazendo pelo sublime--*/
 
 @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@1,700;1,900&family=Ubuntu:ital,wght@1,300&display=swap');
 @import "../css/padrao.css";
 
 
-.content{
-    width: auto;
-    margin: 0px auto;
-    position: relative;
-    display:flex;
-    align-items: center;
-    flex-flow: column;
-    justify-content: center;   
-    min-height: 100vh;
-  }
-  
-  
-  h1{
-    font-size: 70px;
-    color: #00e5fff8;
-    text-shadow: 0 2px 2px rgb(10, 114, 138);
-    padding: 2px 0 5px 0;
-    font-family: 'Ubuntu', sans-serif;
-    font-weight: bold;
-    text-align: center;
-    padding-bottom: 30px; /*margim de baixo do risco abaixo do cadastro/loguin */
-  } 
-  
   h1:after{
     content: ' ';
     display: block;
@@ -50,11 +27,13 @@ ex.:  https://paletton.com/#uid=13q0u0kiCFn8GVde7NVmtwSqXtg
     position: relative;
   }
   
-  :-webkit-input-placeholder  {
+/*--"Preencha este campo"--*/
+  :-webkit-input-placeholder{
     color: red; 
     font-style: italic;
   }
-   
+  
+/*--Caixas para prencher--*/ 
   input:-moz-placeholder,
   textarea:-moz-placeholder{
     color: #01fdfdd2;
@@ -82,7 +61,7 @@ ex.:  https://paletton.com/#uid=13q0u0kiCFn8GVde7NVmtwSqXtg
     transition: all 0.2s linear;
   }
    
-  /*estilo do botão submit para ambas paginas*/
+  /*--Estilo do botão submit para ambas paginas--*/
   input[type="submit"]{
     font-weight: bold;
     width: 100%!important;
@@ -101,7 +80,7 @@ ex.:  https://paletton.com/#uid=13q0u0kiCFn8GVde7NVmtwSqXtg
     transition: all 0.2s linear;
   }
   
-  /* troca de cor do botao login/cadastrar*/
+  /*--Transição do botão login/cadastrar--*/
   input[type="submit"]:hover{
     font-weight: bold;
     background: #fff;
@@ -118,14 +97,15 @@ ex.:  https://paletton.com/#uid=13q0u0kiCFn8GVde7NVmtwSqXtg
     transition: all 0.2s linear;
   }
   
-  
+/*--Algumas definições do botão 
+    ir para loguin/cadastrar--*/  
   .link{
     background: #e1eaeb;
     color: #7f7c7c;
     left: 0px;
     height: 20px;
     width: 440px;
-    padding: 17px 30px 20px 30px;
+    padding: 17px 30px 20px 30px; /*--Parametros da distancia do bt cadastrar--*/
     font-size: 16px;
     text-align: right;
     border-top: 1px solid #dbe5e8;
@@ -156,6 +136,7 @@ ex.:  https://paletton.com/#uid=13q0u0kiCFn8GVde7NVmtwSqXtg
     border: 1px solid #4ab3c6;
   }
   
+/*--Margins da limitação de conteudo dentro do BG cinza--*/
   #cadastro, 
   #login{   
     padding: 18px 1.5% 60px 1.5%;
