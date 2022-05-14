@@ -25,7 +25,7 @@ func createRouter() *gin.Engine {
 	var router *gin.Engine
 
 	ginMode := os.Getenv("GIN_MODE")
-	if ginMode != "release" {
+	if ginMode == "release" {
 		router = gin.New()
 		router.Use(gin.Recovery())
 	} else {
