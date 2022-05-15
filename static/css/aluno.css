@@ -84,3 +84,28 @@ label{
     z-index: 1; /*--Esconde o menu--*/
 }
 
+/*--Botão de logout--*/
+#logout{
+    background: var(--bg_botao);
+    color: #7f7c7c;
+    float: right;
+    padding: 7px 15px 7px 15px; /*--Parametros da distancia do bt cadastrar--*/
+    font-size: 12px;
+    border-top: 1px solid #dbe5e8;
+    -webkit-border-radius: 0 0  5px 5px;
+    border-radius: 0 0  5px 5px;
+    font-weight: bold;
+    color: #ffffff;
+    border: 1px solid #4ab3c6;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;  
+    -webkit-transition: all 0.4s linear;
+    transition: all 0.4s  linear;
+    text-shadow: 0 1px 1px #333;
+}
+   
+#logout:hover {
+    color: #39bfd7;
+    background: #f7f7f7;
+    border: 1px solid #4ab3c6;
+}
