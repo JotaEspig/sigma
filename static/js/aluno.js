@@ -2,7 +2,7 @@ $(document).ready(function () {
 
     $.ajax({
         type: "get",
-        url: "/logged/user/get",
+        url: "/validate/user",
         success: function (response) {
             $("#username").html(response["user"]["username"]);
             document.title = response["user"]["username"];

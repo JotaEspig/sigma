@@ -34,7 +34,7 @@ $(document).ready(function () {
         // Does a request to check if the cookie is legit and hasn't expired
         $.ajax({
             type: "get",
-            url: "/logged/user/get",
+            url: "/validate/user",
             statusCode: {
                 200: function() {
                     window.location = "/aluno";
