@@ -31,6 +31,8 @@ func TestUserValidate(t *testing.T) {
 }
 
 func TestAddUser(t *testing.T) {
+	TestRmUser(t)
+
 	u := InitUser(defUsername, defEmail, defName, defPasswd)
 
 	func() {
@@ -57,6 +59,21 @@ func TestGetUser(t *testing.T) {
 	_, err := GetUser(db, defUsername)
 	if err != nil {
 		t.Errorf("getting legit user: %s", err)
+	}
+
+	u, err := GetUser(db, defUsername, "username", "email")
+	// Checks if get user parcial info is working
+	if err != nil {
+		t.Errorf("getting legit user (parcial info): %s", err)
+	}
+	if u.Username == "" {
+		t.Errorf("getting legit user (parcial info): username is empty")
+	}
+	if u.Email == "" {
+		t.Errorf("getting legit user (parcial info): email is empty")
+	}
+	if u.Name != "" {
+		t.Errorf("getting legit user (parcial info): name is filled")
 	}
 
 	_, err = GetUser(db, "non-existent-user")
