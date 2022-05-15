@@ -9,6 +9,18 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// Gets the type of router engine according to ginMode.
+// ginMode should be an env variable
+func getRouterEngine(ginMode string) *gin.Engine {
+	if ginMode == "release" {
+		router := gin.New()
+		router.Use(gin.Recovery())
+		return router
+	}
+
+	return gin.Default()
+}
+
 // Checks if file needs to be route
 // It needed by default, and it's not when the filename is in the notToRoute
 func isHTMLToRoute(filename string, notToRoute []string) bool {
@@ -22,29 +34,23 @@ func isHTMLToRoute(filename string, notToRoute []string) bool {
 
 // Configures and creates a router
 func createRouter() *gin.Engine {
-	var router *gin.Engine
-
-	ginMode := os.Getenv("GIN_MODE")
-	if ginMode == "release" {
-		router = gin.New()
-		router.Use(gin.Recovery())
-	} else {
-		router = gin.Default()
-	}
+	router := getRouterEngine(os.Getenv("GIN_MODE"))
 
 	router.LoadHTMLGlob("static/html/*.html")
 
-	// These lines add a route to every HTML file inside ./html
-	pwd, err := os.Getwd()
+	// These lines add a route to every HTML file inside ./html (with exceptions)
+	notToRoute := []string{
+		"alunoinfo.html",
+	}
+
+	currentWorkingDir, err := os.Getwd()
 	if err != nil {
 		panic(err)
 	}
 
-	notToRoute := []string{
-		"alunoinfo.html",
-	}
-	// Walks inside the folder, checks the filename and then adds as GET
-	filepath.Walk(pwd+"/static/html/", func(path string, info os.FileInfo, err error) error {
+	pathToHTML := currentWorkingDir + "/static/html/"
+	// Walks inside the folder, checks the filename and then adds an route for it
+	filepath.Walk(pathToHTML, func(path string, info os.FileInfo, err error) error {
 		if len(info.Name()) < 6 {
 			return nil
 		}
@@ -54,13 +60,11 @@ func createRouter() *gin.Engine {
 
 		idxUntilFileExt := len(info.Name()) - 4
 		filePath := "/" + info.Name()
-		filePathWithoutExt := filePath[:idxUntilFileExt]
+		filePathWithoutExt := filePath[:idxUntilFileExt] // removes the ".html"
 
 		router.GET(filePathWithoutExt, func(ctx *gin.Context) {
 			ctx.HTML(
-				http.StatusOK,
-				info.Name(),
-				nil,
+				http.StatusOK, info.Name(), nil,
 			)
 		})
 		return nil
