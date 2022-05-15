@@ -15,7 +15,7 @@ const (
 
 // Gets the token and sends a JSON containing information about the user to the browser
 // if the token is valid
-func GetUserInfo() gin.HandlerFunc {
+func GetLoggedUserInfo() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		// Defines a function that sends an unauthorized code to the server
 		unauthorizedJSON := func(json gin.H) {
