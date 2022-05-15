@@ -28,7 +28,7 @@ input[type="checkbox"]
     display: none;
 }
 
-/*--Faz aparecer o menue--*/
+/*--Faz aparecer o menu--*/
 input[type="checkbox"]:checked ~ nav
 {
     transform: translateX(300px); 
@@ -108,4 +108,14 @@ label{
     color: #39bfd7;
     background: #f7f7f7;
     border: 1px solid #4ab3c6;
+}
+
+/*--Estilização dos cards--*/
+.Cards{
+    border-radius: rem-calc(6);
+    display: flex;
+    height: rem-calc(424);
+    padding: $global-module-size * 2;
+    position: relative;
+    width: rem-calc(768);
 }
