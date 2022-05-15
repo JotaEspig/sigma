@@ -83,14 +83,14 @@ func createRouter() *gin.Engine {
 	// Cadastro
 	router.POST("/cadastro", handlers.SignupPOST())
 
-	// Validate User
-	router.GET("/logged/user/get", handlers.GetLoggedUserInfo())
+	// Validates User
+	router.GET("/validate/user", handlers.ValidateUser())
 
+	// Get user
 	router.GET("/user/:username", func(ctx *gin.Context) {
 		ctx.HTML(http.StatusOK, "alunoinfo.html", nil)
 	})
-
-	router.GET("/user/get", handlers.GetUserInfo())
+	router.POST("/user/:username", handlers.GetUserInfo())
 
 	return router
 }
