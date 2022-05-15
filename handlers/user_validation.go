@@ -13,6 +13,33 @@ const (
 	errNoResult = "sql: no rows in result set"
 )
 
+// Gets the public info from an user, according to request
+func GetUserInfo() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		resp := struct {
+			Username string
+			Params   []string
+		}{}
+		ctx.BindJSON(&resp)
+		// Test:
+		// curl -X GET http://127.0.0.1:8080/getuser -H "Content-Type: application/json" \
+		// -d "{\"username\": \"admin\",\"params\":[\"username\", \"email\"]}"
+
+		user, err := auth.GetUser(db, resp.Username, resp.Params...)
+		if err != nil || user == nil {
+			ctx.Status(http.StatusNotFound)
+			return
+		}
+
+		ctx.JSON(
+			http.StatusOK,
+			gin.H{
+				"user": user.ToMap(),
+			},
+		)
+	}
+}
+
 // Gets the token and sends a JSON containing information about the user to the browser
 // if the token is valid
 func GetLoggedUserInfo() gin.HandlerFunc {

@@ -15,6 +15,7 @@ func getRouterEngine(ginMode string) *gin.Engine {
 	if ginMode == "release" {
 		router := gin.New()
 		router.Use(gin.Recovery())
+		// Don't use logs middleware
 		return router
 	}
 
@@ -83,7 +84,9 @@ func createRouter() *gin.Engine {
 	router.POST("/cadastro", handlers.SignupPOST())
 
 	// Validate User
-	router.GET("/validateuser", handlers.GetLoggedUserInfo())
+	router.GET("/getloggeduser", handlers.GetLoggedUserInfo())
+
+	router.GET("/getuser", handlers.GetUserInfo())
 
 	return router
 }
