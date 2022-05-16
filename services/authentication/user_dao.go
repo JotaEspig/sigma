@@ -36,9 +36,9 @@ func GetUser(db *sqlx.DB, username string, columns ...string) (*User, error) {
 // Adds an user to a database
 func AddUser(db *sqlx.DB, u *User) {
 	db.MustExec(
-		`INSERT INTO "user"(username, password, email, name)
-		VALUES($1, $2, $3, $4)`,
-		u.Username, u.HashedPassword, u.Email, u.Name,
+		`INSERT INTO "user"(username, password, name, surname, email)
+		VALUES($1, $2, $3, $4, $5)`,
+		u.Username, u.HashedPassword, u.Name, u.Surname, u.Email,
 	)
 }
 
