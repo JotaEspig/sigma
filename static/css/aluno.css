@@ -69,6 +69,7 @@ ul{
 
 /*--Sobre os links no caso botões do menu--*/
 a{
+    border-radius: rem-calc(6);
     display: block;
     padding: 17px 5px; /*--Altura e largura--*/
     color: white;
@@ -148,39 +149,56 @@ label{
     border-radius: 20px;
     box-shadow: 0px 2px 18px #26395354;
     padding: 20px;
-    padding-top: 0px;
-
 }
 
+/*--Midias dos cards--*/
 #midia_card_pt{
+    border-radius: 5px;
     background: url(https://imagens-revista-pro.vivadecora.com.br/uploads/2017/06/livros-para-arquitetos.jpg) center/cover;
-    height: 200px;
-    width: 100px;
+    padding: 30px;
+    width: 100%;
 }
+
+#midia_card_mat{
+    border-radius: 5px;
+    background: url(https://www12.senado.leg.br/radio/1/educacao-federal/2021/11/22/o-paradoxo-entre-pesquisa-e-ensino-da-matematica-no-brasil/@@images/2b0baa50-32f5-4c95-9365-a18c83a2b879.jpeg) center/cover;
+    padding: 30px;
+    width: 100%;
+}
+
+#midia_card_geo{
+    border-radius: 5px;
+    background: url(https://img.quizur.com/f/img624c71cb615369.10168769.jpg?lastEdited=1649177046) center/cover;
+    padding: 30px;
+    width: 100%;
+}
+
 
 
 /*--Ver materia--*/
-.teste{
+#ir_para{
     display: block;
-    padding: 17px 5px; /*--Altura e largura--*/
-    font-size: 12px;
-    color: white;
-    background: var(--bg_botao);
-    text-shadow: 0 1px 1px #333;
+    border-radius: 5px;
+    text-align: center;
+    padding: 10px 5px; /*--Altura e largura--*/
+    color: var(--titulo);
+    font-size: 15px;
+    background-color: rgba(168, 168, 168, 0.6);;
+    padding: 2px 0 5px 0; /*--Centralização do titulo--*/
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: bold;
+    text-align: center
+    text-shadow: 0 2px 2px #0a728a;
     -webkit-box-shadow: 0px 1px 4px 0px rgba(168, 168, 168, 0.6) inset;
     box-shadow: 0px 1px 4px 0px rgba(168, 168, 168, 0.6) inset;
     transition: all 90ms ease-in;
 }
 
 /*--Transição quando passar o ponteiro--*/
-.teste:hover{
-    background: var(--bg);
+#ir_para:hover{
+    border-radius: 5px;
+    background-color: rgba(168, 168, 168, 1);
     color: var(--titulo);      
-    text-shadow: 0 1px 1px #333;
+    text-shadow: 0 2px 2px #0a728a;
     transition: all 90ms ease-out;
-}
-
-/*--Efeito para quando clicar em cima dar uma abaixada--*/
-.teste:active{
-    transform: translateY(10px);
 }
