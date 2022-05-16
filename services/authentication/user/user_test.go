@@ -1,4 +1,4 @@
-package auth
+package userauth
 
 import (
 	"sigma/services/database"
@@ -11,29 +11,28 @@ var db = database.ConnInit().GetDB()
 const (
 	defUsername = "defUsername"
 	defPasswd   = "defPasswd"
-	defEmail    = "defEmail"
 	defName     = "defName"
+	defSurname  = "defSurname"
+	defEmail    = "defEmail"
 )
 
 func TestUserValidate(t *testing.T) {
-	u1 := InitUser(defUsername, defEmail, defName, defPasswd)
-	u2 := InitUser(defUsername, defEmail, defName, defPasswd)
+	u1 := InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
+	u2 := InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
 	if !u1.Validate(u2.Username, defPasswd) {
 		t.Error("validating user: 2 identical users couldn't pass the validation")
 	}
 
 	fakePasswd := "fake passwd"
-	u3 := InitUser(defUsername, defEmail, defName, defPasswd)
-	u4 := InitUser(defUsername, defEmail, defName, fakePasswd)
+	u3 := InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
+	u4 := InitUser(defUsername, defEmail, defName, defSurname, fakePasswd)
 	if !u3.Validate(u4.Username, defPasswd) {
 		t.Error("validating user: 2 different users could pass the validation (it's supposed to not)")
 	}
 }
 
 func TestAddUser(t *testing.T) {
-	TestRmUser(t)
-
-	u := InitUser(defUsername, defEmail, defName, defPasswd)
+	u := InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
 
 	func() {
 		defer func() {
@@ -56,12 +55,24 @@ func TestAddUser(t *testing.T) {
 }
 
 func TestGetUser(t *testing.T) {
+	u := InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
+
+	// Adds if user's not added in the database
+	func() {
+		defer func() {
+			if r := recover(); r != nil {
+				return
+			}
+		}()
+		AddUser(db, u)
+	}()
+
 	_, err := GetUser(db, defUsername)
 	if err != nil {
 		t.Errorf("getting legit user: %s", err)
 	}
 
-	u, err := GetUser(db, defUsername, "username", "email")
+	u, err = GetUser(db, defUsername, "username", "email")
 	// Checks if get user parcial info is working
 	if err != nil {
 		t.Errorf("getting legit user (parcial info): %s", err)
@@ -83,7 +94,7 @@ func TestGetUser(t *testing.T) {
 }
 
 func TestRmUser(t *testing.T) {
-	u := InitUser(defUsername, defEmail, defName, defPasswd)
+	u := InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
 
 	// Adds if user's not added in the database
 	func() {

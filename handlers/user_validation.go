@@ -2,7 +2,7 @@ package handlers
 
 import (
 	"net/http"
-	auth "sigma/services/authentication"
+	userauth "sigma/services/authentication/user"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
@@ -38,7 +38,7 @@ func ValidateUser() gin.HandlerFunc {
 			return
 		}
 
-		user, err := auth.GetUser(db, claims["username"].(string))
+		user, err := userauth.GetUser(db, claims["username"].(string))
 		if err != nil {
 			if err.Error() == errNoResult {
 				ctx.Status(http.StatusUnauthorized)
@@ -71,7 +71,7 @@ func GetUserInfo() gin.HandlerFunc {
 		// curl -X GET http://127.0.0.1:8080/user/get -H "Content-Type: application/json" \
 		// -d "{\"username\": \"admin\",\"params\":[\"username\", \"email\"]}"
 
-		user, err := auth.GetUser(db, username, resp.Params...)
+		user, err := userauth.GetUser(db, username, resp.Params...)
 		if err != nil || user == nil {
 			ctx.Status(http.StatusNotFound)
 			return

@@ -1,6 +1,8 @@
-package auth
+package userauth
 
 import (
+	"database/sql"
+
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -10,22 +12,24 @@ import (
 type User struct {
 	ID             int
 	Username       string
-	Email          string
 	Name           string
+	Surname        string
+	Email          string
 	HashedPassword string `db:"password"`
+	Type           sql.NullString
 }
 
-func InitUser(usern, email, name, password string) *User {
+func InitUser(usern, email, name, surname, password string) *User {
 	u := &User{
 		Username: usern,
-		Email:    email,
 		Name:     name,
+		Surname:  surname,
+		Email:    email,
 	}
 	hashedPasswd, _ := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	u.HashedPassword = string(hashedPasswd)
 
 	return u
-
 }
 
 // Validates the user. It compares the hashed password in the database
@@ -42,6 +46,8 @@ func (u *User) ToMap() map[string]interface{} {
 	userMap["id"] = u.ID
 	userMap["username"] = u.Username
 	userMap["name"] = u.Name
+	userMap["surname"] = u.Surname
 	userMap["email"] = u.Email
+	userMap["type"] = u.Type.String
 	return userMap
 }
