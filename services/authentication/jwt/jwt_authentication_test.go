@@ -1,4 +1,4 @@
-package auth
+package jwtauth
 
 import "testing"
 
