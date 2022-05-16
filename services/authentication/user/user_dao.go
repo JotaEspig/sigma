@@ -33,7 +33,8 @@ func GetUser(db *sqlx.DB, username string, columns ...string) (*User, error) {
 	return &u, err
 }
 
-// Adds an user to a database
+// Adds an user to a database.
+// Panics if something goes wrong.
 func AddUser(db *sqlx.DB, u *User) {
 	db.MustExec(
 		`INSERT INTO "user"(username, password, name, surname, email)
@@ -42,6 +43,7 @@ func AddUser(db *sqlx.DB, u *User) {
 	)
 }
 
+// Removes an user
 func RmUser(db *sqlx.DB, username string) {
 	db.MustExec(
 		`DELETE FROM "user" WHERE username = $1`,
