@@ -1,7 +1,7 @@
 package handlers
 
 import (
-	auth "sigma/services/authentication"
+	auth "sigma/services/authentication/jwt"
 	"sigma/services/database"
 )
 
