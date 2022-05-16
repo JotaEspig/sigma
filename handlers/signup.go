@@ -22,9 +22,10 @@ func SignupPOST() gin.HandlerFunc {
 		usern := ctx.PostForm("username")
 		email := ctx.PostForm("email")
 		name := ctx.PostForm("name")
+		surname := ctx.PostForm("surname")
 		passwd := ctx.PostForm("password")
 
-		user := auth.InitUser(usern, email, name, passwd)
+		user := auth.InitUser(usern, email, name, surname, passwd)
 
 		err := db.Ping() // Tests the database
 		if err != nil {
