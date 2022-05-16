@@ -20,7 +20,7 @@ CREATE TABLE "admin" (
 CREATE TABLE "student" (
   "id" int PRIMARY KEY,
   "year" int,
-  "status" varchar(10) NOT NULL,
+  "status" varchar(10),
   "class_id" int
 );
 
@@ -34,9 +34,9 @@ CREATE TABLE "subject" (
 );
 
 CREATE TABLE "teacher_subject_class" (
-  "teacher_id" int,
-  "subject_id" int,
-  "class_id" int
+  "teacher_id" int NOT NULL,
+  "subject_id" int NOT NULL,
+  "class_id" int NOT NULL
 );
 
 CREATE TABLE "activity" (
@@ -46,9 +46,9 @@ CREATE TABLE "activity" (
 );
 
 CREATE TABLE "activity_subject_class" (
-  "activity_id" int,
-  "subject_id" int,
-  "class_id" int
+  "activity_id" int NOT NULL,
+  "subject_id" int NOT NULL,
+  "class_id" int NOT NULL
 );
 
 CREATE TABLE "news" (
@@ -58,9 +58,9 @@ CREATE TABLE "news" (
 );
 
 CREATE TABLE "news_subject_class" (
-  "news_id" int,
-  "subject_id" int,
-  "class_id" int
+  "news_id" int NOT NULL,
+  "subject_id" int NOT NULL,
+  "class_id" int NOT NULL
 );
 
 ALTER TABLE "admin" ADD FOREIGN KEY ("id") REFERENCES "user" ("id");
