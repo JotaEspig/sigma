@@ -12,14 +12,28 @@ h2{
     text-align: center;
 }
 
+/*--Tabela das noticias--*/
 table, th, td {
-    border: 1px solid black;
+    background: var(--bg);
+    border-collapse: collapse;
+    border-bottom: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+th{
+    text-align: center;
+    border-top: 1px solid black;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+}
+#not-border{
+    border-right: none;
 }
 
 
 /*--Css do menu--*/
 img{
-    width: 40px;
+    width: 30px;
 }
 
 /*--Esconde o check--*/
@@ -34,7 +48,7 @@ input[type="checkbox"]:checked ~ nav
     transform: translateX(300px); 
 }
 
-/*--Tabela dos botões--*/
+/*--Tabela dos botões menu--*/
 nav{
     background-color: var(--bg_botao);
     width: 280px;   
@@ -60,19 +74,24 @@ a{
     color: white;
     background: var(--bg_botao);
     text-shadow: 0 1px 1px #333;
-   
     -webkit-box-shadow: 0px 1px 4px 0px rgba(168, 168, 168, 0.6) inset;
     box-shadow: 0px 1px 4px 0px rgba(168, 168, 168, 0.6) inset;
+    transition: all 90ms ease-in;
 }
 
 /*--Transição quando passar o ponteiro--*/
 a:hover{
     background: var(--bg);
-    padding: 20px 5px;
+    padding: 17px 5px;
     color: var(--titulo);
     font-size: 20px;      
     text-shadow: 0 1px 1px #333;
-    transition: all 0.2s linear;
+    transition: all 90ms ease-out;
+}
+
+/*--Efeito para quando clicar em cima dar uma abaixada--*/
+a:active{
+    transform: translateY(10px);
 }
 
 /*--Altera alguns parametros do botao para abrir o menu--*/
@@ -104,18 +123,64 @@ label{
     text-shadow: 0 1px 1px #333;
 }
    
-#logout:hover {
+#logout:hover{
     color: #39bfd7;
     background: #f7f7f7;
     border: 1px solid #4ab3c6;
 }
 
-/*--Estilização dos cards--*/
+/*--Estilização dos cards/ revisar--*/
 .Cards{
     border-radius: rem-calc(6);
+    box-shadow: 0 0 rem-calc(15) rgba(0, 0, 0, 0.15),
+        0 0 rem-calc(30) rgba(0, 0, 0, 0.1); /*--Revisar--*/
     display: flex;
     height: rem-calc(424);
+    margin: auto;
     padding: $global-module-size * 2;
     position: relative;
     width: rem-calc(768);
+}
+
+/*--Novo cards teste--*/
+.Card{
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0px 2px 18px #26395354;
+    padding: 20px;
+    padding-top: 0px;
+
+}
+
+#midia_card_pt{
+    background: url(https://imagens-revista-pro.vivadecora.com.br/uploads/2017/06/livros-para-arquitetos.jpg) center/cover;
+    height: 200px;
+    width: 100px;
+}
+
+
+/*--Ver materia--*/
+.teste{
+    display: block;
+    padding: 17px 5px; /*--Altura e largura--*/
+    font-size: 12px;
+    color: white;
+    background: var(--bg_botao);
+    text-shadow: 0 1px 1px #333;
+    -webkit-box-shadow: 0px 1px 4px 0px rgba(168, 168, 168, 0.6) inset;
+    box-shadow: 0px 1px 4px 0px rgba(168, 168, 168, 0.6) inset;
+    transition: all 90ms ease-in;
+}
+
+/*--Transição quando passar o ponteiro--*/
+.teste:hover{
+    background: var(--bg);
+    color: var(--titulo);      
+    text-shadow: 0 1px 1px #333;
+    transition: all 90ms ease-out;
+}
+
+/*--Efeito para quando clicar em cima dar uma abaixada--*/
+.teste:active{
+    transform: translateY(10px);
 }
