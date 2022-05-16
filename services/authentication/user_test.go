@@ -55,14 +55,24 @@ func TestAddUser(t *testing.T) {
 }
 
 func TestGetUser(t *testing.T) {
-	TestAddUser(t)
+	u := InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
+
+	// Adds if user's not added in the database
+	func() {
+		defer func() {
+			if r := recover(); r != nil {
+				return
+			}
+		}()
+		AddUser(db, u)
+	}()
 
 	_, err := GetUser(db, defUsername)
 	if err != nil {
 		t.Errorf("getting legit user: %s", err)
 	}
 
-	u, err := GetUser(db, defUsername, "username", "email")
+	u, err = GetUser(db, defUsername, "username", "email")
 	// Checks if get user parcial info is working
 	if err != nil {
 		t.Errorf("getting legit user (parcial info): %s", err)
