@@ -137,25 +137,60 @@ label{
     border: 1px solid #4ab3c6;
 }
 
-/*--Estilização dos cards/ revisar--*/
-.Cards{
-    border-radius: rem-calc(6);
-    box-shadow: 0 0 rem-calc(15) rgba(0, 0, 0, 0.15),
-        0 0 rem-calc(30) rgba(0, 0, 0, 0.1); /*--Revisar--*/
-    display: flex;
-    height: rem-calc(424);
-    margin: auto;
-    padding: $global-module-size * 2;
-    position: relative;
-    width: rem-calc(768);
+/*--Novo cards teste--*/
+.card{
+    background: var(--titulo);
+    border-radius: 5px;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    min-height: 1px;
+    padding: 1.25rem;
+    box-shadow: 1px 2px 5px #333;
 }
 
-/*--Novo cards teste--*/
-.Card{
-    background: #fff;
-    border-radius: 20px;
-    box-shadow: 0px 2px 18px #26395354;
-    padding: 20px;
+#btn-materia{
+    border-radius: 5px;
+    display: block;
+    padding: 15px 5px; /*--Altura e largura--*/
+    color: var(--titulo);
+    font-size: 14px; 
+    background: var(--bg);
+    text-shadow: 0 1px 1px #333;
+    -webkit-box-shadow: 0px 1px 4px 0px rgba(168, 168, 168, 0.6) inset;
+    box-shadow: 0px 1px 4px 0px rgba(168, 168, 168, 0.6) inset;
+    transition: all 90ms ease-in;
+}
+
+#btn-materia:hover{
+    text-decoration: none;
+    background: var(--bg_botao);
+    padding: 15px 5px;
+    color: white;
+    font-size: 14px;      
+    text-shadow: 0 1px 1px #333;
+    transition: all 90ms ease-out;
+}
+
+.row{
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
+#coluna{
+    -ms-flex: 0 0 auto;
+    -ms-flex-preferred-size: 0;
+    flex: 0 0 auto;
+    flex-basis: 0;
+    flex-grow: 1;
+    width: auto;
+    max-width: 100%;
+    position: relative;
+    padding-right: 15px;
+    padding-left: 15px;
 }
 
 /*--Midias dos cards--*/
@@ -180,33 +215,3 @@ label{
     width: 100%;
 }
 
-
-
-/*--Ver materia--*/
-#ir_para{
-    display: block;
-    border-radius: 5px;
-    text-align: center;
-    padding: 10px 5px; /*--Altura e largura--*/
-    color: var(--titulo);
-    font-size: 15px;
-    background-color: rgba(168, 168, 168, 0.6);;
-    padding: 2px 0 5px 0; /*--Centralização do titulo--*/
-    font-family: 'Ubuntu', sans-serif;
-    font-weight: bold;
-    text-align: center
-    text-shadow: 0 2px 2px #0a728a;
-    -webkit-box-shadow: 0px 1px 4px 0px rgba(168, 168, 168, 0.6) inset;
-    box-shadow: 0px 1px 4px 0px rgba(168, 168, 168, 0.6) inset;
-    transition: all 90ms ease-in;
-}
-
-/*--Transição quando passar o ponteiro--*/
-#ir_para:hover{
-    border-radius: 5px;
-    background-color: rgba(168, 168, 168, 1);
-    color: var(--titulo);      
-    text-shadow: 0 2px 2px #0a728a;
-    transition: all 90ms ease-out;
-}
-  
