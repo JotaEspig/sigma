@@ -62,7 +62,7 @@ nav{
     top: 10px;
     height: 100%;
     position: absolute;
-    transition: all 0.2;
+    transition: all 110ms;
 }
 
 ul{
@@ -114,7 +114,6 @@ label{
 /*--Botão de logout--*/
 #logout{
     background: var(--bg_botao);
-    color: #7f7c7c;
     float: right;
     padding: 7px 15px 7px 15px; /*--Parametros da distancia do bt cadastrar--*/
     font-size: 12px;
@@ -137,9 +136,34 @@ label{
     border: 1px solid #4ab3c6;
 }
 
-/*--Novo cards teste--*/
-.card{
-    background: var(--titulo);
+/*--Cards--*/
+
+.card_title{ /*--Padrao--*/
+    text-decoration: center;
+    float: center;
+    padding: 7px 100px; /*--Parametros da distancia do bt cadastrar--*/
+    font-size: 12px;
+    border-top: 1px solid #dbe5e8;
+    -webkit-border-radius: 0 0  5px 5px;
+    border-radius: 0 0  5px 5px;
+    font-weight: bold;
+    color: #ffffff;
+    border: 1px solid #4ab3c6;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;  
+    -webkit-transition: all 0.4s linear;
+    transition: all 0.4s  linear;
+    text-shadow: 0 1px 1px #333;
+}
+
+.card_text{
+    color: black;
+    background: rgba(168, 168, 168, 1.0);
+}
+
+/*--Midia dos cards--*/
+.card_pt{
+    background: url(https://imagens-revista-pro.vivadecora.com.br/uploads/2017/06/livros-para-arquitetos.jpg) center/cover;
     border-radius: 5px;
     -ms-flex: 1 1 auto;
     flex: 1 1 auto;
@@ -148,6 +172,27 @@ label{
     box-shadow: 1px 2px 5px #333;
 }
 
+.card_mat{
+    background: url(https://www12.senado.leg.br/radio/1/educacao-federal/2021/11/22/o-paradoxo-entre-pesquisa-e-ensino-da-matematica-no-brasil/@@images/2b0baa50-32f5-4c95-9365-a18c83a2b879.jpeg) center/cover;
+    border-radius: 5px;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    min-height: 1px;
+    padding: 1.25rem;
+    box-shadow: 1px 2px 5px #333;
+}
+
+.card_geo{
+    background: url(https://img.quizur.com/f/img624c71cb615369.10168769.jpg?lastEdited=1649177046) center/cover;
+    border-radius: 5px;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    min-height: 1px;
+    padding: 1.25rem;
+    box-shadow: 1px 2px 5px #333;
+}
+
+/*--Botões do card--*/
 #btn-materia{
     border-radius: 5px;
     display: block;
@@ -192,26 +237,3 @@ label{
     padding-right: 15px;
     padding-left: 15px;
 }
-
-/*--Midias dos cards--*/
-#midia_card_pt{
-    border-radius: 5px;
-    background: url(https://imagens-revista-pro.vivadecora.com.br/uploads/2017/06/livros-para-arquitetos.jpg) center/cover;
-    padding: 30px;
-    width: 100%;
-}
-
-#midia_card_mat{
-    border-radius: 5px;
-    background: url(https://www12.senado.leg.br/radio/1/educacao-federal/2021/11/22/o-paradoxo-entre-pesquisa-e-ensino-da-matematica-no-brasil/@@images/2b0baa50-32f5-4c95-9365-a18c83a2b879.jpeg) center/cover;
-    padding: 30px;
-    width: 100%;
-}
-
-#midia_card_geo{
-    border-radius: 5px;
-    background: url(https://img.quizur.com/f/img624c71cb615369.10168769.jpg?lastEdited=1649177046) center/cover;
-    padding: 30px;
-    width: 100%;
-}
-
