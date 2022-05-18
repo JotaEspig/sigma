@@ -19,22 +19,7 @@ h2{
 }
 
 /*--Tabela das noticias--*/
-table, th, td {
-    background: var(--bg);
-    border-collapse: collapse;
-    border-bottom: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-}
-th{
-    text-align: center;
-    border-top: 1px solid black;
-    border-right: 1px solid black;
-    border-bottom: 1px solid black;
-}
-#not-border{
-    border-right: none;
-}
+
 
 
 /*--Css do menu--*/
@@ -201,8 +186,6 @@ label{
     font-size: 14px; 
     background: var(--bg);
     text-shadow: 0 1px 1px #333;
-    -webkit-box-shadow: 0px 1px 4px 0px rgba(168, 168, 168, 0.6) inset;
-    box-shadow: 0px 1px 4px 0px rgba(168, 168, 168, 0.6) inset;
     transition: all 90ms ease-in;
 }
 
@@ -213,6 +196,7 @@ label{
     color: white;
     font-size: 14px;      
     text-shadow: 0 1px 1px #333;
+    
     transition: all 90ms ease-out;
 }
 
@@ -237,3 +221,36 @@ label{
     padding-right: 15px;
     padding-left: 15px;
 }
+
+/*--Tabela noticias--*/
+
+/* #teste{
+    border-radius: 5px;
+    background-color: #ffffff;
+    border-color: #95999c;
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    font-weight: bold;
+    box-shadow: 1px 2px 5px #333;
+}
+
+#teste:hover{
+    background-color: var(--bg_botao);
+    border-color: #95999c;
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border: 0;
+}
+
+td, th{
+    padding: auto;
+}
+
+.full{
+    display: block;
+}
+*/
