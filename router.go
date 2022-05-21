@@ -20,9 +20,11 @@ var notToRoute = []string{
 const relativePathToHTML = "/static/html/"
 
 func setNewRelicMiddleware(router *gin.Engine) {
+	nrAppName := os.Getenv("NR_APP_NAME")
+	nrAPIKey := os.Getenv("NR_API_KEY")
 	app, err := newrelic.NewApplication(
-		newrelic.ConfigAppName("sigma-ifc"),
-		newrelic.ConfigLicense("a97830624e16762ac35bc1d1b8674abf54a7NRAL"),
+		newrelic.ConfigAppName(nrAppName),
+		newrelic.ConfigLicense(nrAPIKey),
 		newrelic.ConfigDistributedTracerEnabled(true),
 	)
 
