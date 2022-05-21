@@ -7,15 +7,47 @@ import (
 	"sigma/handlers"
 
 	"github.com/gin-gonic/gin"
+	"github.com/newrelic/go-agent/v3/integrations/nrgin"
+	"github.com/newrelic/go-agent/v3/newrelic"
 )
+
+// TODO Jota: Set the heroku production and staging
+
+var notToRoute = []string{
+	"alunoinfo.html",
+}
+
+const relativePathToHTML = "/static/html/"
+
+func setNewRelicMiddleware(router *gin.Engine) {
+	app, err := newrelic.NewApplication(
+		newrelic.ConfigAppName("sigma-ifc"),
+		newrelic.ConfigLicense("a97830624e16762ac35bc1d1b8674abf54a7NRAL"),
+		newrelic.ConfigDistributedTracerEnabled(true),
+	)
+
+	if err != nil {
+		panic(err)
+	}
+
+	router.Use(nrgin.Middleware(app))
+}
 
 // Gets the type of router engine according to ginMode.
 // ginMode should be an env variable
-func getRouterEngine(ginMode string) *gin.Engine {
-	if ginMode == "release" {
+func getRouterEngine() *gin.Engine {
+	routerMode := os.Getenv("ROUTER_MODE")
+	if routerMode == "release" {
+		gin.SetMode(gin.ReleaseMode)
 		router := gin.New()
 		router.Use(gin.Recovery())
 		// Don't use logs middleware
+		return router
+	}
+
+	if routerMode == "staging" {
+		router := gin.Default()
+		setNewRelicMiddleware(router)
 		return router
 	}
 
@@ -33,25 +65,24 @@ func isHTMLToRoute(filename string, notToRoute []string) bool {
 	return true
 }
 
-// Configures and creates a router
-func createRouter() *gin.Engine {
-	router := getRouterEngine(os.Getenv("GIN_MODE"))
+// Gets the route path according to a file information
+func getRoutePath(info os.FileInfo) string {
+	idxUntilFileExt := len(info.Name()) - 4
+	filePath := "/" + info.Name()
+	filePathWithoutExt := filePath[:idxUntilFileExt] // removes the ".html"
+	return filePathWithoutExt
+}
 
-	router.LoadHTMLGlob("static/html/*.html")
-
-	// These lines add a route to every HTML file inside ./html (with exceptions)
-	notToRoute := []string{
-		"alunoinfo.html",
-	}
-
+// Set the routes to a router
+func setRoutes(router *gin.Engine) {
 	currentWorkingDir, err := os.Getwd()
 	if err != nil {
 		panic(err)
 	}
 
-	pathToHTML := currentWorkingDir + "/static/html/"
+	absPathToHTML := currentWorkingDir + relativePathToHTML
 	// Walks inside the folder, checks the filename and then adds an route for it
-	filepath.Walk(pathToHTML, func(path string, info os.FileInfo, err error) error {
+	filepath.Walk(absPathToHTML, func(path string, info os.FileInfo, err error) error {
 		if len(info.Name()) < 6 {
 			return nil
 		}
@@ -59,10 +90,7 @@ func createRouter() *gin.Engine {
 			return nil
 		}
 
-		idxUntilFileExt := len(info.Name()) - 4
-		filePath := "/" + info.Name()
-		filePathWithoutExt := filePath[:idxUntilFileExt] // removes the ".html"
-
+		filePathWithoutExt := getRoutePath(info)
 		router.GET(filePathWithoutExt, func(ctx *gin.Context) {
 			ctx.HTML(
 				http.StatusOK, info.Name(), nil,
@@ -70,11 +98,6 @@ func createRouter() *gin.Engine {
 		})
 		return nil
 	})
-
-	// Loads the img, css and js folders
-	router.Static("css/", "static/css/")
-	router.Static("js/", "static/js/")
-	router.Static("img/", "static/img/")
 
 	// Login
 	router.GET("/", handlers.LoginRedirect())
@@ -91,6 +114,19 @@ func createRouter() *gin.Engine {
 		ctx.HTML(http.StatusOK, "alunoinfo.html", nil)
 	})
 	router.POST("/user/:username", handlers.GetUserInfo())
+}
+
+func createRouter() *gin.Engine {
+	router := getRouterEngine()
+
+	router.LoadHTMLGlob("static/html/*.html")
+
+	// Loads the img, css and js folders
+	router.Static("css/", "static/css/")
+	router.Static("js/", "static/js/")
+	router.Static("img/", "static/img/")
+
+	setRoutes(router)
 
 	return router
 }
