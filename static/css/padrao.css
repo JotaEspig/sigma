@@ -4,6 +4,10 @@ ex.:  https://paletton.com/#uid=13q0u0kiCFn8GVde7NVmtwSqXtg
 
 @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@1,700;1,900&family=Ubuntu:ital,wght@1,300&display=swap');
 
+/* TODO Samuel: Proposta: pegar um tom de azul menos vibrante. 
+ * Obs.: Eder tinha comentado que parecia simpsons
+*/
+
 /*--Definições de variaveis--*/
 :root{
     --titulo: #00e5fff8;
@@ -13,6 +17,12 @@ ex.:  https://paletton.com/#uid=13q0u0kiCFn8GVde7NVmtwSqXtg
     --letra_transition: #39bfd7;
     --letras_label: rgba(147,184,189,0.8) 20%;
     --bg: #f2fbff;
+}
+html{
+    font-family: sans-serif;
+    line-height: 1.15;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
 /*--Limitações de conteudo--*/
@@ -29,6 +39,9 @@ ex.:  https://paletton.com/#uid=13q0u0kiCFn8GVde7NVmtwSqXtg
 
 body{
     background-color: #f2fbff;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
 }
 a{
     text-decoration: none;
@@ -52,4 +65,6 @@ h1{
     font-family: 'Ubuntu', sans-serif;
     font-weight: bold;
     text-align: center;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
 }

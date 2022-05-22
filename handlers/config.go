@@ -1,13 +1,12 @@
 package handlers
 
 import (
-	auth "sigma/services/authentication"
+	jwtauth "sigma/services/authentication/jwt"
 	"sigma/services/database"
 )
 
-// Connection and database variables
-var Conn = database.ConnInit()
-var db = Conn.GetDB()
+// Database variables
+var db = database.ConnInit().GetDB()
 
 // JWTService variable
-var defaultJWT = auth.JWTAuthService()
+var defaultJWT = jwtauth.JWTAuthService()

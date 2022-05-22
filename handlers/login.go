@@ -3,7 +3,7 @@ package handlers
 import (
 	"net/http"
 	"net/url"
-	auth "sigma/services/authentication"
+	userauth "sigma/services/authentication/user"
 
 	"github.com/gin-gonic/gin"
 )
@@ -31,7 +31,7 @@ func LoginPOST() gin.HandlerFunc {
 		usern := ctx.PostForm("username")
 		passwd := ctx.PostForm("password")
 
-		user, err := auth.GetUser(db, usern)
+		user, err := userauth.GetUser(db, usern)
 		if err != nil || !user.Validate(usern, passwd) {
 			ctx.Status(http.StatusUnauthorized)
 			return

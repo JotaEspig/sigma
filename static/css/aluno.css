@@ -1,5 +1,12 @@
 /*--Obs: sempre verificar o caminho pois o samuel esta
 fazendo pelo sublime--*/
+/*--Nota deixar os cards pela metade para dar 
+    a sensação que tem continuação 
+    (gatilho samuel: lembra do site spotify, anuncio)
+    https://bonstutoriais.com.br/como-fazer-um-efeito-de-sobreposicao-de-imagem-simples-com-html-e-css/
+    
+    --*/
+
 @import "../css/padrao.css";
   
 h2{
@@ -10,16 +17,17 @@ h2{
     font-family: 'Ubuntu', sans-serif;
     font-weight: bold;
     text-align: center;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
 }
 
-table, th, td {
-    border: 1px solid black;
-}
+/*--Tabela das noticias--*/
+
 
 
 /*--Css do menu--*/
 img{
-    width: 40px;
+    width: 30px;
 }
 
 /*--Esconde o check--*/
@@ -28,13 +36,13 @@ input[type="checkbox"]
     display: none;
 }
 
-/*--Faz aparecer o menue--*/
+/*--Faz aparecer o menu--*/
 input[type="checkbox"]:checked ~ nav
 {
     transform: translateX(300px); 
 }
 
-/*--Tabela dos botões--*/
+/*--Tabela dos botões menu--*/
 nav{
     background-color: var(--bg_botao);
     width: 280px;   
@@ -42,7 +50,7 @@ nav{
     top: 10px;
     height: 100%;
     position: absolute;
-    transition: all 0.2;
+    transition: all 110ms;
 }
 
 ul{
@@ -55,24 +63,31 @@ ul{
 
 /*--Sobre os links no caso botões do menu--*/
 a{
+    border-radius: rem-calc(6);
     display: block;
     padding: 17px 5px; /*--Altura e largura--*/
     color: white;
     background: var(--bg_botao);
     text-shadow: 0 1px 1px #333;
-   
     -webkit-box-shadow: 0px 1px 4px 0px rgba(168, 168, 168, 0.6) inset;
     box-shadow: 0px 1px 4px 0px rgba(168, 168, 168, 0.6) inset;
+    transition: all 90ms ease-in;
 }
 
 /*--Transição quando passar o ponteiro--*/
 a:hover{
+    text-decoration: none;
     background: var(--bg);
-    padding: 20px 5px;
+    padding: 17px 5px;
     color: var(--titulo);
     font-size: 20px;      
     text-shadow: 0 1px 1px #333;
-    transition: all 0.2s linear;
+    transition: all 90ms ease-out;
+}
+
+/*--Efeito para quando clicar em cima dar uma abaixada--*/
+a:active{
+    transform: translateY(10px);
 }
 
 /*--Altera alguns parametros do botao para abrir o menu--*/
@@ -84,3 +99,161 @@ label{
     z-index: 1; /*--Esconde o menu--*/
 }
 
+/*--Botão de logout--*/
+#logout{
+    background: var(--bg_botao);
+    float: right;
+    padding: 7px 15px 7px 15px; /*--Parametros da distancia do bt cadastrar--*/
+    font-size: 12px;
+    border-top: 1px solid #dbe5e8;
+    -webkit-border-radius: 0 0  5px 5px;
+    border-radius: 0 0  5px 5px;
+    font-weight: bold;
+    color: #ffffff;
+    border: 1px solid #4ab3c6;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;  
+    -webkit-transition: all 0.4s linear;
+    transition: all 0.4s  linear;
+    text-shadow: 0 1px 1px #333;
+}
+   
+#logout:hover{
+    color: #39bfd7;
+    background: #f7f7f7;
+    border: 1px solid #4ab3c6;
+}
+
+/*--Cards--*/
+
+.card_title{ /*--Padrao--*/
+    text-decoration: center;
+    float: center;
+    padding: 7px 100px; /*--Parametros da distancia do bt cadastrar--*/
+    font-size: 12px;
+    border-top: 1px solid #dbe5e8;
+    -webkit-border-radius: 0 0  5px 5px;
+    border-radius: 0 0  5px 5px;
+    font-weight: bold;
+    color: #ffffff;
+    border: 1px solid #4ab3c6;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;  
+    -webkit-transition: all 0.4s linear;
+    transition: all 0.4s  linear;
+    text-shadow: 0 1px 1px #333;
+}
+
+.card_text{
+    color: black;
+    background: rgba(168, 168, 168, 1.0);
+}
+
+/*--Midia dos cards--*/
+.card_pt{
+    background: url(https://imagens-revista-pro.vivadecora.com.br/uploads/2017/06/livros-para-arquitetos.jpg) center/cover;
+    border-radius: 5px;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    min-height: 1px;
+    padding: 1.25rem;
+    box-shadow: 1px 2px 5px #333;
+}
+
+.card_mat{
+    background: url(https://www12.senado.leg.br/radio/1/educacao-federal/2021/11/22/o-paradoxo-entre-pesquisa-e-ensino-da-matematica-no-brasil/@@images/2b0baa50-32f5-4c95-9365-a18c83a2b879.jpeg) center/cover;
+    border-radius: 5px;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    min-height: 1px;
+    padding: 1.25rem;
+    box-shadow: 1px 2px 5px #333;
+}
+
+.card_geo{
+    background: url(https://img.quizur.com/f/img624c71cb615369.10168769.jpg?lastEdited=1649177046) center/cover;
+    border-radius: 5px;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    min-height: 1px;
+    padding: 1.25rem;
+    box-shadow: 1px 2px 5px #333;
+}
+
+/*--Botões do card--*/
+#btn-materia{
+    border-radius: 5px;
+    display: block;
+    padding: 15px 5px; /*--Altura e largura--*/
+    color: var(--titulo);
+    font-size: 14px; 
+    background: var(--bg);
+    text-shadow: 0 1px 1px #333;
+    transition: all 90ms ease-in;
+}
+
+#btn-materia:hover{
+    text-decoration: none;
+    background: var(--bg_botao);
+    padding: 15px 5px;
+    color: white;
+    font-size: 14px;      
+    text-shadow: 0 1px 1px #333;
+    
+    transition: all 90ms ease-out;
+}
+
+.row{
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
+#coluna{
+    -ms-flex: 0 0 auto;
+    -ms-flex-preferred-size: 0;
+    flex: 0 0 auto;
+    flex-basis: 0;
+    flex-grow: 1;
+    width: auto;
+    max-width: 100%;
+    position: relative;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+/*--Tabela noticias--*/
+
+/* #teste{
+    border-radius: 5px;
+    background-color: #ffffff;
+    border-color: #95999c;
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    font-weight: bold;
+    box-shadow: 1px 2px 5px #333;
+}
+
+#teste:hover{
+    background-color: var(--bg_botao);
+    border-color: #95999c;
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border: 0;
+}
+
+td, th{
+    padding: auto;
+}
+
+.full{
+    display: block;
+}
+*/

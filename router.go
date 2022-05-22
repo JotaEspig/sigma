@@ -7,7 +7,54 @@ import (
 	"sigma/handlers"
 
 	"github.com/gin-gonic/gin"
+	"github.com/newrelic/go-agent/v3/integrations/nrgin"
+	"github.com/newrelic/go-agent/v3/newrelic"
 )
+
+// TODO Jota: Set the heroku production and staging
+
+var notToRoute = []string{
+	"alunoinfo.html",
+}
+
+const relativePathToHTML = "/static/html/"
+
+func setNewRelicMiddleware(router *gin.Engine) {
+	nrAppName := os.Getenv("NR_APP_NAME")
+	nrAPIKey := os.Getenv("NR_API_KEY")
+	app, err := newrelic.NewApplication(
+		newrelic.ConfigAppName(nrAppName),
+		newrelic.ConfigLicense(nrAPIKey),
+		newrelic.ConfigDistributedTracerEnabled(true),
+	)
+
+	if err != nil {
+		panic(err)
+	}
+
+	router.Use(nrgin.Middleware(app))
+}
+
+// Gets the type of router engine according to ginMode.
+// ginMode should be an env variable
+func getRouterEngine() *gin.Engine {
+	routerMode := os.Getenv("ROUTER_MODE")
+	if routerMode == "release" {
+		gin.SetMode(gin.ReleaseMode)
+		router := gin.New()
+		router.Use(gin.Recovery())
+		// Don't use logs middleware
+		return router
+	}
+
+	if routerMode == "staging" {
+		router := gin.Default()
+		setNewRelicMiddleware(router)
+		return router
+	}
+
+	return gin.Default()
+}
 
 // Checks if file needs to be route
 // It needed by default, and it's not when the filename is in the notToRoute
@@ -20,31 +67,24 @@ func isHTMLToRoute(filename string, notToRoute []string) bool {
 	return true
 }
 
-// Configures and creates a router
-func createRouter() *gin.Engine {
-	var router *gin.Engine
+// Gets the route path according to a file information
+func getRoutePath(info os.FileInfo) string {
+	idxUntilFileExt := len(info.Name()) - 4
+	filePath := "/" + info.Name()
+	filePathWithoutExt := filePath[:idxUntilFileExt] // removes the ".html"
+	return filePathWithoutExt
+}
 
-	ginMode := os.Getenv("GIN_MODE")
-	if ginMode == "release" {
-		router = gin.New()
-		router.Use(gin.Recovery())
-	} else {
-		router = gin.Default()
-	}
-
-	router.LoadHTMLGlob("static/html/*.html")
-
-	// These lines add a route to every HTML file inside ./html
-	pwd, err := os.Getwd()
+// Set the routes to a router
+func setRoutes(router *gin.Engine) {
+	currentWorkingDir, err := os.Getwd()
 	if err != nil {
 		panic(err)
 	}
 
-	notToRoute := []string{
-		"alunoinfo.html",
-	}
-	// Walks inside the folder, checks the filename and then adds as GET
-	filepath.Walk(pwd+"/static/html/", func(path string, info os.FileInfo, err error) error {
+	absPathToHTML := currentWorkingDir + relativePathToHTML
+	// Walks inside the folder, checks the filename and then adds an route for it
+	filepath.Walk(absPathToHTML, func(path string, info os.FileInfo, err error) error {
 		if len(info.Name()) < 6 {
 			return nil
 		}
@@ -52,24 +92,14 @@ func createRouter() *gin.Engine {
 			return nil
 		}
 
-		idxUntilFileExt := len(info.Name()) - 4
-		filePath := "/" + info.Name()
-		filePathWithoutExt := filePath[:idxUntilFileExt]
-
+		filePathWithoutExt := getRoutePath(info)
 		router.GET(filePathWithoutExt, func(ctx *gin.Context) {
 			ctx.HTML(
-				http.StatusOK,
-				info.Name(),
-				nil,
+				http.StatusOK, info.Name(), nil,
 			)
 		})
 		return nil
 	})
-
-	// Loads the img, css and js folders
-	router.Static("css/", "static/css/")
-	router.Static("js/", "static/js/")
-	router.Static("img/", "static/img/")
 
 	// Login
 	router.GET("/", handlers.LoginRedirect())
@@ -78,8 +108,27 @@ func createRouter() *gin.Engine {
 	// Cadastro
 	router.POST("/cadastro", handlers.SignupPOST())
 
-	// Validate User
-	router.GET("/validateuser", handlers.GetUserInfo())
+	// Validates User
+	router.GET("/validate/user", handlers.ValidateUser())
+
+	// Get user
+	router.GET("/user/:username", func(ctx *gin.Context) {
+		ctx.HTML(http.StatusOK, "alunoinfo.html", nil)
+	})
+	router.POST("/user/:username", handlers.GetUserInfo())
+}
+
+func createRouter() *gin.Engine {
+	router := getRouterEngine()
+
+	router.LoadHTMLGlob("static/html/*.html")
+
+	// Loads the img, css and js folders
+	router.Static("css/", "static/css/")
+	router.Static("js/", "static/js/")
+	router.Static("img/", "static/img/")
+
+	setRoutes(router)
 
 	return router
 }
