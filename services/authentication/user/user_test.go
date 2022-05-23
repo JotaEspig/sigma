@@ -52,6 +52,8 @@ func TestAddUser(t *testing.T) {
 		}()
 		AddUser(db, u)
 	}()
+
+	RmUser(db, defUsername)
 }
 
 func TestGetUser(t *testing.T) {
@@ -72,7 +74,7 @@ func TestGetUser(t *testing.T) {
 		t.Errorf("getting legit user: %s", err)
 	}
 
-	u, err = GetUser(db, defUsername, "username", "email")
+	u, err = GetUser(db, "username", "email")
 	// Checks if get user parcial info is working
 	if err != nil {
 		t.Errorf("getting legit user (parcial info): %s", err)
@@ -91,6 +93,8 @@ func TestGetUser(t *testing.T) {
 	if err == nil {
 		t.Errorf("getting non existent user (it's not supposed to work): %s", err)
 	}
+
+	RmUser(db, defUsername)
 }
 
 func TestRmUser(t *testing.T) {

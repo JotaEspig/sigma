@@ -40,7 +40,6 @@ func (u *User) Validate(userInput, passInput string) bool {
 }
 
 // Returns a map containing user info WITHOUT password.
-// This map will be send in /validate_user
 func (u *User) ToMap() map[string]interface{} {
 	userMap := make(map[string]interface{})
 	userMap["id"] = u.ID
