@@ -2,23 +2,26 @@ package userauth
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/jmoiron/sqlx"
 )
 
-// Gets a user from a database
+// Adds an user to a database.
+// Panics if something goes wrong.
+func AddUser(db *sqlx.DB, u *User) {
+	db.MustExec(
+		`INSERT INTO "user"(username, password, name, surname, email)
+		VALUES($1, $2, $3, $4, $5)`,
+		u.Username, u.HashedPassword, u.Name, u.Surname, u.Email,
+	)
+}
+
+// Gets an user from a database
 func GetUser(db *sqlx.DB, username string, columns ...string) (*User, error) {
-	var columnsStr string
 	u := User{}
 
-	// Transforms array of string to string
-	for idx, val := range columns {
-		if idx == len(columns)-1 {
-			columnsStr += val
-			break
-		}
-		columnsStr += val + ","
-	}
+	columnsStr := strings.Join(columns, ",")
 	// If there is no arguments, sets it to default
 	if len(columns) == 0 {
 		columnsStr = "*"
@@ -31,16 +34,6 @@ func GetUser(db *sqlx.DB, username string, columns ...string) (*User, error) {
 	err := db.Get(&u, sqlQuery, username)
 
 	return &u, err
-}
-
-// Adds an user to a database.
-// Panics if something goes wrong.
-func AddUser(db *sqlx.DB, u *User) {
-	db.MustExec(
-		`INSERT INTO "user"(username, password, name, surname, email)
-		VALUES($1, $2, $3, $4, $5)`,
-		u.Username, u.HashedPassword, u.Name, u.Surname, u.Email,
-	)
 }
 
 // Removes an user
