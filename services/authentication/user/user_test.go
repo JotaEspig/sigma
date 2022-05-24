@@ -68,6 +68,7 @@ func TestUserValidate(t *testing.T) {
 }
 
 func TestAddUser(t *testing.T) {
+	db.AutoMigrate(&User{})
 	u := InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
 
 	func() {
@@ -79,20 +80,11 @@ func TestAddUser(t *testing.T) {
 		AddUser(db, u)
 	}()
 
-	// repeating the same action
-	func() {
-		defer func() {
-			if r := recover(); r == nil {
-				t.Errorf("adding repeated user (it's not supposed to work)")
-			}
-		}()
-		AddUser(db, u)
-	}()
-
 	RmUser(db, defUsername)
 }
 
 func TestGetUser(t *testing.T) {
+	db.AutoMigrate(&User{})
 	u := InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
 
 	// Adds if user's not added in the database
@@ -105,16 +97,13 @@ func TestGetUser(t *testing.T) {
 		AddUser(db, u)
 	}()
 
-	_, err := GetUser(db, defUsername)
-	if err != nil {
-		t.Errorf("getting legit user: %s", err)
+	u = GetUser(db, defUsername)
+	if u.Model.ID == 0 {
+		t.Errorf("getting legit user: ID is 0")
 	}
 
-	u, err = GetUser(db, "username", "email")
+	u = GetUser(db, defUsername, "username", "email")
 	// Checks if get user parcial info is working
-	if err != nil {
-		t.Errorf("getting legit user (parcial info): %s", err)
-	}
 	if u.Username == "" {
 		t.Errorf("getting legit user (parcial info): username is empty")
 	}
@@ -125,15 +114,16 @@ func TestGetUser(t *testing.T) {
 		t.Errorf("getting legit user (parcial info): name is filled")
 	}
 
-	_, err = GetUser(db, "non-existent-user")
-	if err == nil {
-		t.Errorf("getting non existent user (it's not supposed to work): %s", err)
+	u = GetUser(db, "non-existent-user")
+	if u.Model.ID != 0 {
+		t.Errorf("getting non existent user (it's not supposed to work): ID is not 0")
 	}
 
 	RmUser(db, defUsername)
 }
 
 func TestRmUser(t *testing.T) {
+	db.AutoMigrate(&User{})
 	u := InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
 
 	// Adds if user's not added in the database
