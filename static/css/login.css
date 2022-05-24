@@ -23,7 +23,7 @@ fazendo pelo sublime--*/
   }
    
   label{
-    color: rgba(147,184,189,0.8) 20%;
+    color: var(--letras_label);
     position: relative;
   }
   
