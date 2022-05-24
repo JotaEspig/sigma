@@ -16,6 +16,42 @@ const (
 	defEmail    = "defEmail"
 )
 
+func TestGetColumns(t *testing.T) {
+	columns := []string{"username", "password"}
+
+	func() {
+		defer func() {
+			if r := recover(); r != nil {
+				t.Error(r)
+			}
+		}()
+
+		newColumns := getColumns(columns...).([]string)
+		if newColumns[0] != "username" {
+			t.Errorf("get columns: There is no username in first index")
+		}
+		if newColumns[1] != "password" {
+			t.Errorf("get columns: There is no password in seconde index")
+		}
+	}()
+
+	func() {
+		defer func() {
+			if r := recover(); r != nil {
+				t.Error(r)
+			}
+		}()
+
+		newColumns := getColumns().(string)
+		if newColumns != "*" {
+			t.Errorf("get columns: It's not *")
+		}
+	}()
+
+}
+
+// TODO Jota: Must make tests use gorm instead of sqlx
+
 func TestUserValidate(t *testing.T) {
 	u1 := InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
 	u2 := InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
