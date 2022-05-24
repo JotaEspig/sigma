@@ -12,11 +12,11 @@ import (
 
 type User struct {
 	gorm.Model
-	Username       string
-	Name           string
-	Surname        string
-	Email          string
-	HashedPassword string `db:"password"`
+	Username       string `gorm:"unique;not null"`
+	Name           string `gorm:"not null"`
+	Surname        string `gorm:"not null"`
+	Email          string `gorm:"not null"`
+	HashedPassword string `db:"password" gorm:"not null"`
 	Type           sql.NullString
 }
 
@@ -43,7 +43,7 @@ func (u *User) Validate(userInput, passInput string) bool {
 // Returns a map containing user info WITHOUT password.
 func (u *User) ToMap() map[string]interface{} {
 	userMap := make(map[string]interface{})
-	userMap["id"] = u.ID
+	userMap["id"] = u.Model.ID
 	userMap["username"] = u.Username
 	userMap["name"] = u.Name
 	userMap["surname"] = u.Surname
