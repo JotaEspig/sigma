@@ -4,13 +4,14 @@ import (
 	"database/sql"
 
 	"golang.org/x/crypto/bcrypt"
+	"gorm.io/gorm"
 )
 
 //TODO jota: it's needed to separate the struct user to "admin", "teacher", "student"
 // Maybe implement something similar to Inheritance
 
 type User struct {
-	ID             int
+	gorm.Model
 	Username       string
 	Name           string
 	Surname        string

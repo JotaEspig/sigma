@@ -1,45 +1,38 @@
 package userauth
 
 import (
-	"fmt"
-	"strings"
-
-	"github.com/jmoiron/sqlx"
+	"gorm.io/gorm"
 )
+
+func getColumns(columns ...string) interface{} {
+	var columnsToUse interface{}
+
+	columnsToUse = "*"
+	if len(columns) != 0 {
+		columnsToUse = columns
+	}
+
+	return columnsToUse
+}
 
 // Adds an user to a database.
 // Panics if something goes wrong.
-func AddUser(db *sqlx.DB, u *User) {
-	db.MustExec(
-		`INSERT INTO "user"(username, password, name, surname, email)
-		VALUES($1, $2, $3, $4, $5)`,
-		u.Username, u.HashedPassword, u.Name, u.Surname, u.Email,
-	)
+func AddUser(db *gorm.DB, u *User) {
+	db.Create(u)
 }
 
 // Gets an user from a database
-func GetUser(db *sqlx.DB, username string, columns ...string) (*User, error) {
+func GetUser(db *gorm.DB, username string, columns ...string) *User {
 	u := User{}
 
-	columnsStr := strings.Join(columns, ",")
-	// If there is no arguments, sets it to default
-	if len(columns) == 0 {
-		columnsStr = "*"
-	}
+	columnsToUse := getColumns(columns...)
 
-	// TODO Jota: Implement something to "clean" columnsStr
-	// the reason is to avoid SQLInjection (if that's possible)
-	sqlQuery := fmt.Sprintf("SELECT %s FROM \"user\" WHERE username=$1", columnsStr)
+	db.Select(columnsToUse).Where("username = ?", username).First(&u)
 
-	err := db.Get(&u, sqlQuery, username)
-
-	return &u, err
+	return &u
 }
 
 // Removes an user
-func RmUser(db *sqlx.DB, username string) {
-	db.MustExec(
-		`DELETE FROM "user" WHERE username = $1`,
-		username,
-	)
+func RmUser(db *gorm.DB, username string) {
+
 }
