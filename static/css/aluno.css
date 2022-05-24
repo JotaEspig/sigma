@@ -250,8 +250,9 @@ label{
     border-top: 2px solid #dee2e6;
   }
 #teste tbody tr:hover{
-    color: #212529;
-    background-color: var(--titulo);
+    background-color: var(--bg_botao);
+    -webkit-transition: all 0.4s linear;
+    transition: all 0.4s  linear;
   }
 #teste {
 color: #fff;
