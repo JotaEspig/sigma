@@ -71,7 +71,7 @@
                                     <h5 class="card_title">Portugues</h5>
                                     <span class="card_text">Teste ate achar uma imagem boa<</span>
                                     <br>
-                                    <a id="btn-materia" href="#">Ir para matéria</a>
+                                    <a class="btn-materia" href="#">Ir para matéria</a>
                                 </div>
                             </div>
                         </div>
@@ -81,7 +81,7 @@
                                     <h5 class="card_title">Matemática</h5>
                                     <span class="card_text">Teste ate achar uma imagem boa</span>
                                     <br>
-                                    <a id="btn-materia" href="#" >Ir para matéria</a>
+                                    <a class="btn-materia" href="#" >Ir para matéria</a>
                                 </div>
                             </div>
                         </div>
@@ -91,7 +91,7 @@
                                     <h5 class="card_title">Geografia</h5>
                                     <span class="card_text">Teste ate achar uma imagem boa<</span>
                                     <br>
-                                    <a id="btn-materia" href="#" >Ir para matéria</a>
+                                    <a class="btn-materia" href="#">Ir para matéria</a>
                                 </div>
                             </div>
                         </div>
@@ -102,18 +102,24 @@
             <!-- Tabela de noticias -->    
             <h2>Notícias</h2>
             <table id="teste"> 
-                <tr>
-                    <th>Matérias</th>
-                    <th>Descrição</th>
-                    <th>Postagem</th>
-                    <th>Visualizar</th>
-                </tr>
-                <tr>
-                    <td>Português</td>
-                    <td>Fazer com uma redação com 50 mil palavras</td>
-                    <td>20/04/2022</td>
-                    <td>tem que botar um icone interativo aqui</td>
-                </tr>
+                <thead>
+                    <tr>
+                        <th scope="col">Matérias</th>
+                        <th scope="col">Descrição</th>
+                        <th scope="col">Postagem</th>
+                        <th scope="col">Visualizar</th>
+                    </tr>
+                </thead>
+                
+                <tbody>
+                    <tr>
+                        <td>Português</td>
+                        <td>Fazer com uma redação com 50 mil palavras</td>
+                        <td>20/04/2022</td>
+                        <td>tem que botar um icone interativo aqui</td>
+                    </tr>
+                </tbody>
+                    
             </table>
             <br>
             <button id="logout" onclick="logout()">LOGOUT</button>

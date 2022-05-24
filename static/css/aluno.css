@@ -47,7 +47,7 @@ nav{
     background-color: var(--bg_botao);
     width: 280px;   
     left: -300px;
-    top: 10px;
+    top: 0px;
     height: 100%;
     position: absolute;
     transition: all 110ms;
@@ -69,8 +69,6 @@ a{
     color: white;
     background: var(--bg_botao);
     text-shadow: 0 1px 1px #333;
-    -webkit-box-shadow: 0px 1px 4px 0px rgba(168, 168, 168, 0.6) inset;
-    box-shadow: 0px 1px 4px 0px rgba(168, 168, 168, 0.6) inset;
     transition: all 90ms ease-in;
 }
 
@@ -181,7 +179,7 @@ label{
 }
 
 /*--Botões do card--*/
-#btn-materia{
+.btn-materia{
     border-radius: 5px;
     display: block;
     padding: 15px 5px; /*--Altura e largura--*/
@@ -189,17 +187,18 @@ label{
     font-size: 14px; 
     background: var(--bg);
     text-shadow: 0 1px 1px #333;
+    -webkit-box-shadow: 0px 1px 4px 0px rgba(168, 168, 168, 0.6) inset;
+    box-shadow: 0px 1px 4px 0px rgba(168, 168, 168, 0.6) inset;
     transition: all 90ms ease-in;
 }
 
-#btn-materia:hover{
+.btn-materia:hover{
     text-decoration: none;
     background: var(--bg_botao);
     padding: 15px 5px;
     color: white;
     font-size: 14px;      
     text-shadow: 0 1px 1px #333;
-    
     transition: all 90ms ease-out;
 }
 
@@ -227,33 +226,40 @@ label{
 
 /*--Tabela noticias--*/
 
-/* #teste{
-    border-radius: 5px;
-    background-color: #ffffff;
-    border-color: #95999c;
-    display: block;
+#teste{
+    border-collapse: collapse;
     width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    font-weight: bold;
-    box-shadow: 1px 2px 5px #333;
+    margin-bottom: 1rem;
+    color: #212529;
+
 }
 
-#teste:hover{
-    background-color: var(--bg_botao);
-    border-color: #95999c;
-    display: block;
-    width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    border: 0;
+#teste th,
+#teste td{
+    padding: 0.75rem; /*--Linha do cabeçalho--*/
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
 }
 
-td, th{
-    padding: auto;
+#teste thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #dee2e6;
 }
 
-.full{
-    display: block;
+#teste tbody + tbody {
+    border-top: 2px solid #dee2e6;
+  }
+#teste tbody tr:hover{
+    color: #212529;
+    background-color: var(--titulo);
+  }
+#teste {
+color: #fff;
+background-color: #343a40;
 }
-*/
+
+#teste th,
+#teste td,
+#teste thead th {
+border-color: #454d55;
+}
