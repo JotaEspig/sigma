@@ -1,12 +1,12 @@
 package database
 
 import (
-	"github.com/jmoiron/sqlx"
-	_ "github.com/lib/pq"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 )
 
 type Connection struct {
-	db *sqlx.DB
+	db *gorm.DB
 }
 
 func ConnInit() *Connection {
@@ -17,25 +17,13 @@ func ConnInit() *Connection {
 
 // Connects with a database
 func (c *Connection) connectDB() {
-	driver, connStr := getConfig() // from config.go
-	newDB, err := sqlx.Connect(driver, connStr)
-	if err != nil {
-		panic(err.Error())
-	}
-
-	if newDB.Ping() != nil {
-		panic(err.Error())
-	}
+	connStr := getConfig() // from config.go
+	newDB, _ := gorm.Open(postgres.Open(connStr), &gorm.Config{})
 
 	c.db = newDB
 }
 
 // Gets the database variable from the connection
-func (c *Connection) GetDB() *sqlx.DB {
+func (c *Connection) GetDB() *gorm.DB {
 	return c.db
-}
-
-// Closes the database connection
-func (c *Connection) CloseDB() {
-	c.db.Close()
 }
