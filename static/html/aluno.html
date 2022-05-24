@@ -37,96 +37,94 @@
 </head>
 
 <body>
+    <h1>Bem vindo</h1>
+    <h2>
+        <span id="username" style="font-style:italic;"></span>
+    </h2>
+    
+    <!-- Menu -->
+    <div id="full">
+        <input type="checkbox" id="check">
+        <label for="check">
+            <img src="../img/menu-aberto.png">
+        </label>    
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Extensão</a></li>
+                <li><a href="#">Contatos</a></li>
+            </ul>
+        </nav>
+    </div>    
 
-            <h1>Bem vindo</h1>
-            <h2>
-                <span id="username" style="font-style:italic;"></span>
-            </h2>
-            
-            <!-- Menu -->
-            <div id="full">
-                <input type="checkbox" id="check">
-                <label for="check">
-                    <img src="../img/menu-aberto.png">
-                </label>    
-                <nav>
-                    <ul>
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">Extensão</a></li>
-                        <li><a href="#">Contatos</a></li>
-                    </ul>
-                </nav>
-            </div>    
-
-            <!-- Materias -->
-            <section id="materias">
-                <div class="conteiner">
-                    <h2>Matérias</h2>   
-                    <div class="card">
-                        <div id="coluna">
-                            <div class="card_pt">
-                                <h5 class="card_title">Portugues</h5>
-                                <span class="card_text">Teste ate achar uma imagem boa<</span>
-                                <br>
-                                <a class="btn-materia" href="#">Ir para matéria</a>
-                            </div>
-                        </div>
-                        <div id="coluna">
-                            <div class="card_mat">
-                                <h5 class="card_title">Matemática</h5>
-                                <span class="card_text">Teste ate achar uma imagem boa</span>
-                                <br>
-                                <a class="btn-materia" href="#" >Ir para matéria</a>
-                            </div>
-                        </div>
-                        <div id="coluna">
-                            <div class="card_geo">
-                                <h5 class="card_title">Geografia</h5>
-                                <span class="card_text">Teste ate achar uma imagem boa<</span>
-                                <br>
-                                <a class="btn-materia" href="#">Ir para matéria</a>
-                            </div>
-                        </div>
+    <!-- Materias -->
+    <section id="materias">
+        <div class="conteiner">
+            <h2>Matérias</h2>   
+            <div class="card">
+                <div id="coluna">
+                    <div class="card_pt">
+                        <h5 class="card_title">Portugues</h5>
+                        <span class="card_text">Teste ate achar uma imagem boa<</span>
+                        <br>
+                        <a class="btn-materia" href="#">Ir para matéria</a>
                     </div>
-                </div>    
-            </section>
+                </div>
+                <div id="coluna">
+                    <div class="card_mat">
+                        <h5 class="card_title">Matemática</h5>
+                        <span class="card_text">Teste ate achar uma imagem boa</span>
+                        <br>
+                        <a class="btn-materia" href="#" >Ir para matéria</a>
+                    </div>
+                </div>
+                <div id="coluna">
+                    <div class="card_geo">
+                        <h5 class="card_title">Geografia</h5>
+                        <span class="card_text">Teste ate achar uma imagem boa<</span>
+                        <br>
+                        <a class="btn-materia" href="#">Ir para matéria</a>
+                    </div>
+                </div>
+            </div>
+        </div>    
+    </section>
 
-            <!-- Tabela de noticias -->    
-            <h2>Notícias</h2>
-            <table id="teste"> 
-                <thead>
-                    <tr>
-                        <th scope="col">Matérias</th>
-                        <th scope="col">Descrição</th>
-                        <th scope="col">Postagem</th>
-                        <th scope="col">Visualizar</th>
-                    </tr>
-                </thead>
-                
-                <tbody>
-                    <tr>
-                        <td>Português</td>
-                        <td>Fazer com uma redação com 50 mil palavras</td>
-                        <td>20/04/2022</td>
-                        <td>tem que botar um icone interativo aqui</td>
-                    </tr>
-                    <tr>
-                        <td>Matemática</td>
-                        <td>Fazer todas as questões do enem pra ontem.</td>
-                        <td>24/05/2022</td>
-                        <td>tem que botar um icone interativo aqui</td>
-                    </tr>
-                    <tr>
-                        <td>Geografia</td>
-                        <td>Faça um mapa de marte para o Elon Musk</td>
-                        <td>24/05/2022</td>
-                        <td>tem que botar um icone interativo aqui</td>
-                    </tr>
-                </tbody>
-                    
-            </table>
-            <br>
-            <button id="logout" onclick="logout()">LOGOUT</button>
+    <!-- Tabela de noticias -->    
+    <h2>Notícias</h2>
+    <table id="teste"> 
+        <thead>
+            <tr>
+                <th scope="col">Matérias</th>
+                <th scope="col">Descrição</th>
+                <th scope="col">Postagem</th>
+                <th scope="col">Visualizar</th>
+            </tr>
+        </thead>
+        
+        <tbody>
+            <tr>
+                <td>Português</td>
+                <td>Fazer com uma redação com 50 mil palavras</td>
+                <td>20/04/2022</td>
+                <td>tem que botar um icone interativo aqui</td>
+            </tr>
+            <tr>
+                <td>Matemática</td>
+                <td>Fazer todas as questões do enem pra ontem.</td>
+                <td>24/05/2022</td>
+                <td>tem que botar um icone interativo aqui</td>
+            </tr>
+            <tr>
+                <td>Geografia</td>
+                <td>Faça um mapa de marte para o Elon Musk</td>
+                <td>24/05/2022</td>
+                <td>tem que botar um icone interativo aqui</td>
+            </tr>
+        </tbody>       
+    </table>
+    <br>
+    <button id="logout" onclick="logout()">LOGOUT</button>
 </body>
 
 </html>

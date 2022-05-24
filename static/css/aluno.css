@@ -97,10 +97,10 @@ label{
     z-index: 1; /*--Esconde o menu--*/
 }
 
-/*--Botão de logout tem que ajeitar ele--*/
+/*--Botão de logout tem que ajeitar--*/
 #logout{
     background: var(--bg_botao);
-    margin: auto;
+    margin-left: 1360px;
     padding: 7px 15px 7px 15px; /*--Parametros do corpo do botão--*/
     font-size: 12px;
     border-top: 1px solid #dbe5e8;
@@ -218,15 +218,13 @@ label{
 
 #teste{
     border-collapse: collapse;
-    margin-bottom: 1rem;
     color: #212529;
     text-align: center;
-    margin-bottom : .5em;
     color: #fff;
     background-color: #343a40;
     word-wrap:break-word;
     table-layout: fixed;
-    width: 50% !important;
+    width: 50%;
     margin: auto;
 }
 
