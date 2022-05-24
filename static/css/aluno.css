@@ -97,11 +97,11 @@ label{
     z-index: 1; /*--Esconde o menu--*/
 }
 
-/*--Botão de logout--*/
+/*--Botão de logout tem que ajeitar--*/
 #logout{
     background: var(--bg_botao);
-    float: right;
-    padding: 7px 15px 7px 15px; /*--Parametros da distancia do bt cadastrar--*/
+    margin-left: 1360px;
+    padding: 7px 15px 7px 15px; /*--Parametros do corpo do botão--*/
     font-size: 12px;
     border-top: 1px solid #dbe5e8;
     -webkit-border-radius: 0 0  5px 5px;
@@ -123,11 +123,18 @@ label{
 }
 
 /*--Cards--*/
+.card{
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    padding: 18px 22% 60px 24%;
+}
 
 .card_title{ /*--Padrao--*/
     text-decoration: center;
     float: center;
-    padding: 7px 100px; /*--Parametros da distancia do bt cadastrar--*/
+    padding: 7px 100px;
     font-size: 12px;
     border-top: 1px solid #dbe5e8;
     -webkit-border-radius: 0 0  5px 5px;
@@ -202,24 +209,7 @@ label{
     transition: all 90ms ease-out;
 }
 
-.row{
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  margin-right: -15px;
-  margin-left: -15px;
-}
-
 #coluna{
-    -ms-flex: 0 0 auto;
-    -ms-flex-preferred-size: 0;
-    flex: 0 0 auto;
-    flex-basis: 0;
-    flex-grow: 1;
-    width: auto;
-    max-width: 100%;
-    position: relative;
     padding-right: 15px;
     padding-left: 15px;
 }
@@ -228,10 +218,14 @@ label{
 
 #teste{
     border-collapse: collapse;
-    width: 100%;
-    margin-bottom: 1rem;
     color: #212529;
-
+    text-align: center;
+    color: #fff;
+    background-color: #343a40;
+    word-wrap:break-word;
+    table-layout: fixed;
+    width: 50%;
+    margin: auto;
 }
 
 #teste th,
@@ -248,19 +242,17 @@ label{
 
 #teste tbody + tbody {
     border-top: 2px solid #dee2e6;
-  }
+}
+
 #teste tbody tr:hover{
-    background-color: var(--bg_botao);
+    background-color: #454d55;
+    color: ;
     -webkit-transition: all 0.4s linear;
     transition: all 0.4s  linear;
-  }
-#teste {
-color: #fff;
-background-color: #343a40;
 }
 
 #teste th,
 #teste td,
 #teste thead th {
-border-color: #454d55;
+    border-color: #454d55;
 }
