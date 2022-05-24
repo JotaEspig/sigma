@@ -18,7 +18,10 @@ func ConnInit() *Connection {
 // Connects with a database
 func (c *Connection) connectDB() {
 	connStr := getConfig() // from config.go
-	newDB, _ := gorm.Open(postgres.Open(connStr), &gorm.Config{})
+	newDB, err := gorm.Open(postgres.Open(connStr), &gorm.Config{})
+	if err != nil {
+		panic(err)
+	}
 
 	c.db = newDB
 }
