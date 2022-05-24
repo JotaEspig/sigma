@@ -34,5 +34,5 @@ func GetUser(db *gorm.DB, username string, columns ...string) *User {
 
 // Removes an user
 func RmUser(db *gorm.DB, username string) {
-
+	db.Where("username = ?", username).Delete(&User{})
 }
