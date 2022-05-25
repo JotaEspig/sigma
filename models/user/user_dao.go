@@ -16,19 +16,19 @@ func GetColumns(columns ...string) interface{} {
 }
 
 // Adds an user to a database.
-func AddUser(db *gorm.DB, u *User) {
-	db.Create(u)
+func AddUser(db *gorm.DB, u *User) error {
+	return db.Create(u).Error
 }
 
 // Gets an user from a database
-func GetUser(db *gorm.DB, username string, columns ...string) *User {
+func GetUser(db *gorm.DB, username string, columns ...string) (*User, error) {
 	u := User{}
 
 	columnsToUse := GetColumns(columns...)
 
-	db.Select(columnsToUse).Where("username = ?", username).First(&u)
+	err := db.Select(columnsToUse).Where("username = ?", username).First(&u).Error
 
-	return &u
+	return &u, err
 }
 
 // Removes an user
