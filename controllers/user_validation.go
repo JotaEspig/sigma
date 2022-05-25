@@ -11,10 +11,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-const (
-	errNoResult = "sql: no rows in result set"
-)
-
 // Validates an user
 func ValidateUser() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
@@ -40,13 +36,9 @@ func ValidateUser() gin.HandlerFunc {
 			return
 		}
 
-		user := user.GetUser(db.DB, claims["username"].(string))
+		u, err := user.GetUser(db.DB, claims["username"].(string))
 		if err != nil {
-			if err.Error() == errNoResult {
-				ctx.Status(http.StatusUnauthorized)
-				return
-			}
-			ctx.Status(http.StatusInternalServerError)
+			ctx.Status(http.StatusUnauthorized)
 			return
 		}
 
@@ -54,7 +46,7 @@ func ValidateUser() gin.HandlerFunc {
 			http.StatusOK,
 			gin.H{
 				"claims": claims,
-				"user":   user.ToMap(),
+				"user":   u.ToMap(),
 			},
 		)
 	}
@@ -73,8 +65,8 @@ func GetUserInfo() gin.HandlerFunc {
 		// curl -X GET http://127.0.0.1:8080/user/get -H "Content-Type: application/json" \
 		// -d "{\"username\": \"admin\",\"params\":[\"username\", \"email\"]}"
 
-		u := user.GetUser(db.DB, username, resp.Params...)
-		if u == nil {
+		u, err := user.GetUser(db.DB, username, resp.Params...)
+		if err != nil {
 			ctx.Status(http.StatusNotFound)
 			return
 		}

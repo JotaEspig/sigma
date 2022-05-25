@@ -96,13 +96,19 @@ func TestGetUser(t *testing.T) {
 		user.AddUser(db.DB, u)
 	}()
 
-	u = user.GetUser(db.DB, defUsername)
+	u, err := user.GetUser(db.DB, defUsername)
+	if err != nil {
+		t.Errorf("getting legit user: %s", err)
+	}
 	if u.Model.ID == 0 {
 		t.Errorf("getting legit user: ID is 0")
 	}
 
-	u = user.GetUser(db.DB, defUsername, "username", "email")
+	u, err = user.GetUser(db.DB, defUsername, "username", "email")
 	// Checks if get user parcial info is working
+	if err != nil {
+		t.Errorf("getting legit user (parcial info): %s", err)
+	}
 	if u.Username == "" {
 		t.Errorf("getting legit user (parcial info): username is empty")
 	}
@@ -113,7 +119,7 @@ func TestGetUser(t *testing.T) {
 		t.Errorf("getting legit user (parcial info): name is filled")
 	}
 
-	u = user.GetUser(db.DB, "non-existent-user")
+	u, err = user.GetUser(db.DB, "non-existent-user")
 	if u.Model.ID != 0 {
 		t.Errorf("getting non existent user (it's not supposed to work): ID is not 0")
 	}
