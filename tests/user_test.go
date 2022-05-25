@@ -1,11 +1,12 @@
-package userauth
+package tests
 
 import (
-	"sigma/services/database"
+	"sigma/db"
+	"sigma/models/user"
 	"testing"
 )
 
-var db = database.ConnInit().GetDB()
+var db_ = db.ConnInit().GetDB()
 
 // Constants to use in tests, def = default
 const (
@@ -26,7 +27,7 @@ func TestGetColumns(t *testing.T) {
 			}
 		}()
 
-		newColumns := getColumns(columns...).([]string)
+		newColumns := user.GetColumns(columns...).([]string)
 		if newColumns[0] != "username" {
 			t.Errorf("get columns: There is no username in first index")
 		}
@@ -42,7 +43,7 @@ func TestGetColumns(t *testing.T) {
 			}
 		}()
 
-		newColumns := getColumns().(string)
+		newColumns := user.GetColumns().(string)
 		if newColumns != "*" {
 			t.Errorf("get columns: It's not *")
 		}
@@ -53,23 +54,23 @@ func TestGetColumns(t *testing.T) {
 // TODO Jota: Must make tests use gorm instead of sqlx
 
 func TestUserValidate(t *testing.T) {
-	u1 := InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
-	u2 := InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
+	u1 := user.InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
+	u2 := user.InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
 	if !u1.Validate(u2.Username, defPasswd) {
 		t.Error("validating user: 2 identical users couldn't pass the validation")
 	}
 
 	fakePasswd := "fake passwd"
-	u3 := InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
-	u4 := InitUser(defUsername, defEmail, defName, defSurname, fakePasswd)
+	u3 := user.InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
+	u4 := user.InitUser(defUsername, defEmail, defName, defSurname, fakePasswd)
 	if !u3.Validate(u4.Username, defPasswd) {
 		t.Error("validating user: 2 different users could pass the validation (it's supposed to not)")
 	}
 }
 
 func TestAddUser(t *testing.T) {
-	db.AutoMigrate(&User{})
-	u := InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
+	db_.AutoMigrate(&user.User{})
+	u := user.InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
 
 	func() {
 		defer func() {
@@ -77,15 +78,15 @@ func TestAddUser(t *testing.T) {
 				t.Errorf("adding legit user: %s", r)
 			}
 		}()
-		AddUser(db, u)
+		user.AddUser(db_, u)
 	}()
 
-	RmUser(db, defUsername)
+	user.RmUser(db_, defUsername)
 }
 
 func TestGetUser(t *testing.T) {
-	db.AutoMigrate(&User{})
-	u := InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
+	db_.AutoMigrate(&user.User{})
+	u := user.InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
 
 	// Adds if user's not added in the database
 	func() {
@@ -94,15 +95,15 @@ func TestGetUser(t *testing.T) {
 				return
 			}
 		}()
-		AddUser(db, u)
+		user.AddUser(db_, u)
 	}()
 
-	u = GetUser(db, defUsername)
+	u = user.GetUser(db_, defUsername)
 	if u.Model.ID == 0 {
 		t.Errorf("getting legit user: ID is 0")
 	}
 
-	u = GetUser(db, defUsername, "username", "email")
+	u = user.GetUser(db_, defUsername, "username", "email")
 	// Checks if get user parcial info is working
 	if u.Username == "" {
 		t.Errorf("getting legit user (parcial info): username is empty")
@@ -114,17 +115,17 @@ func TestGetUser(t *testing.T) {
 		t.Errorf("getting legit user (parcial info): name is filled")
 	}
 
-	u = GetUser(db, "non-existent-user")
+	u = user.GetUser(db_, "non-existent-user")
 	if u.Model.ID != 0 {
 		t.Errorf("getting non existent user (it's not supposed to work): ID is not 0")
 	}
 
-	RmUser(db, defUsername)
+	user.RmUser(db_, defUsername)
 }
 
 func TestRmUser(t *testing.T) {
-	db.AutoMigrate(&User{})
-	u := InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
+	db_.AutoMigrate(&user.User{})
+	u := user.InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
 
 	// Adds if user's not added in the database
 	func() {
@@ -133,7 +134,7 @@ func TestRmUser(t *testing.T) {
 				return
 			}
 		}()
-		AddUser(db, u)
+		user.AddUser(db_, u)
 	}()
 
 	func() {
@@ -142,6 +143,6 @@ func TestRmUser(t *testing.T) {
 				t.Errorf("removing legit user: %s", r)
 			}
 		}()
-		RmUser(db, u.Username)
+		user.RmUser(db_, u.Username)
 	}()
 }
