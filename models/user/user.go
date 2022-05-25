@@ -16,7 +16,7 @@ type User struct {
 	Name           string `gorm:"not null"`
 	Surname        string `gorm:"not null"`
 	Email          string `gorm:"not null"`
-	HashedPassword string `db:"password" gorm:"not null"`
+	HashedPassword string `gorm:"not null;column:password"`
 	Type           sql.NullString
 }
 
