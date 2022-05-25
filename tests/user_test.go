@@ -6,8 +6,6 @@ import (
 	"testing"
 )
 
-var db_ = db.ConnInit().GetDB()
-
 // Constants to use in tests, def = default
 const (
 	defUsername = "defUsername"
@@ -69,7 +67,7 @@ func TestUserValidate(t *testing.T) {
 }
 
 func TestAddUser(t *testing.T) {
-	db_.AutoMigrate(&user.User{})
+	db.DB.AutoMigrate(&user.User{})
 	u := user.InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
 
 	func() {
@@ -78,14 +76,14 @@ func TestAddUser(t *testing.T) {
 				t.Errorf("adding legit user: %s", r)
 			}
 		}()
-		user.AddUser(db_, u)
+		user.AddUser(db.DB, u)
 	}()
 
-	user.RmUser(db_, defUsername)
+	user.RmUser(db.DB, defUsername)
 }
 
 func TestGetUser(t *testing.T) {
-	db_.AutoMigrate(&user.User{})
+	db.DB.AutoMigrate(&user.User{})
 	u := user.InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
 
 	// Adds if user's not added in the database
@@ -95,15 +93,15 @@ func TestGetUser(t *testing.T) {
 				return
 			}
 		}()
-		user.AddUser(db_, u)
+		user.AddUser(db.DB, u)
 	}()
 
-	u = user.GetUser(db_, defUsername)
+	u = user.GetUser(db.DB, defUsername)
 	if u.Model.ID == 0 {
 		t.Errorf("getting legit user: ID is 0")
 	}
 
-	u = user.GetUser(db_, defUsername, "username", "email")
+	u = user.GetUser(db.DB, defUsername, "username", "email")
 	// Checks if get user parcial info is working
 	if u.Username == "" {
 		t.Errorf("getting legit user (parcial info): username is empty")
@@ -115,16 +113,16 @@ func TestGetUser(t *testing.T) {
 		t.Errorf("getting legit user (parcial info): name is filled")
 	}
 
-	u = user.GetUser(db_, "non-existent-user")
+	u = user.GetUser(db.DB, "non-existent-user")
 	if u.Model.ID != 0 {
 		t.Errorf("getting non existent user (it's not supposed to work): ID is not 0")
 	}
 
-	user.RmUser(db_, defUsername)
+	user.RmUser(db.DB, defUsername)
 }
 
 func TestRmUser(t *testing.T) {
-	db_.AutoMigrate(&user.User{})
+	db.DB.AutoMigrate(&user.User{})
 	u := user.InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
 
 	// Adds if user's not added in the database
@@ -134,7 +132,7 @@ func TestRmUser(t *testing.T) {
 				return
 			}
 		}()
-		user.AddUser(db_, u)
+		user.AddUser(db.DB, u)
 	}()
 
 	func() {
@@ -143,6 +141,6 @@ func TestRmUser(t *testing.T) {
 				t.Errorf("removing legit user: %s", r)
 			}
 		}()
-		user.RmUser(db_, u.Username)
+		user.RmUser(db.DB, u.Username)
 	}()
 }
