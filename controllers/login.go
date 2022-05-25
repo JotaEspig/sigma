@@ -1,9 +1,11 @@
-package handlers
+package controllers
 
 import (
 	"net/http"
 	"net/url"
-	userauth "sigma/services/authentication/user"
+	"sigma/config"
+	"sigma/db"
+	"sigma/models/user"
 
 	"github.com/gin-gonic/gin"
 )
@@ -31,13 +33,13 @@ func LoginPOST() gin.HandlerFunc {
 		usern := ctx.PostForm("username")
 		passwd := ctx.PostForm("password")
 
-		user, err := userauth.GetUser(db, usern)
-		if err != nil || !user.Validate(usern, passwd) {
+		user := user.GetUser(db.DB, usern)
+		if !user.Validate(usern, passwd) {
 			ctx.Status(http.StatusUnauthorized)
 			return
 		}
 
-		token, err := defaultJWT.GenerateToken(usern)
+		token, err := config.DefaultJWT.GenerateToken(usern)
 		if err != nil || token == "" {
 			ctx.Status(http.StatusInternalServerError)
 			return

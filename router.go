@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
-	"sigma/handlers"
+	"sigma/controllers"
 
 	"github.com/gin-gonic/gin"
 	"github.com/newrelic/go-agent/v3/integrations/nrgin"
@@ -102,20 +102,20 @@ func setRoutes(router *gin.Engine) {
 	})
 
 	// Login
-	router.GET("/", handlers.LoginRedirect())
-	router.POST("/login", handlers.LoginPOST())
+	router.GET("/", controllers.LoginRedirect())
+	router.POST("/login", controllers.LoginPOST())
 
 	// Cadastro
-	router.POST("/cadastro", handlers.SignupPOST())
+	router.POST("/cadastro", controllers.SignupPOST())
 
 	// Validates User
-	router.GET("/validate/user", handlers.ValidateUser())
+	router.GET("/validate/user", controllers.ValidateUser())
 
 	// Get user
 	router.GET("/user/:username", func(ctx *gin.Context) {
 		ctx.HTML(http.StatusOK, "alunoinfo.html", nil)
 	})
-	router.POST("/user/:username", handlers.GetUserInfo())
+	router.POST("/user/:username", controllers.GetUserInfo())
 }
 
 func createRouter() *gin.Engine {

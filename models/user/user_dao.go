@@ -1,10 +1,10 @@
-package userauth
+package user
 
 import (
 	"gorm.io/gorm"
 )
 
-func getColumns(columns ...string) interface{} {
+func GetColumns(columns ...string) interface{} {
 	var columnsToUse interface{}
 
 	columnsToUse = "*"
@@ -16,7 +16,6 @@ func getColumns(columns ...string) interface{} {
 }
 
 // Adds an user to a database.
-// Panics if something goes wrong.
 func AddUser(db *gorm.DB, u *User) {
 	db.Create(u)
 }
@@ -25,7 +24,7 @@ func AddUser(db *gorm.DB, u *User) {
 func GetUser(db *gorm.DB, username string, columns ...string) *User {
 	u := User{}
 
-	columnsToUse := getColumns(columns...)
+	columnsToUse := GetColumns(columns...)
 
 	db.Select(columnsToUse).Where("username = ?", username).First(&u)
 

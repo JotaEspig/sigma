@@ -1,15 +1,19 @@
-package database
+package db
 
 import (
+	"sigma/config"
+
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
+
+var DB = connInit().getDB()
 
 type Connection struct {
 	db *gorm.DB
 }
 
-func ConnInit() *Connection {
+func connInit() *Connection {
 	conn := &Connection{}
 	conn.connectDB()
 	return conn
@@ -17,7 +21,7 @@ func ConnInit() *Connection {
 
 // Connects with a database
 func (c *Connection) connectDB() {
-	connStr := getConfig() // from config.go
+	connStr := config.GetDBConfig() // from config.go
 	newDB, err := gorm.Open(postgres.Open(connStr), &gorm.Config{})
 	if err != nil {
 		panic(err)
@@ -27,6 +31,6 @@ func (c *Connection) connectDB() {
 }
 
 // Gets the database variable from the connection
-func (c *Connection) GetDB() *gorm.DB {
+func (c *Connection) getDB() *gorm.DB {
 	return c.db
 }

@@ -1,8 +1,10 @@
-package handlers
+package controllers
 
 import (
 	"net/http"
-	userauth "sigma/services/authentication/user"
+	"sigma/config"
+	"sigma/db"
+	"sigma/models/user"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
@@ -23,7 +25,7 @@ func ValidateUser() gin.HandlerFunc {
 		}
 
 		//dToken means decoded token
-		dToken, err := defaultJWT.ValidateToken(token)
+		dToken, err := config.DefaultJWT.ValidateToken(token)
 		if err != nil || !dToken.Valid {
 			ctx.Status(http.StatusUnauthorized)
 			return
@@ -38,7 +40,7 @@ func ValidateUser() gin.HandlerFunc {
 			return
 		}
 
-		user, err := userauth.GetUser(db, claims["username"].(string))
+		user := user.GetUser(db.DB, claims["username"].(string))
 		if err != nil {
 			if err.Error() == errNoResult {
 				ctx.Status(http.StatusUnauthorized)
@@ -71,8 +73,8 @@ func GetUserInfo() gin.HandlerFunc {
 		// curl -X GET http://127.0.0.1:8080/user/get -H "Content-Type: application/json" \
 		// -d "{\"username\": \"admin\",\"params\":[\"username\", \"email\"]}"
 
-		user, err := userauth.GetUser(db, username, resp.Params...)
-		if err != nil || user == nil {
+		u := user.GetUser(db.DB, username, resp.Params...)
+		if u == nil {
 			ctx.Status(http.StatusNotFound)
 			return
 		}
@@ -80,7 +82,7 @@ func GetUserInfo() gin.HandlerFunc {
 		ctx.JSON(
 			http.StatusOK,
 			gin.H{
-				"user": user.ToMap(),
+				"user": u.ToMap(),
 			},
 		)
 	}
