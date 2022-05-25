@@ -66,7 +66,7 @@ a{
     border-radius: rem-calc(6);
     display: block;
     padding: 17px 5px; /*--Altura e largura--*/
-    color: white;
+    color: var(--texto);
     background: var(--bg_botao);
     text-shadow: 0 1px 1px #333;
     transition: all 90ms ease-in;
@@ -75,9 +75,9 @@ a{
 /*--Transição quando passar o ponteiro--*/
 a:hover{
     text-decoration: none;
-    background: var(--bg);
+    background: var(--bg_pag);
     padding: 17px 5px;
-    color: var(--titulo);
+    color: var(--texto);
     font-size: 20px;      
     text-shadow: 0 1px 1px #333;
     transition: all 90ms ease-out;
@@ -190,7 +190,7 @@ label{
     border-radius: 5px;
     display: block;
     padding: 15px 5px; /*--Altura e largura--*/
-    color: var(--titulo);
+    color: var(--texto);
     font-size: 14px; 
     background: var(--bg);
     text-shadow: 0 1px 1px #333;
