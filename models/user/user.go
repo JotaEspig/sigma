@@ -1,4 +1,4 @@
-package userauth
+package user
 
 import (
 	"database/sql"
