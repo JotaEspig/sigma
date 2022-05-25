@@ -1,27 +1,15 @@
-package studentauth
+package tests
 
 import (
-	userauth "sigma/services/authentication/user"
-	"sigma/services/database"
+	"sigma/db"
+	"sigma/models/user"
 	"testing"
 )
 
-var db = database.ConnInit().GetDB()
-
-// Constants to use in tests, def = default
-const (
-	defUsername   = "defUsername"
-	defPasswd     = "defPasswd"
-	defName       = "defName"
-	defSurname    = "defSurname"
-	defEmail      = "defEmail"
-	nonExistentID = 9999
-)
-
 func TestAddStudent(t *testing.T) {
-	u := userauth.InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
-	userauth.AddUser(db, u)
-	u, err := userauth.GetUser(db, u.Username)
+	u := user.InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
+	user.AddUser(db.DB, u)
+	u, err := user.GetUser(db.DB, u.Username)
 	if err != nil {
 		t.Error(err)
 	}
@@ -37,7 +25,7 @@ func TestAddStudent(t *testing.T) {
 				t.Errorf("adding legit student: %s", r)
 			}
 		}()
-		AddStudent(db, s)
+		user.AddStudent(db.DB, s)
 	}()
 
 	// repeating the same action
@@ -47,12 +35,12 @@ func TestAddStudent(t *testing.T) {
 				t.Errorf("adding repeated student (it's not supposed to work)")
 			}
 		}()
-		AddStudent(db, s)
+		user.AddStudent(db.DB, s)
 	}()
 }
 
 func TestGetStudent(t *testing.T) {
-	u := userauth.InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
+	u := user.InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
 
 	// Adds if user's not added in the database
 	func() {
@@ -61,10 +49,10 @@ func TestGetStudent(t *testing.T) {
 				return
 			}
 		}()
-		userauth.AddUser(db, u)
+		user.AddUser(db.DB, u)
 	}()
 
-	u, err := userauth.GetUser(db, defUsername)
+	u, err := user.GetUser(db.DB, defUsername)
 	if err != nil {
 		t.Errorf("getting legit student: %s", err)
 	}
@@ -84,16 +72,16 @@ func TestGetStudent(t *testing.T) {
 				t.Error(r)
 			}
 		}()
-		AddStudent(db, s)
+		user.AddStudent(db.DB, s)
 	}()
 
-	_, err = GetStudent(db, u.ID)
+	_, err = GetStudent(db.DB, u.ID)
 	// Checks if get student parcial info is working
 	if err != nil {
 		t.Errorf("getting legit student (parcial info): %s", err)
 	}
 
-	s, err = GetStudent(db, u.ID, "year", "status")
+	s, err = GetStudent(db.DB, u.ID, "year", "status")
 	if err != nil {
 		t.Errorf("getting legit student (parcial info): %s", err)
 	}
@@ -107,7 +95,7 @@ func TestGetStudent(t *testing.T) {
 		t.Errorf("getting legit student (parcial info): class id is filled")
 	}
 
-	_, err = GetStudent(db, nonExistentID)
+	_, err = GetStudent(db.DB, nonExistentID)
 	if err == nil {
 		t.Errorf("getting non existent student (it's not supposed to work): %s", err)
 	}
