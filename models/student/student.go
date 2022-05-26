@@ -1,26 +1,27 @@
 package studentauth
 
 import (
-	"database/sql"
 	"errors"
-	userauth "sigma/services/authentication/user"
+	"sigma/models/user"
+
+	"gorm.io/gorm"
 )
 
 type Student struct {
-	ID      int
-	User    *userauth.User
-	Year    sql.NullInt16
-	Status  sql.NullString
-	ClassID sql.NullInt64 `db:"class_id"`
+	gorm.Model
+	Year   uint8
+	Status string
+	UserID uint `gorm:"not null;unique"`
+	User   *user.User
 }
 
-func InitStudent(u *userauth.User) (*Student, error) {
-	if u.ID == 0 {
-		return nil, errors.New("student: ID cannot be 0")
+func InitStudent(u *user.User) (*Student, error) {
+	if u.Model.ID == 0 {
+		return nil, errors.New("student: UserID cannot be 0")
 	}
 
 	s := &Student{
-		ID: u.ID,
+		UserID: u.Model.ID,
 	}
 
 	return s, nil
@@ -29,8 +30,9 @@ func InitStudent(u *userauth.User) (*Student, error) {
 // Adds student value to map contaning user info
 func (s *Student) ToMap() map[string]interface{} {
 	studentMap := s.User.ToMap()
-	studentMap["year"] = s.Year.Int16
-	studentMap["status"] = s.Status.String
-	studentMap["class_id"] = s.ClassID.Int64
+	studentMap["year"] = s.Year
+	studentMap["status"] = s.Status
+	studentMap["user_id"] = s.UserID
+	studentMap["user"] = s.User.ToMap()
 	return studentMap
 }
