@@ -15,40 +15,6 @@ const (
 	defEmail    = "defEmail"
 )
 
-func TestGetColumns(t *testing.T) {
-	columns := []string{"username", "password"}
-
-	func() {
-		defer func() {
-			if r := recover(); r != nil {
-				t.Error(r)
-			}
-		}()
-
-		newColumns := user.GetColumns(columns...).([]string)
-		if newColumns[0] != "username" {
-			t.Errorf("get columns: There is no username in first index")
-		}
-		if newColumns[1] != "password" {
-			t.Errorf("get columns: There is no password in seconde index")
-		}
-	}()
-
-	func() {
-		defer func() {
-			if r := recover(); r != nil {
-				t.Error(r)
-			}
-		}()
-
-		newColumns := user.GetColumns().(string)
-		if newColumns != "*" {
-			t.Errorf("get columns: It's not *")
-		}
-	}()
-
-}
-
 // TODO Jota: Must make tests use gorm instead of sqlx
 
 func TestUserValidate(t *testing.T) {
@@ -70,16 +36,15 @@ func TestAddUser(t *testing.T) {
 	db.DB.AutoMigrate(&user.User{})
 	u := user.InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
 
-	func() {
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("adding legit user: %s", r)
-			}
-		}()
-		user.AddUser(db.DB, u)
-	}()
+	err := user.AddUser(db.DB, u)
+	if err != nil {
+		t.Error(err)
+	}
 
-	user.RmUser(db.DB, defUsername)
+	err = user.RmUser(db.DB, defUsername)
+	if err != nil {
+		t.Error(err)
+	}
 }
 
 func TestGetUser(t *testing.T) {
@@ -87,16 +52,12 @@ func TestGetUser(t *testing.T) {
 	u := user.InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
 
 	// Adds if user's not added in the database
-	func() {
-		defer func() {
-			if r := recover(); r != nil {
-				return
-			}
-		}()
-		user.AddUser(db.DB, u)
-	}()
+	err := user.AddUser(db.DB, u)
+	if err != nil {
+		t.Error(err)
+	}
 
-	u, err := user.GetUser(db.DB, defUsername)
+	u, err = user.GetUser(db.DB, defUsername)
 	if err != nil {
 		t.Errorf("getting legit user: %s", err)
 	}
@@ -119,12 +80,15 @@ func TestGetUser(t *testing.T) {
 		t.Errorf("getting legit user (parcial info): name is filled")
 	}
 
-	u, err = user.GetUser(db.DB, "non-existent-user")
+	u, _ = user.GetUser(db.DB, "non-existent-user")
 	if u.Model.ID != 0 {
 		t.Errorf("getting non existent user (it's not supposed to work): ID is not 0")
 	}
 
-	user.RmUser(db.DB, defUsername)
+	err = user.RmUser(db.DB, defUsername)
+	if err != nil {
+		t.Error(err)
+	}
 }
 
 func TestRmUser(t *testing.T) {
@@ -132,21 +96,13 @@ func TestRmUser(t *testing.T) {
 	u := user.InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
 
 	// Adds if user's not added in the database
-	func() {
-		defer func() {
-			if r := recover(); r != nil {
-				return
-			}
-		}()
-		user.AddUser(db.DB, u)
-	}()
+	err := user.AddUser(db.DB, u)
+	if err != nil {
+		t.Error(err)
+	}
 
-	func() {
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("removing legit user: %s", r)
-			}
-		}()
-		user.RmUser(db.DB, u.Username)
-	}()
+	err = user.RmUser(db.DB, defUsername)
+	if err != nil {
+		t.Error(err)
+	}
 }
