@@ -1,4 +1,4 @@
-package studentauth
+package student
 
 import (
 	"errors"
