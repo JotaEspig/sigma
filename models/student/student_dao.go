@@ -39,3 +39,13 @@ func GetStudent(db *gorm.DB, username string, columns ...string) (*Student, erro
 	err = db.Select(columnsToUse).Where("user_id = ?", u.Model.ID).First(s).Error
 	return s, err
 }
+
+// Removes a student from a database
+func RmUser(db *gorm.DB, username string) error {
+	u, err := user.GetUser(db, username, "user_id")
+	if err != nil {
+		return err
+	}
+
+	return db.Unscoped().Where("username = ?", u.Username).Delete(&Student{}).Error
+}
