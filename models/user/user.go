@@ -41,7 +41,7 @@ func (u *User) Validate(userInput, passInput string) bool {
 // Returns a map containing user info WITHOUT password.
 func (u *User) ToMap() map[string]interface{} {
 	userMap := make(map[string]interface{})
-	userMap["id"] = u.Model.ID
+	userMap["id"] = u.ID
 	userMap["username"] = u.Username
 	userMap["name"] = u.Name
 	userMap["surname"] = u.Surname
