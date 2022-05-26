@@ -34,30 +34,35 @@ func TestUserValidate(t *testing.T) {
 
 func TestAddUser(t *testing.T) {
 	db.DB.AutoMigrate(&user.User{})
+
 	u := user.InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
 
 	err := user.AddUser(db.DB, u)
 	if err != nil {
-		t.Error(err)
+		t.Errorf("adding legit user: %s", err)
+	}
+
+	// repeating the same action
+	err = user.AddUser(db.DB, u)
+	if err == nil {
+		t.Errorf("adding repeated user (it's not supposed to happen): %s", err)
 	}
 
 	err = user.RmUser(db.DB, defUsername)
 	if err != nil {
-		t.Error(err)
+		t.Errorf("removing legit user: %s", err)
 	}
 }
 
 func TestGetUser(t *testing.T) {
 	db.DB.AutoMigrate(&user.User{})
+
 	u := user.InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
 
 	// Adds if user's not added in the database
-	err := user.AddUser(db.DB, u)
-	if err != nil {
-		t.Error(err)
-	}
+	user.AddUser(db.DB, u)
 
-	u, err = user.GetUser(db.DB, defUsername)
+	u, err := user.GetUser(db.DB, defUsername)
 	if err != nil {
 		t.Errorf("getting legit user: %s", err)
 	}
@@ -87,22 +92,20 @@ func TestGetUser(t *testing.T) {
 
 	err = user.RmUser(db.DB, defUsername)
 	if err != nil {
-		t.Error(err)
+		t.Errorf("removing legit user: %s", err)
 	}
 }
 
 func TestRmUser(t *testing.T) {
 	db.DB.AutoMigrate(&user.User{})
+
 	u := user.InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
 
 	// Adds if user's not added in the database
-	err := user.AddUser(db.DB, u)
-	if err != nil {
-		t.Error(err)
-	}
+	user.AddUser(db.DB, u)
 
-	err = user.RmUser(db.DB, defUsername)
+	err := user.RmUser(db.DB, defUsername)
 	if err != nil {
-		t.Error(err)
+		t.Errorf("removing legit user: %s", err)
 	}
 }
