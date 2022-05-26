@@ -28,14 +28,11 @@ func SignupPOST() gin.HandlerFunc {
 
 		u := user.InitUser(usern, email, name, surname, passwd)
 
-		// It will recover if an error occurs in AddUser
-		// that means that duplicate key error happened
-		defer func() {
-			if r := recover(); r != nil {
-				ctx.Status(http.StatusConflict)
-			}
-		}()
-		user.AddUser(db.DB, u)
+		err := user.AddUser(db.DB, u)
+		if err != nil {
+			ctx.Status(http.StatusConflict)
+			return
+		}
 
 		ctx.Status(http.StatusOK)
 	}
