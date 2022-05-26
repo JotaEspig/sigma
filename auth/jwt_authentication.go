@@ -24,8 +24,6 @@ type authClaims struct {
 }
 
 // Parameters used in jwt authentication
-// 	secretKey : key used in the generation and validation of a token
-// 	issuer : who issued the token
 type JWTService struct {
 	SecretKey string
 	Issuer    string
@@ -50,23 +48,19 @@ func (service *JWTService) GenerateToken(username string) (string, error) {
 			IssuedAt:  time.Now().Unix(),
 		},
 	}
-	// Creates the token using HS256
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	// Gets the string with the encoded token
 	encodedToken, err := token.SignedString([]byte(service.SecretKey))
 	return encodedToken, err
 }
 
 // Validates the token, according to the secret key
 func (service *JWTService) ValidateToken(encodedToken string) (*jwt.Token, error) {
-	// Creates a key function
 	keyFunc := func(token *jwt.Token) (interface{}, error) {
 		// Checks if the token is valid trying to convert it to HMAC
 		_, isValid := token.Method.(*jwt.SigningMethodHMAC)
 		if !isValid {
 			return nil, fmt.Errorf("invalid token")
 		}
-		// If it's valid, will return the secret key to the parser
 		return []byte(service.SecretKey), nil
 	}
 
