@@ -22,7 +22,7 @@ func GetUser(db *gorm.DB, username string, columns ...string) (*User, error) {
 	return u, err
 }
 
-// Removes an user
+// Removes an user from a database
 func RmUser(db *gorm.DB, username string) error {
-	return db.Where("username = ?", username).Delete(&User{}).Error
+	return db.Unscoped().Where("username = ?", username).Delete(&User{}).Error
 }
