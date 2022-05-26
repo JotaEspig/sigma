@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- CSS -->
+    <link href="../bootstrap/bootstrap-grid.css" rel="stylesheet">
+    <link href="../bootstrap/bootstrap.css" rel="stylesheet">
+
+    <!-- JQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <!-- JavaScript -->
+    <script src="js/login.js"></script>
+    <script src="js/cookies.js"></script>
+    
+    <!--link para icon-->
+    <link rel="icon" type="jpg" href="../img/favicon.ico"/> 
+
+    <title>SIGMA</title>
+</head>
+<body>
+    <div class="content">      
+        <!--FORMULÁRIO DE LOGIN-->
+        <div id="login">
+          <form id="loginForm" method="post"> 
+            <h1>Login</h1>
+            <p id="Erro" style="color: red; text-align: center;"></p>
+            <p> 
+              <label for="username_login">Nome de usuário</label>
+              <input id="username_login" name="username" required="required" type="text" placeholder="Nome de usuário"/>
+            </p>
+             
+            <p> 
+              <label for="senha_login">Senha</label>
+              <input id="senha_login" name="password" required="required" type="password" placeholder="ex. C4rL0ta D!v 928"/>
+            </p>
+             
+            <p> 
+              <input type="submit" value="Logar"/> 
+            </p>
+            <p class="link">
+                Ainda não tem conta?
+                <a href="/cadastro">Cadastre-se</a>
+            </p>
+          </form>
+        </div>
+    </div>     
+</body>
+</html>
