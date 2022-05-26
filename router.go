@@ -77,6 +77,10 @@ func getRoutePath(info os.FileInfo) string {
 
 // Set the routes to a router
 func setRoutes(router *gin.Engine) {
+	// TODO Jota: Create groups of routes to separate the route paths
+
+	// TODO Jota: Suggestion for the future: remove the filepath walker
+
 	currentWorkingDir, err := os.Getwd()
 	if err != nil {
 		panic(err)
