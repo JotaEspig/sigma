@@ -41,7 +41,7 @@ func GetStudent(db *gorm.DB, username string, columns ...string) (*Student, erro
 }
 
 // Removes a student from a database
-func RmUser(db *gorm.DB, username string) error {
+func RmStudent(db *gorm.DB, username string) error {
 	u, err := user.GetUser(db, username, "user_id")
 	if err != nil {
 		return err
