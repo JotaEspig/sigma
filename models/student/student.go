@@ -16,12 +16,13 @@ type Student struct {
 }
 
 func InitStudent(u *user.User) (*Student, error) {
-	if u.Model.ID == 0 {
+	if u.ID == 0 {
 		return nil, errors.New("student: UserID cannot be 0")
 	}
 
 	s := &Student{
-		UserID: u.Model.ID,
+		UserID: u.ID,
+		User:   u,
 	}
 
 	return s, nil
