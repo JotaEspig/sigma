@@ -36,16 +36,16 @@ func GetStudent(db *gorm.DB, username string, columns ...string) (*Student, erro
 
 	columnsToUse := dbPKG.GetColumns(columns...)
 
-	err = db.Select(columnsToUse).Where("user_id = ?", u.Model.ID).First(s).Error
+	err = db.Select(columnsToUse).Where("user_id = ?", u.ID).First(s).Error
 	return s, err
 }
 
 // Removes a student from a database
 func RmStudent(db *gorm.DB, username string) error {
-	u, err := user.GetUser(db, username, "user_id")
+	u, err := user.GetUser(db, username, "id")
 	if err != nil {
 		return err
 	}
 
-	return db.Unscoped().Where("username = ?", u.Username).Delete(&Student{}).Error
+	return db.Unscoped().Where("user_id = ?", u.ID).Delete(&Student{}).Error
 }
