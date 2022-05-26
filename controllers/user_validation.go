@@ -11,6 +11,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// TODO Jota: Create a middleware to validation
+
 // Validates an user
 func ValidateUser() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
