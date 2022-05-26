@@ -1,8 +1,6 @@
 package user
 
 import (
-	"database/sql"
-
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 )
@@ -17,7 +15,7 @@ type User struct {
 	Surname        string `gorm:"not null"`
 	Email          string `gorm:"not null"`
 	HashedPassword string `gorm:"not null;column:password"`
-	Type           sql.NullString
+	Type           string
 }
 
 func InitUser(usern, email, name, surname, password string) *User {
@@ -48,6 +46,6 @@ func (u *User) ToMap() map[string]interface{} {
 	userMap["name"] = u.Name
 	userMap["surname"] = u.Surname
 	userMap["email"] = u.Email
-	userMap["type"] = u.Type.String
+	userMap["type"] = u.Type
 	return userMap
 }
