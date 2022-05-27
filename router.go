@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"os"
 	"sigma/controllers"
+	"sigma/middlewares"
 
 	"github.com/gin-gonic/gin"
 	"github.com/newrelic/go-agent/v3/integrations/nrgin"
@@ -70,6 +71,11 @@ func setRoutes(router *gin.Engine) {
 		ctx.HTML(http.StatusOK, "alunoinfo.html", nil)
 	})
 	router.GET("/user/:username/get", controllers.GetUserInfo())
+
+	// Aluno
+	router.GET("/aluno", middlewares.AuthMiddleware(), func(ctx *gin.Context) {
+		ctx.HTML(http.StatusOK, "aluno.html", nil)
+	})
 }
 
 func createRouter() *gin.Engine {
