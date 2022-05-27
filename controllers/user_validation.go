@@ -62,10 +62,9 @@ func GetUserInfo() gin.HandlerFunc {
 		resp := struct {
 			Params []string
 		}{}
-		ctx.BindJSON(&resp)
-		// Test:
-		// curl -X GET http://127.0.0.1:8080/user/get -H "Content-Type: application/json" \
-		// -d "{\"username\": \"admin\",\"params\":[\"username\", \"email\"]}"
+		// ShouldBind is used to not set header status code to 400
+		// if there is an error
+		ctx.ShouldBindJSON(&resp)
 
 		u, err := user.GetUser(db.DB, username, resp.Params...)
 		if err != nil {
