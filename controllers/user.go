@@ -2,51 +2,27 @@ package controllers
 
 import (
 	"net/http"
-	"sigma/config"
 	"sigma/db"
 	"sigma/models/user"
-	"time"
 
-	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 )
 
 // Validates an user
 func ValidateUser() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		token, err := ctx.Cookie("auth")
-		if token == "" || err != nil {
-			ctx.Status(http.StatusUnauthorized)
-			return
-		}
+		username := ctx.Param("username")
 
-		//dToken means decoded token
-		dToken, err := config.DefaultJWT.ValidateToken(token)
-		if err != nil || !dToken.Valid {
-			ctx.Status(http.StatusUnauthorized)
-			return
-		}
-
-		claims := dToken.Claims.(jwt.MapClaims)
-
-		now := time.Now().Unix()
-		expiresAt := claims["exp"].(float64)
-		if float64(now) > expiresAt {
-			ctx.Status(http.StatusUnauthorized)
-			return
-		}
-
-		u, err := user.GetUser(db.DB, claims["username"].(string))
+		u, err := user.GetUser(db.DB, username)
 		if err != nil {
-			ctx.Status(http.StatusUnauthorized)
+			ctx.AbortWithStatus(http.StatusNotFound)
 			return
 		}
 
 		ctx.JSON(
 			http.StatusOK,
 			gin.H{
-				"claims": claims,
-				"user":   u.ToMap(),
+				"user": u.ToMap(),
 			},
 		)
 	}
@@ -64,9 +40,10 @@ func GetUserInfo() gin.HandlerFunc {
 		// if there is an error
 		ctx.ShouldBindJSON(&resp)
 
-		u, err := user.GetUser(db.DB, username, resp.Params...)
+		params := db.GetColumns(user.PublicUserParams, resp.Params...)
+		u, err := user.GetUser(db.DB, username, params...)
 		if err != nil {
-			ctx.Status(http.StatusNotFound)
+			ctx.AbortWithStatus(http.StatusNotFound)
 			return
 		}
 
