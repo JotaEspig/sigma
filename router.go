@@ -63,17 +63,19 @@ func setRoutes(router *gin.Engine) {
 	router.GET("/cadastro", controllers.SignupGET())
 	router.POST("/cadastro", controllers.SignupPOST())
 
-	// Validates User
-	router.GET("/user/validate", controllers.ValidateUser())
+	user := router.Group("/user")
 
 	// Get user
-	router.GET("/user/:username", func(ctx *gin.Context) {
+	user.GET("/:username", func(ctx *gin.Context) {
 		ctx.HTML(http.StatusOK, "alunoinfo.html", nil)
 	})
-	router.POST("/user/:username", controllers.GetUserInfo())
+	user.POST("/:username", controllers.GetUserInfo())
+	// Validates User
+	user.GET("/:username/validate",
+		middlewares.AuthMiddleware(), controllers.ValidateUser())
 
 	// Aluno
-	router.GET("/aluno", middlewares.AuthMiddleware(), func(ctx *gin.Context) {
+	user.GET("/:username/aluno", middlewares.AuthMiddleware(), func(ctx *gin.Context) {
 		ctx.HTML(http.StatusOK, "aluno.html", nil)
 	})
 }
