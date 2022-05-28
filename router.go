@@ -1,7 +1,6 @@
 package main
 
 import (
-	"net/http"
 	"os"
 	"sigma/controllers"
 	"sigma/middlewares"
@@ -66,18 +65,17 @@ func setRoutes(router *gin.Engine) {
 	user := router.Group("/user")
 
 	// Get user
-	user.GET("/:username", func(ctx *gin.Context) {
-		ctx.HTML(http.StatusOK, "alunoinfo.html", nil)
-	})
+	user.GET("/:username", controllers.GetUserInfoPage())
 	user.POST("/:username", controllers.GetUserInfo())
+
 	// Validates User
+	user.GET("/validate", controllers.ValidateUserWithToken())
 	user.GET("/:username/validate",
 		middlewares.AuthMiddleware(), controllers.ValidateUser())
 
 	// Aluno
-	user.GET("/:username/aluno", middlewares.AuthMiddleware(), func(ctx *gin.Context) {
-		ctx.HTML(http.StatusOK, "aluno.html", nil)
-	})
+	user.GET("/:username/aluno",
+		middlewares.AuthMiddleware(), controllers.GetAlunoPage())
 }
 
 func createRouter() *gin.Engine {
