@@ -6,6 +6,8 @@ import (
 	"gorm.io/gorm"
 )
 
+// TODO Jota: Add a function to update a user
+
 // Slice of all user params
 var UserParams = []string{
 	"id",
