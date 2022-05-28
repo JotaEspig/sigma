@@ -104,6 +104,7 @@ func TestGetStudent(t *testing.T) {
 		t.Errorf("getting legit student (parcial info): status is empty")
 	}
 
+	// Gets non-existent student
 	_, err = student.GetStudent(db.DB, "non-existent-username")
 	if err == nil {
 		t.Errorf("getting non existent student (it's not supposed to work): %s", err)

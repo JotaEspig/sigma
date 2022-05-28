@@ -83,7 +83,11 @@ func TestGetUser(t *testing.T) {
 		t.Errorf("getting legit user (parcial info): name is filled")
 	}
 
-	u, _ = user.GetUser(db.DB, "non-existent-user")
+	// Gets non-existent user
+	u, err = user.GetUser(db.DB, "non-existent-user")
+	if err == nil {
+		t.Errorf("getting non-existent user (it's not supposed to work): %s", err)
+	}
 	if u.ID != 0 {
 		t.Errorf("getting non existent user (it's not supposed to work): ID is not 0")
 	}
