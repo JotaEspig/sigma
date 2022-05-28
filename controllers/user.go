@@ -111,7 +111,5 @@ func ValidateUserWithToken() gin.HandlerFunc {
 				"user": u.ToMap(),
 			},
 		)
-
 	}
-
 }
