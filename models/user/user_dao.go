@@ -6,7 +6,7 @@ import (
 	"gorm.io/gorm"
 )
 
-// List of all user params
+// Slice of all user params
 var UserParams = []string{
 	"id",
 	"username",
@@ -17,7 +17,7 @@ var UserParams = []string{
 	"type",
 }
 
-// List of public user params
+// Slice of public user params
 var PublicUserParams = []string{
 	"id",
 	"username",
