@@ -42,7 +42,6 @@ func TestAddStudent(t *testing.T) {
 		t.Errorf("removing legit user: %s", err)
 	}
 
-	s.Year = 2
 	s.Status = "ativo"
 
 	// Adds user with year and status
@@ -83,7 +82,6 @@ func TestGetStudent(t *testing.T) {
 		t.Errorf("initializing student: %s", err)
 	}
 
-	s.Year = 2
 	s.Status = "ativo"
 
 	// Adds user with year and status
@@ -101,9 +99,6 @@ func TestGetStudent(t *testing.T) {
 	s, err = student.GetStudent(db.DB, u.Username, "year", "status")
 	if err != nil {
 		t.Errorf("getting legit student (parcial info): %s", err)
-	}
-	if s.Year == 0 {
-		t.Errorf("getting legit student (parcial info): year is empty")
 	}
 	if s.Status == "" {
 		t.Errorf("getting legit student (parcial info): status is empty")
