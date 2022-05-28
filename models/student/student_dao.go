@@ -10,7 +10,6 @@ import (
 // Slice of all student params
 var StudentParams = []string{
 	"id",
-	"year",
 	"status",
 	"user_id",
 }
@@ -18,7 +17,6 @@ var StudentParams = []string{
 // Slice of public student params
 var PublicStudentParams = []string{
 	"id",
-	"year",
 	"user_id",
 }
 
