@@ -33,10 +33,10 @@ func AddUser(db *gorm.DB, u *User) error {
 }
 
 // Gets an user from a database
-func GetUser(db *gorm.DB, username string, columns ...string) (*User, error) {
+func GetUser(db *gorm.DB, username string, params ...string) (*User, error) {
 	u := &User{}
 
-	columnsToUse := dbPKG.GetColumns(UserParams, columns...)
+	columnsToUse := dbPKG.GetColumns(UserParams, params...)
 
 	err := db.Select(columnsToUse).Where("username = ?", username).First(u).Error
 
