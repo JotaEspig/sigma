@@ -31,7 +31,6 @@ func (c *Classroom) ToMap() map[string]interface{} {
 	classroomMap["id"] = c.ID
 	classroomMap["name"] = c.Name
 	classroomMap["year"] = c.Year
-	classroomMap["students"] = []map[string]interface{}{}
 
 	return classroomMap
 }
