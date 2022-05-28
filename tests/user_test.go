@@ -64,7 +64,7 @@ func TestGetUser(t *testing.T) {
 	if err != nil {
 		t.Errorf("getting legit user: %s", err)
 	}
-	if u.Model.ID == 0 {
+	if u.ID == 0 {
 		t.Errorf("getting legit user: ID is 0")
 	}
 
@@ -84,7 +84,7 @@ func TestGetUser(t *testing.T) {
 	}
 
 	u, _ = user.GetUser(db.DB, "non-existent-user")
-	if u.Model.ID != 0 {
+	if u.ID != 0 {
 		t.Errorf("getting non existent user (it's not supposed to work): ID is not 0")
 	}
 
