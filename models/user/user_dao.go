@@ -47,3 +47,8 @@ func GetUser(db *gorm.DB, username string, columns ...string) (*User, error) {
 func RmUser(db *gorm.DB, username string) error {
 	return db.Unscoped().Where("username = ?", username).Delete(&User{}).Error
 }
+
+// AutoMigrate the user table
+func init() {
+	dbPKG.DB.AutoMigrate(&User{})
+}

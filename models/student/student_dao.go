@@ -64,3 +64,8 @@ func RmStudent(db *gorm.DB, username string) error {
 
 	return db.Unscoped().Where("user_id = ?", u.ID).Delete(&Student{}).Error
 }
+
+// AutoMigrate the student table
+func init() {
+	dbPKG.DB.AutoMigrate(&Student{})
+}
