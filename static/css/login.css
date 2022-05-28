@@ -23,7 +23,7 @@ fazendo pelo sublime--*/
   }
    
   label{
-    color: rgba(147,184,189,0.8) 20%;
+    color: var(--letras_label);
     position: relative;
   }
   
@@ -66,7 +66,7 @@ fazendo pelo sublime--*/
     font-weight: bold;
     width: 100%!important;
     cursor: pointer;  
-    background: #3d9db3;
+    background: rgb(68, 67, 90);
     padding: 8px 5px;
     color: rgb(255, 255, 255);
     font-size: 20px;  
@@ -85,11 +85,11 @@ fazendo pelo sublime--*/
     font-weight: bold;
     background: #fff;
     padding: 8px 5px;
-    color: #39bfd7;
+    color: rgb(68, 67, 90);
     font-size: 20px;  
-    border: 1px solid #4ab3c6;   
+    border: 1px solid rgb(68, 67, 90);   
     margin-bottom: 10px;  
-    text-shadow: 0 1px 1px #333;
+    text-shadow: 0 1px 1px rgb(99, 96, 114);
    
     -webkit-border-radius: 5px;
     border-radius: 5px;
@@ -115,11 +115,11 @@ fazendo pelo sublime--*/
    
   .link a {
     font-weight: bold;
-    background: #3d9db3;
+    background: rgb(68, 67, 90);
     padding: 6px;
     color: #ffffff;
     margin-left: 10px;
-    border: 1px solid #4ab3c6;
+    border: 1px solid rgb(99, 96, 114);
    
     -webkit-border-radius: 4px;
     border-radius: 4px;  
@@ -131,9 +131,9 @@ fazendo pelo sublime--*/
   }
    
   .link a:hover {
-    color: #39bfd7;
+    color: rgb(68, 67, 90);
     background: #f7f7f7;
-    border: 1px solid #4ab3c6;
+    border: 1px solid rgb(68, 67, 90); /*--Borda do botao cadastrar/login--*/
   }
   
 /*--Margins da limitação de conteudo dentro do BG cinza--*/
@@ -141,8 +141,8 @@ fazendo pelo sublime--*/
   #login{   
     padding: 18px 1.5% 60px 1.5%;
     margin: 0 0 35px 0;
-    background: #f7f7f7;
-    border: 1px solid rgba(147, 184, 189,0.8);
+    background: #f7f7f7; /*--Bg que engloba o formulario--*/
+    border: 1px solid rgba(147, 184, 189,0.8); /*--Borda do loguin--*/
   }
   
   

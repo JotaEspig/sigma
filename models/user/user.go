@@ -1,22 +1,21 @@
-package userauth
+package user
 
 import (
-	"database/sql"
-
 	"golang.org/x/crypto/bcrypt"
+	"gorm.io/gorm"
 )
 
 //TODO jota: it's needed to separate the struct user to "admin", "teacher", "student"
 // Maybe implement something similar to Inheritance
 
 type User struct {
-	ID             int
-	Username       string
-	Name           string
-	Surname        string
-	Email          string
-	HashedPassword string `db:"password"`
-	Type           sql.NullString
+	gorm.Model
+	Username       string `gorm:"not null;unique"`
+	Name           string `gorm:"not null"`
+	Surname        string `gorm:"not null"`
+	Email          string `gorm:"not null"`
+	HashedPassword string `gorm:"not null;column:password"`
+	Type           string
 }
 
 func InitUser(usern, email, name, surname, password string) *User {
@@ -40,7 +39,6 @@ func (u *User) Validate(userInput, passInput string) bool {
 }
 
 // Returns a map containing user info WITHOUT password.
-// This map will be send in /validate_user
 func (u *User) ToMap() map[string]interface{} {
 	userMap := make(map[string]interface{})
 	userMap["id"] = u.ID
@@ -48,6 +46,6 @@ func (u *User) ToMap() map[string]interface{} {
 	userMap["name"] = u.Name
 	userMap["surname"] = u.Surname
 	userMap["email"] = u.Email
-	userMap["type"] = u.Type.String
+	userMap["type"] = u.Type
 	return userMap
 }

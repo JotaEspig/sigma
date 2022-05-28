@@ -1,10 +1,13 @@
-package jwtauth
+package tests
 
-import "testing"
+import (
+	"sigma/auth"
+	"testing"
+)
 
 func TestGenerateAndValidate(t *testing.T) {
 	// Correct way of using
-	jwtServ := JWTAuthService()
+	jwtServ := auth.JWTAuthService()
 	eToken, err := jwtServ.GenerateToken("JotaEspig")
 	if err != nil {
 		t.Errorf("Error in generating token: %s", err)
@@ -23,9 +26,9 @@ func TestGenerateAndValidate(t *testing.T) {
 	}
 
 	// Testing with other secret key
-	fakeJWTServ := &jwtService{
-		secretKey: "secr",
-		issuer:    "Other",
+	fakeJWTServ := &auth.JWTService{
+		SecretKey: "secr",
+		Issuer:    "Other",
 	}
 	eToken, err = fakeJWTServ.GenerateToken("JotaEspig")
 	if err != nil {

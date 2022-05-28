@@ -13,16 +13,10 @@
         $(document).ready(function () {
             var url = window.location.pathname;
             var username = url.substring(url.lastIndexOf('/') + 1);
-            var newURL = "/user/"+username
+            var newURL = "/user/"+username+"/get"
             $.ajax({
-                type: "post",
+                type: "get",
                 url: newURL,
-                data: JSON.stringify({
-                    params: [
-                        "username",
-                        "email"
-                    ]
-                }),
                 dataType: "json",
                 success: function (response) {
                     $("#user").html(JSON.stringify(response))

@@ -8,8 +8,8 @@
 
     <!-- CSS -->
     <!-- Sempre verificar o css pois o Samuel está fazendo pelo sublime, logo precisa estar na mesma pasta-->
-    <link href="../css/padrao.css" rel="stylesheet">
-    <link href="../css/aluno.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
 
     <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -18,6 +18,7 @@
     <script src="../js/aluno.js"></script>
     <script src="../js/cookies.js"></script>
 
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
@@ -42,52 +43,38 @@
     </h2>
     
     <!-- Menu -->
-    <div id="full">
-        <input type="checkbox" id="check">
-        <label for="check">
-            <img src="../img/menu-aberto.png">
-        </label>    
-        <nav>
-            <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Extensão</a></li>
-                <li><a href="#">Contatos</a></li>
-            </ul>
-        </nav>
-    </div>    
+    <div class="row">
+        <div class="col-3">
+          <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+            <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#" role="tab" aria-controls="v-pills-home" aria-selected="true">Home</a>
+            <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#" role="tab" aria-controls="v-pills-profile" aria-selected="false">Extensão</a>
+            <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#" role="tab" aria-controls="v-pills-settings" aria-selected="false">Contatos</a>
+            <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" role="tab" aria-controls="v-pills-settings" aria-selected="false" onclick="logout()">logout</a>
+          </div>
+        </div>
+    </div>     
 
     <!-- Materias -->
-    <section id="materias">
-        <div class="conteiner">
-            <h2>Matérias</h2>   
-            <div class="card">
-                <div id="coluna">
-                    <div class="card_pt">
-                        <h5 class="card_title">Portugues</h5>
-                        <span class="card_text">Teste ate achar uma imagem boa<</span>
-                        <br>
-                        <a class="btn-materia" href="#">Ir para matéria</a>
-                    </div>
-                </div>
-                <div id="coluna">
-                    <div class="card_mat">
-                        <h5 class="card_title">Matemática</h5>
-                        <span class="card_text">Teste ate achar uma imagem boa</span>
-                        <br>
-                        <a class="btn-materia" href="#" >Ir para matéria</a>
-                    </div>
-                </div>
-                <div id="coluna">
-                    <div class="card_geo">
-                        <h5 class="card_title">Geografia</h5>
-                        <span class="card_text">Teste ate achar uma imagem boa<</span>
-                        <br>
-                        <a class="btn-materia" href="#">Ir para matéria</a>
-                    </div>
-                </div>
+    <div class="row">
+        <div class="card col-sm-6" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">Geografia</h5>
+                <p class="card-text">Apenas testes.</p>
+                <a href="#" class="btn btn-primary">Ir para materia</a>
             </div>
-        </div>    
-    </section>
+            <div class="card-body">
+                <h5 class="card-title">Matematica</h5>
+                <p class="card-text">Apenas testes.</p>
+                <a href="#" class="btn btn-primary">Ir para materia</a>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Geografia</h5>
+                <p class="card-text">Apenas testes.</p>
+                <a href="#" class="btn btn-primary">Ir para materia</a>
+            </div>
+        </div>
+    </div>   
+        
 
     <!-- Tabela de noticias -->    
     <h2>Notícias</h2>
@@ -123,7 +110,6 @@
         </tbody>       
     </table>
     <br>
-    <button id="logout" onclick="logout()">LOGOUT</button>
 </body>
 
 </html>

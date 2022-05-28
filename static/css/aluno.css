@@ -47,7 +47,7 @@ nav{
     background-color: var(--bg_botao);
     width: 280px;   
     left: -300px;
-    top: 10px;
+    top: 0px;
     height: 100%;
     position: absolute;
     transition: all 110ms;
@@ -66,20 +66,18 @@ a{
     border-radius: rem-calc(6);
     display: block;
     padding: 17px 5px; /*--Altura e largura--*/
-    color: white;
+    color: var(--texto);
     background: var(--bg_botao);
     text-shadow: 0 1px 1px #333;
-    -webkit-box-shadow: 0px 1px 4px 0px rgba(168, 168, 168, 0.6) inset;
-    box-shadow: 0px 1px 4px 0px rgba(168, 168, 168, 0.6) inset;
     transition: all 90ms ease-in;
 }
 
 /*--Transição quando passar o ponteiro--*/
 a:hover{
     text-decoration: none;
-    background: var(--bg);
+    background: var(--bg_pag);
     padding: 17px 5px;
-    color: var(--titulo);
+    color: var(--texto);
     font-size: 20px;      
     text-shadow: 0 1px 1px #333;
     transition: all 90ms ease-out;
@@ -99,11 +97,11 @@ label{
     z-index: 1; /*--Esconde o menu--*/
 }
 
-/*--Botão de logout--*/
+/*--Botão de logout tem que ajeitar--*/
 #logout{
     background: var(--bg_botao);
-    float: right;
-    padding: 7px 15px 7px 15px; /*--Parametros da distancia do bt cadastrar--*/
+    margin-left: 1360px;
+    padding: 7px 15px 7px 15px; /*--Parametros do corpo do botão--*/
     font-size: 12px;
     border-top: 1px solid #dbe5e8;
     -webkit-border-radius: 0 0  5px 5px;
@@ -125,11 +123,18 @@ label{
 }
 
 /*--Cards--*/
+.card{
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    padding: 18px 22% 60px 24%;
+}
 
 .card_title{ /*--Padrao--*/
     text-decoration: center;
     float: center;
-    padding: 7px 100px; /*--Parametros da distancia do bt cadastrar--*/
+    padding: 7px 100px;
     font-size: 12px;
     border-top: 1px solid #dbe5e8;
     -webkit-border-radius: 0 0  5px 5px;
@@ -181,79 +186,73 @@ label{
 }
 
 /*--Botões do card--*/
-#btn-materia{
+.btn-materia{
     border-radius: 5px;
     display: block;
     padding: 15px 5px; /*--Altura e largura--*/
-    color: var(--titulo);
+    color: var(--texto);
     font-size: 14px; 
     background: var(--bg);
     text-shadow: 0 1px 1px #333;
+    -webkit-box-shadow: 0px 1px 4px 0px rgba(168, 168, 168, 0.6) inset;
+    box-shadow: 0px 1px 4px 0px rgba(168, 168, 168, 0.6) inset;
     transition: all 90ms ease-in;
 }
 
-#btn-materia:hover{
+.btn-materia:hover{
     text-decoration: none;
     background: var(--bg_botao);
     padding: 15px 5px;
     color: white;
     font-size: 14px;      
     text-shadow: 0 1px 1px #333;
-    
     transition: all 90ms ease-out;
 }
 
-.row{
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  margin-right: -15px;
-  margin-left: -15px;
-}
-
 #coluna{
-    -ms-flex: 0 0 auto;
-    -ms-flex-preferred-size: 0;
-    flex: 0 0 auto;
-    flex-basis: 0;
-    flex-grow: 1;
-    width: auto;
-    max-width: 100%;
-    position: relative;
     padding-right: 15px;
     padding-left: 15px;
 }
 
 /*--Tabela noticias--*/
 
-/* #teste{
-    border-radius: 5px;
-    background-color: #ffffff;
-    border-color: #95999c;
-    display: block;
-    width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    font-weight: bold;
-    box-shadow: 1px 2px 5px #333;
+#teste{
+    border-collapse: collapse;
+    color: #212529;
+    text-align: center;
+    color: #fff;
+    background-color: #343a40;
+    word-wrap:break-word;
+    table-layout: fixed;
+    width: 50%;
+    margin: auto;
 }
 
-#teste:hover{
-    background-color: var(--bg_botao);
-    border-color: #95999c;
-    display: block;
-    width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    border: 0;
+#teste th,
+#teste td{
+    padding: 0.75rem; /*--Linha do cabeçalho--*/
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
 }
 
-td, th{
-    padding: auto;
+#teste thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #dee2e6;
 }
 
-.full{
-    display: block;
+#teste tbody + tbody {
+    border-top: 2px solid #dee2e6;
 }
-*/
+
+#teste tbody tr:hover{
+    background-color: #454d55;
+    color: ;
+    -webkit-transition: all 0.4s linear;
+    transition: all 0.4s  linear;
+}
+
+#teste th,
+#teste td,
+#teste thead th {
+    border-color: #454d55;
+}

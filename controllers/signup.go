@@ -1,8 +1,9 @@
-package handlers
+package controllers
 
 import (
 	"net/http"
-	userauth "sigma/services/authentication/user"
+	"sigma/db"
+	"sigma/models/user"
 
 	"github.com/gin-gonic/gin"
 )
@@ -25,22 +26,13 @@ func SignupPOST() gin.HandlerFunc {
 		surname := ctx.PostForm("surname")
 		passwd := ctx.PostForm("password")
 
-		user := userauth.InitUser(usern, email, name, surname, passwd)
+		u := user.InitUser(usern, email, name, surname, passwd)
 
-		err := db.Ping() // Tests the database
+		err := user.AddUser(db.DB, u)
 		if err != nil {
-			ctx.Status(http.StatusInternalServerError)
+			ctx.Status(http.StatusConflict)
 			return
 		}
-
-		// It will recover if an error occurs in AddUser
-		// that means that duplicate key error happened
-		defer func() {
-			if r := recover(); r != nil {
-				ctx.Status(http.StatusConflict)
-			}
-		}()
-		userauth.AddUser(db, user)
 
 		ctx.Status(http.StatusOK)
 	}

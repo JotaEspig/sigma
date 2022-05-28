@@ -1,16 +1,14 @@
-package handlers
+package controllers
 
 import (
 	"net/http"
-	userauth "sigma/services/authentication/user"
+	"sigma/config"
+	"sigma/db"
+	"sigma/models/user"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
-)
-
-const (
-	errNoResult = "sql: no rows in result set"
 )
 
 // Validates an user
@@ -23,7 +21,7 @@ func ValidateUser() gin.HandlerFunc {
 		}
 
 		//dToken means decoded token
-		dToken, err := defaultJWT.ValidateToken(token)
+		dToken, err := config.DefaultJWT.ValidateToken(token)
 		if err != nil || !dToken.Valid {
 			ctx.Status(http.StatusUnauthorized)
 			return
@@ -38,13 +36,9 @@ func ValidateUser() gin.HandlerFunc {
 			return
 		}
 
-		user, err := userauth.GetUser(db, claims["username"].(string))
+		u, err := user.GetUser(db.DB, claims["username"].(string))
 		if err != nil {
-			if err.Error() == errNoResult {
-				ctx.Status(http.StatusUnauthorized)
-				return
-			}
-			ctx.Status(http.StatusInternalServerError)
+			ctx.Status(http.StatusUnauthorized)
 			return
 		}
 
@@ -52,7 +46,7 @@ func ValidateUser() gin.HandlerFunc {
 			http.StatusOK,
 			gin.H{
 				"claims": claims,
-				"user":   user.ToMap(),
+				"user":   u.ToMap(),
 			},
 		)
 	}
@@ -66,13 +60,12 @@ func GetUserInfo() gin.HandlerFunc {
 		resp := struct {
 			Params []string
 		}{}
-		ctx.BindJSON(&resp)
-		// Test:
-		// curl -X GET http://127.0.0.1:8080/user/get -H "Content-Type: application/json" \
-		// -d "{\"username\": \"admin\",\"params\":[\"username\", \"email\"]}"
+		// ShouldBind is used to not set header status code to 400
+		// if there is an error
+		ctx.ShouldBindJSON(&resp)
 
-		user, err := userauth.GetUser(db, username, resp.Params...)
-		if err != nil || user == nil {
+		u, err := user.GetUser(db.DB, username, resp.Params...)
+		if err != nil {
 			ctx.Status(http.StatusNotFound)
 			return
 		}
@@ -80,7 +73,7 @@ func GetUserInfo() gin.HandlerFunc {
 		ctx.JSON(
 			http.StatusOK,
 			gin.H{
-				"user": user.ToMap(),
+				"user": u.ToMap(),
 			},
 		)
 	}

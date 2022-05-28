@@ -1,9 +1,13 @@
-package database
+package config
 
 import (
 	"fmt"
 	"os"
+	"sigma/auth"
 )
+
+// JWTService variable
+var DefaultJWT = auth.JWTAuthService()
 
 // Checks if there is a environment variable and return its value,
 // if not exists it returns a default value
@@ -15,12 +19,10 @@ func checkEnv(envName string, defaultVal string) string {
 }
 
 // Gets the config to open the database
-func getConfig() (string, string) {
-	postgresDriver := "postgres"
-
+func GetDBConfig() string {
 	// Checks if it's running on heroku
 	if url := os.Getenv("DATABASE_URL"); url != "" {
-		return postgresDriver, url
+		return url
 	}
 
 	user := checkEnv("DB_USERNAME", "postgres")
@@ -32,5 +34,5 @@ func getConfig() (string, string) {
 	connectionStr := fmt.Sprintf("host=%s port=%s user=%s "+
 		"password=%s dbname=%s sslmode=disable", host, port, user, password, dbName)
 
-	return postgresDriver, connectionStr
+	return connectionStr
 }
