@@ -15,7 +15,7 @@ $(document).ready(function () {
                     token = response["token"];
                     if (token != "") {
                         setCookie("auth", token, 48 * 60); // 48 (hours) * 60 (minutes) = 2 days
-                        window.location = "/aluno";
+                        window.location = "/user/"+response["username"]+"/aluno";
                     }
                 },
                 401: function() {
@@ -34,10 +34,10 @@ $(document).ready(function () {
         // Does a request to check if the cookie is legit and hasn't expired
         $.ajax({
             type: "get",
-            url: "/validate/user",
+            url: "/user/validate",
             statusCode: {
-                200: function() {
-                    window.location = "/aluno";
+                200: function(response) {
+                    window.location = "/user/" + response["user"]["username"] + "/aluno";
                 }
             }
         });

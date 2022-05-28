@@ -1,8 +1,12 @@
 $(document).ready(function () {
 
+    var url = window.location.pathname;
+    var username = url.split('/')[2];
+    var newURL = "/user/"+username+"/validate"
+
     $.ajax({
         type: "get",
-        url: "/validate/user",
+        url: newURL,
         success: function (response) {
             $("#username").html(response["user"]["username"]);
             document.title = response["user"]["username"];

@@ -48,7 +48,8 @@ func LoginPOST() gin.HandlerFunc {
 		ctx.JSON(
 			http.StatusOK,
 			gin.H{
-				"token": token,
+				"username": usern,
+				"token":    token,
 			},
 		)
 	}

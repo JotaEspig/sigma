@@ -7,6 +7,21 @@ import (
 	"gorm.io/gorm"
 )
 
+// Slice of all student params
+var StudentParams = []string{
+	"id",
+	"year",
+	"status",
+	"user_id",
+}
+
+// Slice of public student params
+var PublicStudentParams = []string{
+	"id",
+	"year",
+	"user_id",
+}
+
 // Adds a student to a database.
 func AddStudent(db *gorm.DB, s *Student) error {
 	return db.Transaction(func(tx *gorm.DB) error {
@@ -34,7 +49,7 @@ func GetStudent(db *gorm.DB, username string, columns ...string) (*Student, erro
 		return nil, err
 	}
 
-	columnsToUse := dbPKG.GetColumns(columns...)
+	columnsToUse := dbPKG.GetColumns(StudentParams, columns...)
 
 	err = db.Select(columnsToUse).Where("user_id = ?", u.ID).First(s).Error
 	return s, err
