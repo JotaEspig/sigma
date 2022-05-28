@@ -45,7 +45,7 @@ func GetUser(db *gorm.DB, username string, params ...string) (*User, error) {
 
 // Removes an user from a database
 func RmUser(db *gorm.DB, username string) error {
-	return db.Unscoped().Where("username = ?", username).Delete(&User{}).Error
+	return db.Unscoped().Delete(&User{}, "username = ?", username).Error
 }
 
 // AutoMigrate the user table
