@@ -6,6 +6,8 @@ import (
 	"gorm.io/gorm"
 )
 
+// TODO Jota: Add a function to update a classroom
+
 // Slice containing all classroom params
 var ClassroomParams = []string{
 	"id",
