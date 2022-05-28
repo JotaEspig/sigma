@@ -15,8 +15,6 @@ const (
 	defEmail    = "defEmail"
 )
 
-// TODO Jota: Must make tests use gorm instead of sqlx
-
 func TestUserValidate(t *testing.T) {
 	u1 := user.InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
 	u2 := user.InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
