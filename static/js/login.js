@@ -36,8 +36,8 @@ $(document).ready(function () {
             type: "get",
             url: "/user/validate",
             statusCode: {
-                200: function() {
-                    window.location = "/aluno";
+                200: function(response) {
+                    window.location = "/user/" + response["user"]["username"] + "/aluno";
                 }
             }
         });
