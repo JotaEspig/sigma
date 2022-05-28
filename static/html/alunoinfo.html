@@ -13,9 +13,9 @@
         $(document).ready(function () {
             var url = window.location.pathname;
             var username = url.substring(url.lastIndexOf('/') + 1);
-            var newURL = "/user/"+username+"/get"
+            var newURL = "/user/"+username
             $.ajax({
-                type: "get",
+                type: "post",
                 url: newURL,
                 dataType: "json",
                 success: function (response) {
