@@ -45,3 +45,7 @@ func GetClassroom(db *gorm.DB, id uint, params ...string) (*Classroom, error) {
 func RmClassroom(db *gorm.DB, id uint) error {
 	return db.Unscoped().Delete(&Classroom{}, "id = ?", id).Error
 }
+
+func init() {
+	dbPKG.DB.AutoMigrate(&Classroom{})
+}
