@@ -8,11 +8,11 @@ import (
 
 // Constants to use in tests, def = default
 const (
-	defUsername = "defUsername"
-	defPasswd   = "defPasswd"
-	defName     = "defName"
-	defSurname  = "defSurname"
-	defEmail    = "defEmail"
+	defUsername = "TestUsername"
+	defPasswd   = "TestPasswd"
+	defName     = "TestName"
+	defSurname  = "TestSurname"
+	defEmail    = "TestEmail"
 )
 
 func TestUserValidate(t *testing.T) {
@@ -64,7 +64,7 @@ func TestGetUser(t *testing.T) {
 	if err != nil {
 		t.Errorf("getting legit user: %s", err)
 	}
-	if u.Model.ID == 0 {
+	if u.ID == 0 {
 		t.Errorf("getting legit user: ID is 0")
 	}
 
@@ -83,8 +83,12 @@ func TestGetUser(t *testing.T) {
 		t.Errorf("getting legit user (parcial info): name is filled")
 	}
 
-	u, _ = user.GetUser(db.DB, "non-existent-user")
-	if u.Model.ID != 0 {
+	// Gets non-existent user
+	u, err = user.GetUser(db.DB, "non-existent-user")
+	if err == nil {
+		t.Errorf("getting non-existent user (it's not supposed to work): %s", err)
+	}
+	if u.ID != 0 {
 		t.Errorf("getting non existent user (it's not supposed to work): ID is not 0")
 	}
 

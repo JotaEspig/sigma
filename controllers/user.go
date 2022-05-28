@@ -53,7 +53,7 @@ func GetAlunoPage() gin.HandlerFunc {
 	}
 }
 
-// Validates an user
+// Validates a user
 func ValidateUser() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		username := ctx.Param("username")
@@ -73,7 +73,7 @@ func ValidateUser() gin.HandlerFunc {
 	}
 }
 
-// Validates an user with token got from cookie auth
+// Validates a user with token got from cookie auth
 func ValidateUserWithToken() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		token, err := ctx.Cookie("auth")

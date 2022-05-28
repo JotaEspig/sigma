@@ -25,10 +25,10 @@ func TestAddStudent(t *testing.T) {
 		t.Errorf("initializing student: %s", err)
 	}
 
-	// Adds student without year and status
+	// Adds student without status
 	err = student.AddStudent(db.DB, s)
 	if err != nil {
-		t.Errorf("adding legit user (without year and status): %s", err)
+		t.Errorf("adding legit user (without status): %s", err)
 	}
 
 	// repeating the same action to check 'unique' columns
@@ -42,13 +42,12 @@ func TestAddStudent(t *testing.T) {
 		t.Errorf("removing legit user: %s", err)
 	}
 
-	s.Year = 2
 	s.Status = "ativo"
 
-	// Adds user with year and status
+	// Adds user with status
 	err = student.AddStudent(db.DB, s)
 	if err != nil {
-		t.Errorf("adding legit user (without year and status): %s", err)
+		t.Errorf("adding legit user (without status): %s", err)
 	}
 
 	err = student.RmStudent(db.DB, s.User.Username)
@@ -83,13 +82,12 @@ func TestGetStudent(t *testing.T) {
 		t.Errorf("initializing student: %s", err)
 	}
 
-	s.Year = 2
 	s.Status = "ativo"
 
 	// Adds user with year and status
 	err = student.AddStudent(db.DB, s)
 	if err != nil {
-		t.Errorf("adding legit user (without year and status): %s", err)
+		t.Errorf("adding legit user (without status): %s", err)
 	}
 
 	_, err = student.GetStudent(db.DB, u.Username)
@@ -98,17 +96,15 @@ func TestGetStudent(t *testing.T) {
 	}
 
 	// Checks if get student parcial info is working
-	s, err = student.GetStudent(db.DB, u.Username, "year", "status")
+	s, err = student.GetStudent(db.DB, u.Username, "status")
 	if err != nil {
 		t.Errorf("getting legit student (parcial info): %s", err)
-	}
-	if s.Year == 0 {
-		t.Errorf("getting legit student (parcial info): year is empty")
 	}
 	if s.Status == "" {
 		t.Errorf("getting legit student (parcial info): status is empty")
 	}
 
+	// Gets non-existent student
 	_, err = student.GetStudent(db.DB, "non-existent-username")
 	if err == nil {
 		t.Errorf("getting non existent student (it's not supposed to work): %s", err)

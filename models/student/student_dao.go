@@ -7,10 +7,11 @@ import (
 	"gorm.io/gorm"
 )
 
+// TODO Jota: Add a function to update a student
+
 // Slice of all student params
 var StudentParams = []string{
 	"id",
-	"year",
 	"status",
 	"user_id",
 }
@@ -18,7 +19,6 @@ var StudentParams = []string{
 // Slice of public student params
 var PublicStudentParams = []string{
 	"id",
-	"year",
 	"user_id",
 }
 
@@ -41,7 +41,7 @@ func AddStudent(db *gorm.DB, s *Student) error {
 }
 
 // Gets a student from a database
-func GetStudent(db *gorm.DB, username string, columns ...string) (*Student, error) {
+func GetStudent(db *gorm.DB, username string, params ...string) (*Student, error) {
 	s := &Student{}
 
 	u, err := user.GetUser(db, username, "id")
@@ -49,9 +49,22 @@ func GetStudent(db *gorm.DB, username string, columns ...string) (*Student, erro
 		return nil, err
 	}
 
-	columnsToUse := dbPKG.GetColumns(StudentParams, columns...)
+	columnsToUse := dbPKG.GetColumns(StudentParams, params...)
 
 	err = db.Select(columnsToUse).Where("user_id = ?", u.ID).First(s).Error
+	if err != nil {
+		return nil, err
+	}
+
+	err = db.Model(s).Association("User").Find(&s.User)
+	if err != nil {
+		return nil, err
+	}
+
+	if s.ClassroomID != 0 {
+		err = db.Model(s).Association("Classroom").Find(&s.Classroom)
+	}
+
 	return s, err
 }
 
@@ -62,5 +75,10 @@ func RmStudent(db *gorm.DB, username string) error {
 		return err
 	}
 
-	return db.Unscoped().Where("user_id = ?", u.ID).Delete(&Student{}).Error
+	return db.Unscoped().Delete(&Student{}, "user_id = ?", u.ID).Error
+}
+
+// AutoMigrate the student table
+func init() {
+	dbPKG.DB.AutoMigrate(&Student{})
 }
