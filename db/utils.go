@@ -1,11 +1,20 @@
 package db
 
-func GetColumns(columns ...string) interface{} {
-	var columnsToUse interface{}
+// Gets intersection of allowedColumns and columns
+func GetColumns(allowedColumns []string, columns ...string) []string {
+	var columnsToUse []string
 
-	columnsToUse = "*"
-	if len(columns) != 0 {
-		columnsToUse = columns
+	if len(columns) == 0 {
+		return allowedColumns
+	}
+
+	// gets intersection of allowedColumns and columns
+	for _, col := range columns {
+		for _, allowedCol := range allowedColumns {
+			if col == allowedCol {
+				columnsToUse = append(columnsToUse, col)
+			}
+		}
 	}
 
 	return columnsToUse
