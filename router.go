@@ -64,13 +64,13 @@ func setRoutes(router *gin.Engine) {
 	router.POST("/cadastro", controllers.SignupPOST())
 
 	// Validates User
-	router.GET("/validate/user", controllers.ValidateUser())
+	router.GET("/user/validate", controllers.ValidateUser())
 
 	// Get user
 	router.GET("/user/:username", func(ctx *gin.Context) {
 		ctx.HTML(http.StatusOK, "alunoinfo.html", nil)
 	})
-	router.GET("/user/:username/get", controllers.GetUserInfo())
+	router.POST("/user/:username", controllers.GetUserInfo())
 
 	// Aluno
 	router.GET("/aluno", middlewares.AuthMiddleware(), func(ctx *gin.Context) {
