@@ -52,6 +52,12 @@ func GetStudent(db *gorm.DB, username string, columns ...string) (*Student, erro
 	columnsToUse := dbPKG.GetColumns(StudentParams, columns...)
 
 	err = db.Select(columnsToUse).Where("user_id = ?", u.ID).First(s).Error
+	if err != nil {
+		return nil, err
+	}
+
+	err = db.Model(s).Association("User").Find(&s.User)
+
 	return s, err
 }
 
