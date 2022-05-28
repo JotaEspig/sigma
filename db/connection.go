@@ -21,7 +21,7 @@ func connInit() *Connection {
 
 // Connects with a database
 func (c *Connection) connectDB() {
-	connStr := config.GetDBConfig() // from config.go
+	connStr := config.GetDBConfig()
 	newDB, err := gorm.Open(postgres.Open(connStr), &gorm.Config{})
 	if err != nil {
 		panic(err)
