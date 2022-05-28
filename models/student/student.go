@@ -12,7 +12,7 @@ type Student struct {
 	gorm.Model
 	Status      string
 	UserID      uint `gorm:"not null;unique"`
-	ClassroomID uint `gorm:"unique"`
+	ClassroomID uint `gorm:"default:null"`
 	User        *user.User
 	Classroom   *classroom.Classroom
 }
