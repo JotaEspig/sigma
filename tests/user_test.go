@@ -8,11 +8,11 @@ import (
 
 // Constants to use in tests, def = default
 const (
-	defUsername = "defUsername"
-	defPasswd   = "defPasswd"
-	defName     = "defName"
-	defSurname  = "defSurname"
-	defEmail    = "defEmail"
+	defUsername = "TestUsername"
+	defPasswd   = "TestPasswd"
+	defName     = "TestName"
+	defSurname  = "TestSurname"
+	defEmail    = "TestEmail"
 )
 
 func TestUserValidate(t *testing.T) {
