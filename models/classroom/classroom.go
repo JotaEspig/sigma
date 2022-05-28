@@ -2,16 +2,14 @@ package classroom
 
 import (
 	"errors"
-	"sigma/models/student"
 
 	"gorm.io/gorm"
 )
 
 type Classroom struct {
 	gorm.Model
-	Name     string
-	Year     uint8
-	Students []*student.Student
+	Name string
+	Year uint8
 }
 
 func InitClassroom(name string, year uint8) (*Classroom, error) {
@@ -34,9 +32,6 @@ func (c *Classroom) ToMap() map[string]interface{} {
 	classroomMap["name"] = c.Name
 	classroomMap["year"] = c.Year
 	classroomMap["students"] = []map[string]interface{}{}
-	for _, s := range c.Students {
-		classroomMap["students"] = append(classroomMap["students"].([]map[string]interface{}), s.ToMap())
-	}
 
 	return classroomMap
 }
