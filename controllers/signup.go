@@ -17,7 +17,7 @@ func SignupGET() gin.HandlerFunc {
 	}
 }
 
-// Gets the values from the form, creates an user and inserts it in the database
+// Gets the values from the form, creates a user and inserts it in the database
 func SignupPOST() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		usern := ctx.PostForm("username")

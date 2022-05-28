@@ -29,12 +29,12 @@ var PublicUserParams = []string{
 	"type",
 }
 
-// Adds an user to a database.
+// Adds a user to a database.
 func AddUser(db *gorm.DB, u *User) error {
 	return db.Create(u).Error
 }
 
-// Gets an user from a database
+// Gets a user from a database
 func GetUser(db *gorm.DB, username string, params ...string) (*User, error) {
 	u := &User{}
 
@@ -45,7 +45,7 @@ func GetUser(db *gorm.DB, username string, params ...string) (*User, error) {
 	return u, err
 }
 
-// Removes an user from a database
+// Removes a user from a database
 func RmUser(db *gorm.DB, username string) error {
 	return db.Unscoped().Delete(&User{}, "username = ?", username).Error
 }
