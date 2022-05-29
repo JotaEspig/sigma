@@ -6,8 +6,6 @@ import (
 	"gorm.io/gorm"
 )
 
-// TODO Jota: Add a function to update a classroom
-
 // Slice containing all classroom params
 var ClassroomParams = []string{
 	"id",
@@ -39,6 +37,11 @@ func GetClassroom(db *gorm.DB, id uint, params ...string) (*Classroom, error) {
 	}
 
 	return c, nil
+}
+
+// Updates a classroom in a database
+func UpdateClassroom(db *gorm.DB, c *Classroom) error {
+	return db.Save(c).Error
 }
 
 // Removes a classroom from a database

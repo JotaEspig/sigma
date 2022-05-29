@@ -6,8 +6,6 @@ import (
 	"gorm.io/gorm"
 )
 
-// TODO Jota: Add a function to update a user
-
 // Slice of all user params
 var UserParams = []string{
 	"id",
@@ -43,6 +41,11 @@ func GetUser(db *gorm.DB, username string, params ...string) (*User, error) {
 	err := db.Select(columnsToUse).Where("username = ?", username).First(u).Error
 
 	return u, err
+}
+
+// Updates a user in a database
+func UpdateUser(db *gorm.DB, u *User) error {
+	return db.Save(u).Error
 }
 
 // Removes a user from a database
