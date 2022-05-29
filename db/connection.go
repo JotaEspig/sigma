@@ -5,6 +5,7 @@ import (
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 )
 
 var DB = connInit().getDB()
@@ -22,7 +23,9 @@ func connInit() *Connection {
 // Connects with a database
 func (c *Connection) connectDB() {
 	connStr := config.GetDBConfig()
-	newDB, err := gorm.Open(postgres.Open(connStr), &gorm.Config{})
+	newDB, err := gorm.Open(postgres.Open(connStr), &gorm.Config{
+		Logger: logger.Default.LogMode(logger.Silent),
+	})
 	if err != nil {
 		panic(err)
 	}
