@@ -98,6 +98,52 @@ func TestGetUser(t *testing.T) {
 	}
 }
 
+func TestUpdateUser(t *testing.T) {
+	db.DB.AutoMigrate(&user.User{})
+
+	u := user.InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
+
+	// Adds if user's not added in the database
+	user.AddUser(db.DB, u)
+
+	u, err := user.GetUser(db.DB, defUsername)
+	if err != nil {
+		t.Errorf("getting legit user: %s", err)
+	}
+	if u.ID == 0 {
+		t.Errorf("getting legit user: ID is 0")
+	}
+
+	// Updates user
+	u.Email = "different Email"
+	u.Name = "different Name"
+	u.Surname = "different Surname"
+
+	err = user.UpdateUser(db.DB, u)
+	if err != nil {
+		t.Errorf("updating legit user: %s", err)
+	}
+
+	u, err = user.GetUser(db.DB, defUsername)
+	if err != nil {
+		t.Errorf("getting legit user: %s", err)
+	}
+	if u.Email != "different Email" {
+		t.Errorf("updating legit user: email is not changed")
+	}
+	if u.Name != "different Name" {
+		t.Errorf("updating legit user: name is not changed")
+	}
+	if u.Surname != "different Surname" {
+		t.Errorf("updating legit user: surname is not changed")
+	}
+
+	err = user.RmUser(db.DB, defUsername)
+	if err != nil {
+		t.Errorf("removing legit user: %s", err)
+	}
+}
+
 func TestRmUser(t *testing.T) {
 	db.DB.AutoMigrate(&user.User{})
 
