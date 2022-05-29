@@ -37,5 +37,4 @@ func TestGenerateAndValidate(t *testing.T) {
 	if dToken.Valid || err == nil {
 		t.Errorf("Error in validating fake token (other secret key): %s", err)
 	}
-
 }
