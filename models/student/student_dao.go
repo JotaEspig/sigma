@@ -7,8 +7,6 @@ import (
 	"gorm.io/gorm"
 )
 
-// TODO Jota: Add a function to update a student
-
 // Slice of all student params
 var StudentParams = []string{
 	"id",
@@ -26,7 +24,7 @@ var PublicStudentParams = []string{
 func AddStudent(db *gorm.DB, s *Student) error {
 	return db.Transaction(func(tx *gorm.DB) error {
 		s.User.Type = "student"
-		err := tx.Save(s.User).Error
+		err := user.UpdateUser(db, s.User)
 		if err != nil {
 			return err
 		}
@@ -66,6 +64,11 @@ func GetStudent(db *gorm.DB, username string, params ...string) (*Student, error
 	}
 
 	return s, err
+}
+
+// Updates a student in a database
+func UpdateStudent(db *gorm.DB, s *Student) error {
+	return db.Save(s).Error
 }
 
 // Removes a student from a database
