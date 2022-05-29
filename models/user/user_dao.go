@@ -45,7 +45,7 @@ func GetUser(db *gorm.DB, username string, params ...string) (*User, error) {
 
 // Updates a user in a database
 func UpdateUser(db *gorm.DB, u *User) error {
-	return db.Save(u).Error
+	return db.Model(u).Updates(u).Error
 }
 
 // Removes a user from a database

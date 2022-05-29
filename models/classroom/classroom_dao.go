@@ -41,7 +41,7 @@ func GetClassroom(db *gorm.DB, id uint, params ...string) (*Classroom, error) {
 
 // Updates a classroom in a database
 func UpdateClassroom(db *gorm.DB, c *Classroom) error {
-	return db.Save(c).Error
+	return db.Model(c).Updates(c).Error
 }
 
 // Removes a classroom from a database

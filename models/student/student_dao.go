@@ -68,7 +68,7 @@ func GetStudent(db *gorm.DB, username string, params ...string) (*Student, error
 
 // Updates a student in a database
 func UpdateStudent(db *gorm.DB, s *Student) error {
-	return db.Save(s).Error
+	return db.Model(s).Updates(s).Error
 }
 
 // Removes a student from a database
