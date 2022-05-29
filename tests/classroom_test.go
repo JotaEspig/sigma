@@ -78,6 +78,40 @@ func TestGetClassroom(t *testing.T) {
 	}
 }
 
+func TestUpdateClassroom(t *testing.T) {
+	db.DB.AutoMigrate(&classroom.Classroom{})
+
+	c, err := classroom.InitClassroom(defClassroomName, defClassroomYear)
+	if err != nil {
+		t.Errorf("initializing classroom: %s", err)
+	}
+
+	err = classroom.AddClassroom(db.DB, c)
+	if err != nil {
+		t.Errorf("adding legit classroom: %s", err)
+	}
+
+	c.Name = "different classroom name"
+	err = classroom.UpdateClassroom(db.DB, c)
+	if err != nil {
+		t.Errorf("updating legit classroom: %s", err)
+	}
+
+	c, err = classroom.GetClassroom(db.DB, c.ID)
+	if err != nil {
+		t.Errorf("getting legit classroom: %s", err)
+	}
+	if c.Name != "different classroom name" {
+		t.Errorf("updating legit classroom: classroom name is not updated")
+	}
+
+	err = classroom.RmClassroom(db.DB, c.ID)
+	if err != nil {
+		t.Errorf("removing legit classroom: %s", err)
+	}
+
+}
+
 func TestRmClassroom(t *testing.T) {
 	db.DB.AutoMigrate(&classroom.Classroom{})
 
