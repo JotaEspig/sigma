@@ -1,6 +1,8 @@
 package student
 
 import (
+	// dbPKG means 'the package db', because if it's named db
+	// it will conflict with db variable in the functions below
 	dbPKG "sigma/db"
 	"sigma/models/user"
 
