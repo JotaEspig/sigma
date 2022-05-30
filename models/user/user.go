@@ -33,9 +33,9 @@ func InitUser(usern, email, name, surname, password string) *User {
 
 // Validates the user. It compares the hashed password in the database
 // to the password that the user input
-func (u *User) Validate(userInput, passInput string) bool {
-	err := bcrypt.CompareHashAndPassword([]byte(u.HashedPassword), []byte(passInput))
-	return u.Username == userInput && err == nil
+func (u *User) Validate(username, password string) bool {
+	err := bcrypt.CompareHashAndPassword([]byte(u.HashedPassword), []byte(password))
+	return u.Username == username && err == nil
 }
 
 // Returns a map containing user info WITHOUT password.
