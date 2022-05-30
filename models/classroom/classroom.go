@@ -2,12 +2,10 @@ package classroom
 
 import (
 	"errors"
-
-	"gorm.io/gorm"
 )
 
 type Classroom struct {
-	gorm.Model
+	ID   uint `gorm:"primary_key"`
 	Name string
 	Year uint8
 }
