@@ -4,17 +4,15 @@ import (
 	"errors"
 	"sigma/models/classroom"
 	"sigma/models/user"
-
-	"gorm.io/gorm"
 )
 
 type Student struct {
-	gorm.Model
+	ID          uint `gorm:"primary_key"`
 	Status      string
 	UserID      uint `gorm:"not null;unique"`
 	ClassroomID uint `gorm:"default:null"`
-	*user.User
-	*classroom.Classroom
+	User        *user.User
+	Classroom   *classroom.Classroom
 }
 
 func InitStudent(u *user.User) (*Student, error) {
@@ -23,6 +21,7 @@ func InitStudent(u *user.User) (*Student, error) {
 	}
 
 	s := &Student{
+		ID:     u.ID,
 		UserID: u.ID,
 		User:   u,
 	}
@@ -36,7 +35,6 @@ func (s *Student) ToMap() map[string]interface{} {
 	studentMap["status"] = s.Status
 	studentMap["user_id"] = s.UserID
 	studentMap["classroom_id"] = s.ClassroomID
-	studentMap["user"] = s.User.ToMap()
 	studentMap["classroom"] = s.Classroom.ToMap()
 	return studentMap
 }
