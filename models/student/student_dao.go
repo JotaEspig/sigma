@@ -49,7 +49,7 @@ func GetStudent(db *gorm.DB, username string, params ...string) (*Student, error
 
 	columnsToUse := dbPKG.GetColumns(StudentParams, params...)
 
-	err = db.Select(columnsToUse).Where("user_id = ?", u.ID).First(s).Error
+	err = db.Select(columnsToUse).Where("id = ?", u.ID).First(s).Error
 	if err != nil {
 		return nil, err
 	}
@@ -78,7 +78,7 @@ func RmStudent(db *gorm.DB, username string) error {
 		return err
 	}
 
-	return db.Unscoped().Delete(&Student{}, "user_id = ?", u.ID).Error
+	return db.Unscoped().Delete(&Student{}, "id = ?", u.ID).Error
 }
 
 // AutoMigrate the student table
