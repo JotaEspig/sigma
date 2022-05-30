@@ -13,8 +13,8 @@ type Student struct {
 	Status      string
 	UserID      uint `gorm:"not null;unique"`
 	ClassroomID uint `gorm:"default:null"`
-	User        *user.User
-	Classroom   *classroom.Classroom
+	*user.User
+	*classroom.Classroom
 }
 
 func InitStudent(u *user.User) (*Student, error) {
