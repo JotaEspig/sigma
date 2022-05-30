@@ -31,10 +31,17 @@ func InitStudent(u *user.User) (*Student, error) {
 
 // Adds student value to map contaning user info
 func (s *Student) ToMap() map[string]interface{} {
-	studentMap := s.User.ToMap()
+	studentMap := make(map[string]interface{})
+	if s.User != nil {
+		studentMap = s.User.ToMap()
+	}
+
 	studentMap["status"] = s.Status
 	studentMap["user_id"] = s.UserID
 	studentMap["classroom_id"] = s.ClassroomID
-	studentMap["classroom"] = s.Classroom.ToMap()
+	if s.Classroom != nil {
+		studentMap["classroom"] = s.Classroom.ToMap()
+	}
+
 	return studentMap
 }
