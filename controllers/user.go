@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"sigma/config"
 	"sigma/db"
+	"sigma/models/student"
 	"sigma/models/user"
 	"time"
 
@@ -22,27 +23,38 @@ func GetUserInfoPage() gin.HandlerFunc {
 func GetUserInfo() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		username := ctx.Param("username")
-
-		resp := struct {
-			Params []string
-		}{}
-		// ShouldBind is used to not set header status code to 400
-		// if there is an error
-		ctx.ShouldBindJSON(&resp)
-
-		params := db.GetColumns(user.PublicUserParams, resp.Params...)
-		u, err := user.GetUser(db.DB, username, params...)
+		u, err := user.GetUser(db.DB, username, "type")
 		if err != nil {
 			ctx.AbortWithStatus(http.StatusNotFound)
 			return
 		}
 
-		ctx.JSON(
-			http.StatusOK,
-			gin.H{
-				"user": u.ToMap(),
-			},
-		)
+		if u.Type == "" {
+			ctx.JSON(
+				http.StatusOK,
+				gin.H{
+					"user": u.ToMap(),
+				},
+			)
+			return
+		}
+
+		switch u.Type {
+		case "student":
+			s, err := student.GetStudent(db.DB, username)
+			if err != nil {
+				ctx.AbortWithStatus(http.StatusNotFound)
+				return
+			}
+
+			ctx.JSON(
+				http.StatusOK,
+				gin.H{
+					"user": s.ToMap(),
+				},
+			)
+			return
+		}
 	}
 }
 
