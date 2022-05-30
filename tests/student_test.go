@@ -47,7 +47,7 @@ func TestAddStudent(t *testing.T) {
 	// Adds user with status
 	err = student.AddStudent(db.DB, s)
 	if err != nil {
-		t.Errorf("adding legit user (without status): %s", err)
+		t.Errorf("adding legit user: %s", err)
 	}
 
 	err = student.RmStudent(db.DB, s.User.Username)
