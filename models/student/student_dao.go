@@ -13,13 +13,11 @@ import (
 var StudentParams = []string{
 	"id",
 	"status",
-	"user_id",
 }
 
 // Slice of public student params
 var PublicStudentParams = []string{
 	"id",
-	"user_id",
 }
 
 // Adds a student to a database.

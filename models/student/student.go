@@ -7,11 +7,10 @@ import (
 )
 
 type Student struct {
-	ID          uint `gorm:"primary_key"`
+	UID         uint `gorm:"primary_key;column:id"`
 	Status      string
-	UserID      uint `gorm:"not null;unique"`
-	ClassroomID uint `gorm:"default:null"`
-	User        *user.User
+	ClassroomID uint       `gorm:"default:null"`
+	User        *user.User `gorm:"foreignKey:UID"`
 	Classroom   *classroom.Classroom
 }
 
@@ -21,9 +20,8 @@ func InitStudent(u *user.User) (*Student, error) {
 	}
 
 	s := &Student{
-		ID:     u.ID,
-		UserID: u.ID,
-		User:   u,
+		UID:  u.ID,
+		User: u,
 	}
 
 	return s, nil
@@ -37,7 +35,6 @@ func (s *Student) ToMap() map[string]interface{} {
 	}
 
 	studentMap["status"] = s.Status
-	studentMap["user_id"] = s.UserID
 	studentMap["classroom_id"] = s.ClassroomID
 	if s.Classroom != nil {
 		studentMap["classroom"] = s.Classroom.ToMap()
