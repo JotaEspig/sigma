@@ -66,12 +66,13 @@ func setRoutes(router *gin.Engine) {
 
 	// Get user
 	user.GET("/:username", controllers.GetUserInfoPage())
-	user.POST("/:username", controllers.GetUserInfo())
+	user.POST("/:username", controllers.GetPublicUserInfo())
 
+	// TODO Jota: Check if validate is logical
 	// Validates User
-	user.GET("/validate", controllers.ValidateUserWithToken())
+	user.GET("/validate", controllers.ValidateUser())
 	user.GET("/:username/validate",
-		middlewares.AuthMiddleware(), controllers.ValidateUser())
+		middlewares.AuthMiddleware(), controllers.GetAllUserInfo())
 
 	// Aluno
 	user.GET("/:username/aluno",
