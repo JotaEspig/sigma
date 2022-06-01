@@ -1,32 +1,30 @@
 package student
 
 import (
+	// dbPKG means 'the package db', because if it's named db
+	// it will conflict with db variable in the functions below
 	dbPKG "sigma/db"
 	"sigma/models/user"
 
 	"gorm.io/gorm"
 )
 
-// TODO Jota: Add a function to update a student
-
 // Slice of all student params
 var StudentParams = []string{
 	"id",
 	"status",
-	"user_id",
 }
 
 // Slice of public student params
 var PublicStudentParams = []string{
 	"id",
-	"user_id",
 }
 
 // Adds a student to a database.
 func AddStudent(db *gorm.DB, s *Student) error {
 	return db.Transaction(func(tx *gorm.DB) error {
 		s.User.Type = "student"
-		err := tx.Save(s.User).Error
+		err := user.UpdateUser(db, s.User)
 		if err != nil {
 			return err
 		}
@@ -51,7 +49,7 @@ func GetStudent(db *gorm.DB, username string, params ...string) (*Student, error
 
 	columnsToUse := dbPKG.GetColumns(StudentParams, params...)
 
-	err = db.Select(columnsToUse).Where("user_id = ?", u.ID).First(s).Error
+	err = db.Select(columnsToUse).Where("id = ?", u.ID).First(s).Error
 	if err != nil {
 		return nil, err
 	}
@@ -68,6 +66,11 @@ func GetStudent(db *gorm.DB, username string, params ...string) (*Student, error
 	return s, err
 }
 
+// Updates a student in a database
+func UpdateStudent(db *gorm.DB, s *Student) error {
+	return db.Model(s).Updates(s).Error
+}
+
 // Removes a student from a database
 func RmStudent(db *gorm.DB, username string) error {
 	u, err := user.GetUser(db, username, "id")
@@ -75,7 +78,7 @@ func RmStudent(db *gorm.DB, username string) error {
 		return err
 	}
 
-	return db.Unscoped().Delete(&Student{}, "user_id = ?", u.ID).Error
+	return db.Unscoped().Delete(&Student{}, "id = ?", u.ID).Error
 }
 
 // AutoMigrate the student table

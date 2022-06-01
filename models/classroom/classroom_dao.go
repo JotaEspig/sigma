@@ -1,12 +1,12 @@
 package classroom
 
 import (
+	// dbPKG means 'the package db', because if it's named db
+	// it will conflict with db variable in the functions below
 	dbPKG "sigma/db"
 
 	"gorm.io/gorm"
 )
-
-// TODO Jota: Add a function to update a classroom
 
 // Slice containing all classroom params
 var ClassroomParams = []string{
@@ -39,6 +39,11 @@ func GetClassroom(db *gorm.DB, id uint, params ...string) (*Classroom, error) {
 	}
 
 	return c, nil
+}
+
+// Updates a classroom in a database
+func UpdateClassroom(db *gorm.DB, c *Classroom) error {
+	return db.Model(c).Updates(c).Error
 }
 
 // Removes a classroom from a database

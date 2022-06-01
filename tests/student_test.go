@@ -47,7 +47,7 @@ func TestAddStudent(t *testing.T) {
 	// Adds user with status
 	err = student.AddStudent(db.DB, s)
 	if err != nil {
-		t.Errorf("adding legit user (without status): %s", err)
+		t.Errorf("adding legit user: %s", err)
 	}
 
 	err = student.RmStudent(db.DB, s.User.Username)
@@ -67,6 +67,7 @@ func TestAddStudent(t *testing.T) {
 
 func TestGetStudent(t *testing.T) {
 	db.DB.AutoMigrate(&student.Student{})
+
 	u := user.InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
 
 	// Adds if user's not added in the database
@@ -108,6 +109,57 @@ func TestGetStudent(t *testing.T) {
 	_, err = student.GetStudent(db.DB, "non-existent-username")
 	if err == nil {
 		t.Errorf("getting non existent student (it's not supposed to work): %s", err)
+	}
+
+	err = student.RmStudent(db.DB, defUsername)
+	if err != nil {
+		t.Errorf("removing legit student: %s", err)
+	}
+	err = user.RmUser(db.DB, defUsername)
+	if err != nil {
+		t.Errorf("removing legit user: %s", err)
+	}
+}
+
+func TestUpdateStudent(t *testing.T) {
+	db.DB.AutoMigrate(&student.Student{})
+
+	u := user.InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
+
+	// Adds if user's not added in the database
+	user.AddUser(db.DB, u)
+
+	u, err := user.GetUser(db.DB, defUsername)
+	if err != nil {
+		t.Errorf("getting legit user: %s", err)
+	}
+
+	s, err := student.InitStudent(u)
+	if err != nil {
+		t.Errorf("initializing student: %s", err)
+	}
+
+	s.Status = "ativo"
+
+	// Adds user with year and status
+	err = student.AddStudent(db.DB, s)
+	if err != nil {
+		t.Errorf("adding legit user (with status): %s", err)
+	}
+
+	s.Status = "inativo"
+
+	err = student.UpdateStudent(db.DB, s)
+	if err != nil {
+		t.Errorf("updating legit student: %s", err)
+	}
+
+	s, err = student.GetStudent(db.DB, u.Username)
+	if err != nil {
+		t.Errorf("getting legit student: %s", err)
+	}
+	if s.Status != "inativo" {
+		t.Errorf("updating legit student: status is not inativo")
 	}
 
 	err = student.RmStudent(db.DB, defUsername)

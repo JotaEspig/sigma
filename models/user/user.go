@@ -2,14 +2,13 @@ package user
 
 import (
 	"golang.org/x/crypto/bcrypt"
-	"gorm.io/gorm"
 )
 
 //TODO jota: it's needed to separate the struct user to "admin", "teacher", "student"
 // Maybe implement something similar to Inheritance
 
 type User struct {
-	gorm.Model
+	ID             uint   `gorm:"primary_key"`
 	Username       string `gorm:"not null;unique"`
 	Name           string `gorm:"not null"`
 	Surname        string `gorm:"not null"`
@@ -33,9 +32,9 @@ func InitUser(usern, email, name, surname, password string) *User {
 
 // Validates the user. It compares the hashed password in the database
 // to the password that the user input
-func (u *User) Validate(userInput, passInput string) bool {
-	err := bcrypt.CompareHashAndPassword([]byte(u.HashedPassword), []byte(passInput))
-	return u.Username == userInput && err == nil
+func (u *User) Validate(username, password string) bool {
+	err := bcrypt.CompareHashAndPassword([]byte(u.HashedPassword), []byte(password))
+	return u.Username == username && err == nil
 }
 
 // Returns a map containing user info WITHOUT password.

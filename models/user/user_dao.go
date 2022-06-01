@@ -1,12 +1,12 @@
 package user
 
 import (
+	// dbPKG means 'the package db', because if it's named db
+	// it will conflict with db variable in the functions below
 	dbPKG "sigma/db"
 
 	"gorm.io/gorm"
 )
-
-// TODO Jota: Add a function to update a user
 
 // Slice of all user params
 var UserParams = []string{
@@ -43,6 +43,11 @@ func GetUser(db *gorm.DB, username string, params ...string) (*User, error) {
 	err := db.Select(columnsToUse).Where("username = ?", username).First(u).Error
 
 	return u, err
+}
+
+// Updates a user in a database
+func UpdateUser(db *gorm.DB, u *User) error {
+	return db.Model(u).Updates(u).Error
 }
 
 // Removes a user from a database
