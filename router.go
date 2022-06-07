@@ -66,7 +66,7 @@ func setRoutes(router *gin.Engine) {
 
 	// Get user
 	user.GET("/:username", controllers.GetUserInfoPage())
-	user.POST("/:username", controllers.GetPublicUserInfo())
+	user.GET("/:username/get", controllers.GetPublicUserInfo())
 
 	// TODO Jota: Check if validate is logical
 	// Validates User
