@@ -1,6 +1,7 @@
 package main
 
 import (
+	"net/http"
 	"os"
 	"sigma/controllers"
 	"sigma/middlewares"
@@ -62,21 +63,16 @@ func setRoutes(router *gin.Engine) {
 	router.GET("/cadastro", controllers.SignupGET())
 	router.POST("/cadastro", controllers.SignupPOST())
 
-	user := router.Group("/user")
+	// Validate a user token
+	router.GET("/user/validate", controllers.ValidateUser())
 
-	// Get user
-	user.GET("/:username", controllers.GetUserInfoPage())
-	user.GET("/:username/get", controllers.GetPublicUserInfo())
+	// User group
+	user := router.Group("/user/:username", middlewares.AuthMiddleware())
 
-	// TODO Jota: Check if validate is logical
-	// Validates User
-	user.GET("/validate", controllers.ValidateUser())
-	user.GET("/:username/validate",
-		middlewares.AuthMiddleware(), controllers.GetAllUserInfo())
-
-	// Aluno
-	user.GET("/:username/aluno",
-		middlewares.AuthMiddleware(), controllers.GetAlunoPage())
+	user.GET("/", controllers.GetUserInfoPage())
+	user.GET("/get", controllers.GetPublicUserInfo())
+	user.GET("/validate", controllers.GetAllUserInfo())
+	user.GET("/aluno", controllers.GetAlunoPage())
 }
 
 func createRouter() *gin.Engine {
@@ -88,6 +84,10 @@ func createRouter() *gin.Engine {
 	router.Static("css/", "static/css/")
 	router.Static("js/", "static/js/")
 	router.Static("img/", "static/img/")
+
+	router.NoRoute(func(ctx *gin.Context) {
+		ctx.HTML(http.StatusNotFound, "404.html", nil)
+	})
 
 	setRoutes(router)
 
