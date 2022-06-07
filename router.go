@@ -63,16 +63,17 @@ func setRoutes(router *gin.Engine) {
 	router.GET("/cadastro", controllers.SignupGET())
 	router.POST("/cadastro", controllers.SignupPOST())
 
-	// Validate a user token
-	router.GET("/user/validate", controllers.ValidateUser())
-
 	// User group
-	user := router.Group("/user/:username", middlewares.AuthMiddleware())
+	user := router.Group("/user")
 
-	user.GET("/", controllers.GetUserInfoPage())
-	user.GET("/get", controllers.GetPublicUserInfo())
-	user.GET("/validate", controllers.GetAllUserInfo())
-	user.GET("/aluno", controllers.GetAlunoPage())
+	user.GET("/:username", controllers.GetUserInfoPage())
+	user.GET("/:username/get", controllers.GetPublicUserInfo())
+	// Validate a user with token
+	user.GET("/validate", controllers.ValidateUser())
+	user.GET("/:username/validate",
+		middlewares.AuthMiddleware(), controllers.GetAllUserInfo())
+	user.GET("/:username/aluno",
+		middlewares.AuthMiddleware(), controllers.GetAlunoPage())
 }
 
 func createRouter() *gin.Engine {
