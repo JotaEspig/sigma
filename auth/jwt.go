@@ -1,12 +1,27 @@
 package auth
 
 import (
+	"errors"
 	"fmt"
 	"os"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
 )
+
+func GetTokenClaims(token string) (jwt.MapClaims, error) {
+	if token == "" {
+		return nil, errors.New("token: token is empty ")
+	}
+
+	// check if token is valid
+	dToken, err := JWTAuthService().ValidateToken(token)
+	if err != nil || !dToken.Valid {
+		return nil, err
+	}
+
+	return dToken.Claims.(jwt.MapClaims), nil
+}
 
 // Returns the secret key set in the environment
 func getSecretKey() string {
@@ -19,8 +34,9 @@ func getSecretKey() string {
 
 // Values that will be contained in the token
 type authClaims struct {
-	Username string `json:"username"`
 	jwt.StandardClaims
+	Username string `json:"username"`
+	IsAdmin  bool   `json:"isAdmin"`
 }
 
 // Parameters used in jwt authentication
@@ -39,14 +55,15 @@ func JWTAuthService() *JWTService {
 
 // Generates a token according to the username.
 // Returns error if an error has occurred in getting the signed token
-func (service *JWTService) GenerateToken(username string) (string, error) {
+func (service *JWTService) GenerateToken(username string, isAdmin bool) (string, error) {
 	claims := &authClaims{
-		username,
 		jwt.StandardClaims{
 			ExpiresAt: time.Now().Add(time.Hour * 48).Unix(),
 			Issuer:    service.Issuer,
 			IssuedAt:  time.Now().Unix(),
 		},
+		username,
+		isAdmin,
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	encodedToken, err := token.SignedString([]byte(service.SecretKey))

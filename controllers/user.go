@@ -3,7 +3,6 @@ package controllers
 import (
 	"net/http"
 	"sigma/config"
-	"sigma/db"
 	"sigma/models/student"
 	"sigma/models/user"
 	"time"
@@ -30,7 +29,7 @@ func GetUserInfoPage() gin.HandlerFunc {
 func GetPublicUserInfo() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		username := ctx.Param("username")
-		u, err := user.GetUser(db.DB, username, user.PublicUserParams...)
+		u, err := user.GetUser(config.DB, username, user.PublicUserParams...)
 		if err != nil {
 			ctx.AbortWithStatus(http.StatusNotFound)
 			return
@@ -48,7 +47,7 @@ func GetPublicUserInfo() gin.HandlerFunc {
 
 		switch u.Type {
 		case "student":
-			s, err := student.GetStudent(db.DB, username,
+			s, err := student.GetStudent(config.DB, username,
 				student.PublicStudentParams...)
 
 			if err != nil {
@@ -72,7 +71,7 @@ func GetAllUserInfo() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		username := ctx.Param("username")
 
-		u, err := user.GetUser(db.DB, username, user.UserParams...)
+		u, err := user.GetUser(config.DB, username, user.UserParams...)
 		if err != nil {
 			ctx.AbortWithStatus(http.StatusNotFound)
 			return
@@ -90,7 +89,7 @@ func GetAllUserInfo() gin.HandlerFunc {
 
 		switch u.Type {
 		case "student":
-			s, err := student.GetStudent(db.DB, username,
+			s, err := student.GetStudent(config.DB, username,
 				student.StudentParams...)
 			if err != nil {
 				ctx.AbortWithStatus(http.StatusNotFound)
@@ -117,7 +116,7 @@ func ValidateUser() gin.HandlerFunc {
 			return
 		}
 		// check if token is valid
-		dToken, err := config.DefaultJWT.ValidateToken(token)
+		dToken, err := config.JWTService.ValidateToken(token)
 		if err != nil || !dToken.Valid {
 			ctx.AbortWithStatus(http.StatusUnauthorized)
 			return
@@ -134,7 +133,7 @@ func ValidateUser() gin.HandlerFunc {
 
 		username := claims["username"].(string)
 
-		u, err := user.GetUser(db.DB, username)
+		u, err := user.GetUser(config.DB, username)
 		if err != nil {
 			ctx.AbortWithStatus(http.StatusNotFound)
 			return
