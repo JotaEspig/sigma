@@ -2,7 +2,7 @@ package controllers
 
 import (
 	"net/http"
-	"sigma/db"
+	"sigma/config"
 	"sigma/models/user"
 
 	"github.com/gin-gonic/gin"
@@ -28,7 +28,7 @@ func SignupPOST() gin.HandlerFunc {
 
 		u := user.InitUser(usern, email, name, surname, passwd)
 
-		err := user.AddUser(db.DB, u)
+		err := user.AddUser(config.DB, u)
 		if err != nil {
 			ctx.Status(http.StatusConflict)
 			return

@@ -4,7 +4,6 @@ import (
 	"net/http"
 	"net/url"
 	"sigma/config"
-	"sigma/db"
 	"sigma/models/user"
 
 	"github.com/gin-gonic/gin"
@@ -33,13 +32,13 @@ func LoginPOST() gin.HandlerFunc {
 		usern := ctx.PostForm("username")
 		passwd := ctx.PostForm("password")
 
-		user, err := user.GetUser(db.DB, usern)
+		user, err := user.GetUser(config.DB, usern)
 		if err != nil || !user.Validate(usern, passwd) {
 			ctx.Status(http.StatusUnauthorized)
 			return
 		}
 
-		token, err := config.DefaultJWT.GenerateToken(usern)
+		token, err := config.JWTService.GenerateToken(usern)
 		if err != nil || token == "" {
 			ctx.Status(http.StatusInternalServerError)
 			return
