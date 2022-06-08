@@ -38,7 +38,9 @@ func LoginPOST() gin.HandlerFunc {
 			return
 		}
 
-		token, err := config.JWTService.GenerateToken(usern)
+		isAdmin := user.Type == "admin"
+
+		token, err := config.JWTService.GenerateToken(usern, isAdmin)
 		if err != nil || token == "" {
 			ctx.Status(http.StatusInternalServerError)
 			return
