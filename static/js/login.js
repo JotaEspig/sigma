@@ -12,7 +12,7 @@ $(document).ready(function () {
             dataType: "json",
             statusCode: {
                 200: function(response) {
-                    token = response["token"];
+                    var token = response["token"];
                     if (token != "") {
                         setCookie("auth", token, 48 * 60); // 48 (hours) * 60 (minutes) = 2 days
                         window.location = "/user/"+response["username"]+"/aluno";
