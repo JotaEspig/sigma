@@ -34,8 +34,9 @@ func getSecretKey() string {
 
 // Values that will be contained in the token
 type authClaims struct {
-	Username string `json:"username"`
 	jwt.StandardClaims
+	Username string `json:"username"`
+	IsAdmin  bool   `json:"isAdmin"`
 }
 
 // Parameters used in jwt authentication
@@ -54,14 +55,15 @@ func JWTAuthService() *JWTService {
 
 // Generates a token according to the username.
 // Returns error if an error has occurred in getting the signed token
-func (service *JWTService) GenerateToken(username string) (string, error) {
+func (service *JWTService) GenerateToken(username string, isAdmin bool) (string, error) {
 	claims := &authClaims{
-		username,
 		jwt.StandardClaims{
 			ExpiresAt: time.Now().Add(time.Hour * 48).Unix(),
 			Issuer:    service.Issuer,
 			IssuedAt:  time.Now().Unix(),
 		},
+		username,
+		isAdmin,
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	encodedToken, err := token.SignedString([]byte(service.SecretKey))
