@@ -3,6 +3,7 @@ package classroom
 import (
 	// dbPKG means 'the package db', because if it's named db
 	// it will conflict with db variable in the functions below
+	"sigma/config"
 	dbPKG "sigma/db"
 
 	"gorm.io/gorm"
@@ -52,5 +53,5 @@ func RmClassroom(db *gorm.DB, id uint) error {
 }
 
 func init() {
-	dbPKG.DB.AutoMigrate(&Classroom{})
+	config.DB.AutoMigrate(&Classroom{})
 }
