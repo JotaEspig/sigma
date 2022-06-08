@@ -1,12 +1,27 @@
 package auth
 
 import (
+	"errors"
 	"fmt"
 	"os"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
 )
+
+func GetTokenClaims(token string) (jwt.MapClaims, error) {
+	if token == "" {
+		return nil, errors.New("token: token is empty ")
+	}
+
+	// check if token is valid
+	dToken, err := JWTAuthService().ValidateToken(token)
+	if err != nil || !dToken.Valid {
+		return nil, err
+	}
+
+	return dToken.Claims.(jwt.MapClaims), nil
+}
 
 // Returns the secret key set in the environment
 func getSecretKey() string {
