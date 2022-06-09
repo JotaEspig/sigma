@@ -35,16 +35,6 @@ func GetPublicUserInfo() gin.HandlerFunc {
 			return
 		}
 
-		if u.Type == "" {
-			ctx.JSON(
-				http.StatusOK,
-				gin.H{
-					"user": u.ToMap(),
-				},
-			)
-			return
-		}
-
 		switch u.Type {
 		case "student":
 			s, err := student.GetStudent(config.DB, username,
@@ -59,6 +49,15 @@ func GetPublicUserInfo() gin.HandlerFunc {
 				http.StatusOK,
 				gin.H{
 					"user": s.ToMap(),
+				},
+			)
+			return
+
+		default:
+			ctx.JSON(
+				http.StatusOK,
+				gin.H{
+					"user": u.ToMap(),
 				},
 			)
 			return
