@@ -6,7 +6,7 @@
     list-style: none;
 }
 .centered{
-    padding: 40px 1.5% 0 1.5%;
+    padding: 30px 1.5% 0 1.5%;
     margin: 0 0 0 0;
 }
 
@@ -73,10 +73,8 @@ h1:after{
     background: #1d1e20;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-  }
+    font-family: cursive;  
+}
   
   .menu {
     display: flex;
@@ -85,6 +83,11 @@ h1:after{
   .menu li {
     margin-left: 10px;
   }
+
+.menu > li{
+  border-left: red;
+  border-right: red;
+}
   
   .menu li a {
     display: block;
@@ -93,7 +96,14 @@ h1:after{
     text-decoration: none;
   }
 
+
+
+#logout{
+  margin-right: auto;
+}
+
 li > a#logout:hover{
   color: white !important;
   cursor: pointer;
+
 }
