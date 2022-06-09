@@ -18,7 +18,7 @@
 .card{
     background-color: #fffafa;
 }
-h1{
+h1, h2{
     font-size: 70px;
     color: var(--titulo);
     font-family: 'Ubuntu', sans-serif;
@@ -90,7 +90,10 @@ h1:after{
     display: block;
     padding: 10px;
     color: white;
+    text-decoration: none;
   }
-#logout{
-    margin-right: 10px;
+
+li > a#logout:hover{
+  color: white !important;
+  cursor: pointer;
 }
