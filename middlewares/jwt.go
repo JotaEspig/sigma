@@ -2,9 +2,10 @@ package middlewares
 
 import (
 	"net/http"
-	"sigma/auth"
+	"sigma/config"
 	"time"
 
+	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 )
 
@@ -12,16 +13,19 @@ func AuthMiddleware() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		username := ctx.Param("username")
 		token, err := ctx.Cookie("auth")
-		if err != nil {
+		if token == "" || err != nil {
 			ctx.AbortWithStatus(http.StatusUnauthorized)
 			return
 		}
 
-		claims, err := auth.GetTokenClaims(token)
-		if err != nil || claims == nil {
+		// check if token is valid
+		dToken, err := config.JWTService.ValidateToken(token)
+		if err != nil || !dToken.Valid {
 			ctx.AbortWithStatus(http.StatusUnauthorized)
 			return
 		}
+
+		claims := dToken.Claims.(jwt.MapClaims)
 
 		if claims["username"] != username {
 			ctx.AbortWithStatus(http.StatusUnauthorized)
@@ -44,12 +48,19 @@ func IsAdminMiddleware() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		username := ctx.Param("username")
 		token, err := ctx.Cookie("auth")
-		if err != nil {
+		if token == "" || err != nil {
 			ctx.AbortWithStatus(http.StatusUnauthorized)
 			return
 		}
 
-		claims, err := auth.GetTokenClaims(token)
+		// check if token is valid
+		dToken, err := config.JWTService.ValidateToken(token)
+		if err != nil || !dToken.Valid {
+			ctx.AbortWithStatus(http.StatusUnauthorized)
+			return
+		}
+
+		claims := dToken.Claims.(jwt.MapClaims)
 		if err != nil || claims == nil {
 			ctx.AbortWithStatus(http.StatusUnauthorized)
 			return
