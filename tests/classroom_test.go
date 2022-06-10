@@ -12,8 +12,6 @@ const (
 )
 
 func TestAddClassroom(t *testing.T) {
-	config.DB.AutoMigrate(&classroom.Classroom{})
-
 	c, err := classroom.InitClassroom(defClassroomName, defClassroomYear)
 	if err != nil {
 		t.Errorf("initializing classroom: %s", err)

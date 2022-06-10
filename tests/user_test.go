@@ -31,8 +31,6 @@ func TestUserValidate(t *testing.T) {
 }
 
 func TestAddUser(t *testing.T) {
-	config.DB.AutoMigrate(&user.User{})
-
 	u := user.InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
 
 	err := user.AddUser(config.DB, u)

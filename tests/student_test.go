@@ -8,8 +8,6 @@ import (
 )
 
 func TestAddStudent(t *testing.T) {
-	config.DB.AutoMigrate(&student.Student{})
-
 	u := user.InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
 
 	// Adds user to be able to use student
