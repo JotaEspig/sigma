@@ -11,20 +11,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// Serves "aluno.html" page
-func GetAlunoPage() gin.HandlerFunc {
-	return func(ctx *gin.Context) {
-		ctx.HTML(http.StatusOK, "aluno.html", nil)
-	}
-}
-
-// Serves "alunoinfo.html" page
-func GetUserInfoPage() gin.HandlerFunc {
-	return func(ctx *gin.Context) {
-		ctx.HTML(http.StatusOK, "alunoinfo.html", nil)
-	}
-}
-
 // Gets public user info, according to request
 func GetPublicUserInfo() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
