@@ -172,7 +172,22 @@ func TestRmStudent(t *testing.T) {
 	// Adds if user's not added in the database
 	user.AddUser(config.DB, u)
 
-	err := student.RmStudent(config.DB, defUsername)
+	u, err := user.GetUser(config.DB, defUsername)
+	if err != nil {
+		t.Errorf("getting legit user: %s", err)
+	}
+
+	s, err := student.InitStudent(u)
+	if err != nil {
+		t.Errorf("initializing student: %s", err)
+	}
+
+	err = student.AddStudent(config.DB, s)
+	if err != nil {
+		t.Errorf("adding legit student: %s", err)
+	}
+
+	err = student.RmStudent(config.DB, defUsername)
 	if err != nil {
 		t.Errorf("removing legit student: %s", err)
 	}
