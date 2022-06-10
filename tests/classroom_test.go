@@ -35,8 +35,6 @@ func TestAddClassroom(t *testing.T) {
 }
 
 func TestGetClassroom(t *testing.T) {
-	config.DB.AutoMigrate(&classroom.Classroom{})
-
 	c, err := classroom.InitClassroom(defClassroomName, defClassroomYear)
 	if err != nil {
 		t.Errorf("initializing classroom: %s", err)
@@ -77,8 +75,6 @@ func TestGetClassroom(t *testing.T) {
 }
 
 func TestUpdateClassroom(t *testing.T) {
-	config.DB.AutoMigrate(&classroom.Classroom{})
-
 	c, err := classroom.InitClassroom(defClassroomName, defClassroomYear)
 	if err != nil {
 		t.Errorf("initializing classroom: %s", err)
@@ -111,8 +107,6 @@ func TestUpdateClassroom(t *testing.T) {
 }
 
 func TestRmClassroom(t *testing.T) {
-	config.DB.AutoMigrate(&classroom.Classroom{})
-
 	c, err := classroom.InitClassroom(defClassroomName, defClassroomYear)
 	if err != nil {
 		t.Errorf("initializing classroom: %s", err)

@@ -64,8 +64,6 @@ func TestAddStudent(t *testing.T) {
 }
 
 func TestGetStudent(t *testing.T) {
-	config.DB.AutoMigrate(&student.Student{})
-
 	u := user.InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
 
 	// Adds if user's not added in the database
@@ -120,8 +118,6 @@ func TestGetStudent(t *testing.T) {
 }
 
 func TestUpdateStudent(t *testing.T) {
-	config.DB.AutoMigrate(&student.Student{})
-
 	u := user.InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
 
 	// Adds if user's not added in the database
@@ -171,8 +167,6 @@ func TestUpdateStudent(t *testing.T) {
 }
 
 func TestRmStudent(t *testing.T) {
-	config.DB.AutoMigrate(&user.User{})
-
 	u := user.InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
 
 	// Adds if user's not added in the database
