@@ -74,6 +74,7 @@ h1:after{
     display: flex;
     flex-wrap: wrap;
     font-family: cursive;  
+    position: fixed;
 }
   
   .menu {

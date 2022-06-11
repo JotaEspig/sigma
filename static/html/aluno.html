@@ -42,15 +42,17 @@
 <body>
     <!-- Menu -->
     <header class="header">
-        <nav class="navbar">
-            <ul class="menu ">
-                <li><a class="navbar-brand" href="aluno.html">
-                <img src="../img/favicon.ico" width="30" height="30" class="d-inline-block align-top">
-                Home
-                </a></li>
+        <nav class="nav navbar">
+            <ul class="menu align-items-center">
+                <li>
+                    <a class="navbar-brand navbar-light navbar-fixed-top" href="aluno.html">
+                        <img class="d-inline-block align-top" src="../img/favicon.ico" width="30" height="30">
+                        Home
+                    </a>
+                </li>
                 <li><a href="/">Extensão</a></li>
                 <li><a href="/">Contato</a></li>
-                <li><a id="logout" style="margin-right: 10px;" onclick="logout()">Logout</a></li>
+                <li style="padding-left: 100%;"><a id="logout" style="margin-right: 10px;" onclick="logout()">Logout</a></li>
             </ul>
         </nav>
     </header>
@@ -87,7 +89,7 @@
                 <div class="col-4">
                     <div class="card">
                         <div class=" card-img-top-250">
-                            <img class="img-fluid" src="https://img.freepik.com/free-vector/fuck-you-symbol-comic-style_23-2148684350.jpg">
+                            <img class="img-fluid" src="#">
                         </div>
                         <div class="card-block pt-2">
                             <div class="card-header">
@@ -102,7 +104,7 @@
                 <div class="col-4">
                     <div class="card">
                         <div class="card-img-top card-img-top-250">
-                            <img class="img-fluid" src="https://img.freepik.com/free-vector/fuck-you-symbol-comic-style_23-2148684350.jpg">
+                            <img class="img-fluid" src="#">
                         </div>
                         <div class="card-block pt-2">
                             <div class="card-header">
@@ -124,7 +126,7 @@
     <div class="container">
         <table class="table table-hover table-dark "> 
             <thead>
-                <tr>
+                <tr style="text-align: center;">
                     <th scope="col">Matérias</th>
                     <th scope="col">Descrição</th>
                     <th scope="col">Postagem</th>
@@ -132,7 +134,7 @@
                 </tr>
             </thead>
             
-            <tbody>
+            <tbody tr style="text-align: center;">
                 <tr>
                     <td>Português</td>
                     <td>Fazer com uma redação com 50 mil palavras</td>
@@ -157,3 +159,5 @@
 </body>
 
 </html>
+
+
