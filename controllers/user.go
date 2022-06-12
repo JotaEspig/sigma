@@ -15,7 +15,8 @@ import (
 func GetPublicUserInfo() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		username := ctx.Param("username")
-		u, err := user.GetUser(config.DB, username, user.PublicUserParams...)
+		u, err := user.GetUser(config.DB, username, "username", "type")
+
 		if err != nil {
 			ctx.AbortWithStatus(http.StatusNotFound)
 			return
@@ -23,7 +24,7 @@ func GetPublicUserInfo() gin.HandlerFunc {
 
 		switch u.Type {
 		case "student":
-			s, err := student.GetStudent(config.DB, username,
+			s, err := student.GetStudent(config.DB, u.Username,
 				student.PublicStudentParams...)
 
 			if err != nil {
@@ -40,6 +41,14 @@ func GetPublicUserInfo() gin.HandlerFunc {
 			return
 
 		default:
+			u, err := user.GetUser(config.DB, u.Username,
+				user.PublicUserParams...)
+
+			if err != nil {
+				ctx.AbortWithStatus(http.StatusNotFound)
+				return
+			}
+
 			ctx.JSON(
 				http.StatusOK,
 				gin.H{
@@ -55,27 +64,17 @@ func GetPublicUserInfo() gin.HandlerFunc {
 func GetAllUserInfo() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		username := ctx.Param("username")
-
-		u, err := user.GetUser(config.DB, username, user.UserParams...)
+		u, err := user.GetUser(config.DB, username, "username", "type")
 		if err != nil {
 			ctx.AbortWithStatus(http.StatusNotFound)
 			return
 		}
 
-		if u.Type == "" {
-			ctx.JSON(
-				http.StatusOK,
-				gin.H{
-					"user": u.ToMap(),
-				},
-			)
-			return
-		}
-
 		switch u.Type {
 		case "student":
-			s, err := student.GetStudent(config.DB, username,
+			s, err := student.GetStudent(config.DB, u.Username,
 				student.StudentParams...)
+
 			if err != nil {
 				ctx.AbortWithStatus(http.StatusNotFound)
 				return
@@ -85,6 +84,23 @@ func GetAllUserInfo() gin.HandlerFunc {
 				http.StatusOK,
 				gin.H{
 					"user": s.ToMap(),
+				},
+			)
+			return
+
+		default:
+			u, err := user.GetUser(config.DB, u.Username,
+				user.UserParams...)
+
+			if err != nil {
+				ctx.AbortWithStatus(http.StatusNotFound)
+				return
+			}
+
+			ctx.JSON(
+				http.StatusOK,
+				gin.H{
+					"user": u.ToMap(),
 				},
 			)
 			return
