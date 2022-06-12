@@ -52,6 +52,11 @@ func TestAddAdmin(t *testing.T) {
 	if err != nil {
 		t.Errorf("removing legit admin: %s", err)
 	}
+
+	err = user.RmUser(config.DB, u.Username)
+	if err != nil {
+		t.Errorf("removing legit user: %s", err)
+	}
 }
 
 func TestGetAdmin(t *testing.T) {
@@ -76,6 +81,11 @@ func TestGetAdmin(t *testing.T) {
 		t.Errorf("adding legit admin (without role): %s", err)
 	}
 
+	err = admin.RmAdmin(config.DB, a.User.Username)
+	if err != nil {
+		t.Errorf("removing legit admin: %s", err)
+	}
+
 	a.Role = "coordenador"
 
 	// Adds admin with role
@@ -92,6 +102,50 @@ func TestGetAdmin(t *testing.T) {
 	err = admin.RmAdmin(config.DB, a.User.Username)
 	if err != nil {
 		t.Errorf("removing legit admin: %s", err)
+	}
+
+	err = user.RmUser(config.DB, u.Username)
+	if err != nil {
+		t.Errorf("removing legit user: %s", err)
+	}
+}
+
+func TestUpdateAdmin(t *testing.T) {
+	u := user.InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
+
+	// Adds user to be able to use admin
+	user.AddUser(config.DB, u)
+
+	u, err := user.GetUser(config.DB, u.Username)
+	if err != nil {
+		t.Errorf("getting legit user: %s", err)
+	}
+
+	a, err := admin.InitAdmin(u)
+	if err != nil {
+		t.Errorf("initializing admin: %s", err)
+	}
+
+	err = admin.AddAdmin(config.DB, a)
+	if err != nil {
+		t.Errorf("adding legit admin: %s", err)
+	}
+
+	a.Role = "coordenador"
+
+	err = admin.UpdateAdmin(config.DB, a)
+	if err != nil {
+		t.Errorf("updating legit admin: %s", err)
+	}
+
+	err = admin.RmAdmin(config.DB, a.User.Username)
+	if err != nil {
+		t.Errorf("removing legit admin: %s", err)
+	}
+
+	err = user.RmUser(config.DB, u.Username)
+	if err != nil {
+		t.Errorf("removing legit user: %s", err)
 	}
 }
 
