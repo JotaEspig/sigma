@@ -8,7 +8,7 @@ import (
 func TestGenerateAndValidate(t *testing.T) {
 	// Correct way of using
 	jwtServ := auth.JWTAuthService()
-	eToken, err := jwtServ.GenerateToken("JotaEspig", false)
+	eToken, err := jwtServ.GenerateToken("JotaEspig", "")
 	if err != nil {
 		t.Errorf("Error in generating token: %s", err)
 	}
@@ -29,7 +29,7 @@ func TestGenerateAndValidate(t *testing.T) {
 		SecretKey: "secr",
 		Issuer:    "Other",
 	}
-	eToken, err = fakeJWTServ.GenerateToken("JotaEspig", false)
+	eToken, err = fakeJWTServ.GenerateToken("JotaEspig", "")
 	if err != nil {
 		t.Errorf("Error in generating fake token (other secret key): %s", err)
 	}
