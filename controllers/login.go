@@ -14,13 +14,13 @@ func LoginPOST() gin.HandlerFunc {
 		usern := ctx.PostForm("username")
 		passwd := ctx.PostForm("password")
 
-		user, err := user.GetUser(config.DB, usern)
-		if err != nil || !user.Validate(usern, passwd) {
+		u, err := user.GetUser(config.DB, usern, "username", "type")
+		if err != nil || !u.Validate(usern, passwd) {
 			ctx.Status(http.StatusUnauthorized)
 			return
 		}
 
-		token, err := config.JWTService.GenerateToken(usern, user.Type)
+		token, err := config.JWTService.GenerateToken(u.Username, u.Type)
 		if err != nil || token == "" {
 			ctx.Status(http.StatusInternalServerError)
 			return
@@ -29,7 +29,8 @@ func LoginPOST() gin.HandlerFunc {
 		ctx.JSON(
 			http.StatusOK,
 			gin.H{
-				"username": usern,
+				"username": u.Username,
+				"type":     u.Type,
 				"token":    token,
 			},
 		)
