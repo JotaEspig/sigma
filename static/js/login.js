@@ -1,3 +1,34 @@
+/**
+ * get url from response.
+ * Obs.: response must have the keys: username and type.
+ * @param {object} response 
+ * @returns url to be redirect
+ */
+function getPageURLFromResponse(response) {
+    var url = ""
+    switch (response["type"]) {
+        case "student":
+            url += "/aluno";
+            break;
+
+        case "teacher":
+            url += "/professor"
+            break;
+
+        case "admin":
+            url += "/admin";
+            break;
+
+        default:
+            url += "/user";
+            break;
+    }
+
+    url += "/" + response["username"];
+
+    return url
+}
+
 $(document).ready(function () {
 
     $("#loginForm").submit(function (e) { 
@@ -13,10 +44,8 @@ $(document).ready(function () {
             statusCode: {
                 200: function(response) {
                     var token = response["token"];
-                    if (token != "") {
-                        setCookie("auth", token, 48 * 60); // 48 (hours) * 60 (minutes) = 2 days
-                        window.location = "/user/"+response["username"]+"/aluno";
-                    }
+                    setCookie("auth", token, 48 * 60); // 48 (hours) * 60 (minutes) = 2 days
+                    window.location = getPageURLFromResponse(response);
                 },
                 401: function() {
                     $("#Erro").html("Usuário e/ou senha incorretos");
@@ -39,7 +68,7 @@ $(document).ready(function () {
             url: "/user/validate",
             statusCode: {
                 200: function(response) {
-                    window.location = "/user/" + response["user"]["username"] + "/aluno";
+                    window.location = getPageURLFromResponse(response);
                 }
             }
         });
