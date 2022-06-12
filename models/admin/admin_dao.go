@@ -21,6 +21,7 @@ var PublicAdminParams = []string{
 	"id",
 }
 
+// Adds an admin to a database.
 func AddAdmin(db *gorm.DB, a *Admin) error {
 	return db.Transaction(func(tx *gorm.DB) error {
 		a.User.Type = "admin"
@@ -38,6 +39,7 @@ func AddAdmin(db *gorm.DB, a *Admin) error {
 	})
 }
 
+// Gets an admin from a database
 func GetAdmin(db *gorm.DB, username string, params ...string) (*Admin, error) {
 	a := &Admin{}
 
@@ -58,6 +60,12 @@ func GetAdmin(db *gorm.DB, username string, params ...string) (*Admin, error) {
 	return a, err
 }
 
+// Updates an admin in a database
+func UpdateAdmin(db *gorm.DB, a *Admin) error {
+	return db.Model(a).Updates(a).Error
+}
+
+// Removes an admin from a database
 func RmAdmin(db *gorm.DB, username string) error {
 	u, err := user.GetUser(db, username, "id")
 	if err != nil {
