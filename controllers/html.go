@@ -33,16 +33,16 @@ func SignupGET() gin.HandlerFunc {
 	}
 }
 
-// Serves "aluno.html" page
-func GetAlunoPage() gin.HandlerFunc {
+// Serves "userinfo.html" page
+func GetUserPage() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		ctx.HTML(http.StatusOK, "aluno.html", nil)
+		ctx.HTML(http.StatusOK, "userinfo.html", nil)
 	}
 }
 
-// Serves "alunoinfo.html" page
-func GetUserInfoPage() gin.HandlerFunc {
+// Serves "aluno.html" page
+func GetStudentPage() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		ctx.HTML(http.StatusOK, "alunoinfo.html", nil)
+		ctx.HTML(http.StatusOK, "aluno.html", nil)
 	}
 }
