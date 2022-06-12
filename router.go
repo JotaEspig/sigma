@@ -66,14 +66,19 @@ func setRoutes(router *gin.Engine) {
 	// User group
 	user := router.Group("/user")
 
-	user.GET("/:username", controllers.GetUserInfoPage())
+	user.GET("/:username", controllers.GetUserPage())
 	user.GET("/:username/get", controllers.GetPublicUserInfo())
 	// Validate a user with token
 	user.GET("/validate", controllers.ValidateUser())
 	user.GET("/:username/validate",
 		middlewares.AuthMiddleware(), controllers.GetAllUserInfo())
-	user.GET("/:username/aluno",
-		middlewares.AuthMiddleware(), controllers.GetAlunoPage())
+
+	// Student group
+	student := router.Group("/aluno")
+	student.GET("/:username",
+		middlewares.IsStudentMiddleware(), controllers.GetStudentPage())
+	student.GET("/:username/get",
+		middlewares.IsStudentMiddleware(), controllers.GetStudentInfo())
 }
 
 func createRouter() *gin.Engine {
