@@ -69,16 +69,13 @@ func ValidateUser() gin.HandlerFunc {
 			return
 		}
 
-		username := claims["username"].(string)
-
-		u, err := user.GetUser(config.DB, username, "username", "type")
-		if err != nil {
-			ctx.AbortWithStatus(http.StatusNotFound)
-			return
-		}
-
-		f := getAllInfoFuncs[u.Type]
-		f(ctx, u.Username)
+		ctx.JSON(
+			http.StatusOK,
+			gin.H{
+				"username": claims["username"],
+				"type":     claims["type"],
+			},
+		)
 	}
 }
 
