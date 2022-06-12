@@ -19,6 +19,7 @@ var AdminParams = []string{
 // Slice of public admin params
 var PublicAdminParams = []string{
 	"id",
+	"role",
 }
 
 // Adds an admin to a database.
