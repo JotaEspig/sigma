@@ -4,6 +4,7 @@
     margin: 0px;
     padding: 0px;
     list-style: none;
+    cursor: default;
 }
 .centered{
     padding: 30px 1.5% 0 1.5%;
@@ -69,11 +70,11 @@ h1:after{
 
 
 /*--menu--*/
-.header {
+.nav {
     background: #1d1e20;
     display: flex;
-    flex-wrap: wrap;
     font-family: cursive;  
+    font-size: 20px;
    
 }
 
@@ -81,6 +82,10 @@ h1:after{
   .menu {
     display: flex;
     color: white;
+    background: #1d1e20;
+    display: flex;
+    flex-wrap: wrap;
+    font-family: cursive; 
   }
   
   .menu li {
@@ -92,22 +97,40 @@ h1:after{
   border-right: red;
 }
   
-  .menu li a {
+  .menu li a{
     display: block;
     padding: 10px;
     color: white;
     text-decoration: none;
-    font-size: 20px;
+    cursor: pointer;
   }
 
 
+/*#logout{
 
-#logout{
   padding: right !important;
+  color: black !important;
+  font-size: 20px;
+  text-align: center;
 }
 
 li > a#logout:hover{
  
   cursor: pointer;
 
+}
+*/
+/*--botao perfil--*/
+.dropdown{
+  text-align: center;
+}
+.dropdown-menu{
+  background-color: black;
+  color: darkblue;
+}
+.dropdown-item{
+  color: darkblue;
+}
+.dropdown-item:hover{
+  color: darkblue;
 }
