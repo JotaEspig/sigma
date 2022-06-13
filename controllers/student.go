@@ -1,3 +1,6 @@
+/*
+The functions below are the functions that a student can call
+*/
 package controllers
 
 import (
