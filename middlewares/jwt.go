@@ -111,7 +111,7 @@ func IsAdminMiddleware() gin.HandlerFunc {
 			return
 		}
 
-		if !claims["isAdmin"].(bool) {
+		if claims["type"] != "admin" {
 			ctx.AbortWithStatus(http.StatusUnauthorized)
 			return
 		}
