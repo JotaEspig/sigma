@@ -74,11 +74,13 @@ h1:after{
     display: flex;
     flex-wrap: wrap;
     font-family: cursive;  
-    position: fixed;
+   
 }
-  
+
+
   .menu {
     display: flex;
+    color: white;
   }
   
   .menu li {
@@ -95,16 +97,17 @@ h1:after{
     padding: 10px;
     color: white;
     text-decoration: none;
+    font-size: 20px;
   }
 
 
 
 #logout{
-  margin-right: auto;
+  padding: right !important;
 }
 
 li > a#logout:hover{
-  color: white !important;
+ 
   cursor: pointer;
 
 }
