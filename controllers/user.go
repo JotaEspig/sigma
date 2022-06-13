@@ -82,6 +82,45 @@ func ValidateUser() gin.HandlerFunc {
 	}
 }
 
+// Updates a user's info
+func UpdateUser() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		newValues := user.User{}
+		username := ctx.Param("username")
+		u, err := user.GetUser(config.DB, username, "id")
+		if err != nil {
+			ctx.AbortWithStatus(http.StatusNotFound)
+			return
+		}
+
+		err = ctx.ShouldBindJSON(&newValues)
+		if err != nil {
+			ctx.AbortWithStatus(http.StatusBadRequest)
+			return
+		}
+
+		newValues.ID = u.ID
+		// These lines exists to make sure that the user
+		// is not changing the password, or type of the user
+		if newValues.HashedPassword != "" {
+			ctx.AbortWithStatus(http.StatusBadRequest)
+			return
+		}
+		if newValues.Type != "" {
+			ctx.AbortWithStatus(http.StatusBadRequest)
+			return
+		}
+
+		err = user.UpdateUser(config.DB, &newValues)
+		if err != nil {
+			ctx.AbortWithStatus(http.StatusInternalServerError)
+			return
+		}
+
+		ctx.JSON(http.StatusOK, nil)
+	}
+}
+
 // Contains functions to get public info of
 // either user or its children (student, admin)
 // "" means user has no type
