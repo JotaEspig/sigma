@@ -72,6 +72,8 @@ func setRoutes(router *gin.Engine) {
 	user.GET("/validate", controllers.ValidateUser())
 	user.GET("/:username/validate",
 		middlewares.AuthMiddleware(), controllers.GetAllUserInfo())
+	user.PUT("/:username/update",
+		middlewares.AuthMiddleware(), controllers.UpdateUser())
 
 	// Student group
 	student := router.Group("/aluno")
@@ -79,6 +81,11 @@ func setRoutes(router *gin.Engine) {
 		middlewares.IsStudentMiddleware(), controllers.GetStudentPage())
 	student.GET("/:username/get",
 		middlewares.IsStudentMiddleware(), controllers.GetStudentInfo())
+
+	// Admin group
+	admin := router.Group("/admin")
+	admin.GET("/:username",
+		middlewares.IsAdminMiddleware(), controllers.GetAdminPage())
 }
 
 func createRouter() *gin.Engine {
