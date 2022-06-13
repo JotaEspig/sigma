@@ -46,3 +46,10 @@ func GetStudentPage() gin.HandlerFunc {
 		ctx.HTML(http.StatusOK, "aluno.html", nil)
 	}
 }
+
+// Server "admin.html" page
+func GetAdminPage() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		ctx.HTML(http.StatusOK, "admin.html", nil)
+	}
+}
