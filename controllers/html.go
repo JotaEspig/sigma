@@ -7,15 +7,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// Serves "login" page
-func LoginGET() gin.HandlerFunc {
-	return func(ctx *gin.Context) {
-		ctx.HTML(
-			http.StatusOK, "login.html", nil,
-		)
-	}
-}
-
 // Redirects the user to the login page
 func LoginRedirect() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
@@ -24,12 +15,17 @@ func LoginRedirect() gin.HandlerFunc {
 	}
 }
 
+// Serves "login" page
+func LoginGET() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		ctx.HTML(http.StatusOK, "login.html", nil)
+	}
+}
+
 // Serves "cadastro.html" page
 func SignupGET() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		ctx.HTML(
-			http.StatusOK, "cadastro.html", nil,
-		)
+		ctx.HTML(http.StatusOK, "cadastro.html", nil)
 	}
 }
 
