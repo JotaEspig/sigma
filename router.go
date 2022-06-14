@@ -58,6 +58,7 @@ func setRoutes(router *gin.Engine) {
 	router.GET("/", controllers.LoginRedirect())
 	router.GET("/login", controllers.LoginGET())
 	router.POST("/login", controllers.LoginPOST())
+	router.GET("/login/validate", controllers.IsLogged())
 
 	// Cadastro
 	router.GET("/cadastro", controllers.SignupGET())
@@ -68,8 +69,6 @@ func setRoutes(router *gin.Engine) {
 
 	user.GET("/:username", controllers.GetUserPage())
 	user.GET("/:username/get", controllers.GetPublicUserInfo())
-	// Validate a user with token
-	user.GET("/validate", controllers.ValidateUser())
 	user.GET("/:username/validate",
 		middlewares.AuthMiddleware(), controllers.GetAllUserInfo())
 	user.PUT("/:username/update",
