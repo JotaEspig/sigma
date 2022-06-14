@@ -65,7 +65,7 @@ $(document).ready(function () {
         // Does a request to check if the cookie is legit and hasn't expired
         $.ajax({
             type: "get",
-            url: "/user/validate",
+            url: "/login/validate",
             statusCode: {
                 200: function(response) {
                     window.location = getPageURLFromResponse(response);
