@@ -9,9 +9,7 @@ import (
 	"sigma/models/admin"
 	"sigma/models/student"
 	"sigma/models/user"
-	"time"
 
-	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 )
 
@@ -45,40 +43,6 @@ func GetAllUserInfo() gin.HandlerFunc {
 
 		f := getAllInfoFuncs[u.Type]
 		f(ctx, u.Username)
-	}
-}
-
-// Validates a user with token got from cookie auth
-func ValidateUser() gin.HandlerFunc {
-	return func(ctx *gin.Context) {
-		token, err := ctx.Cookie("auth")
-		if token == "" || err != nil {
-			ctx.AbortWithStatus(http.StatusUnauthorized)
-			return
-		}
-		// check if token is valid
-		dToken, err := config.JWTService.ValidateToken(token)
-		if err != nil || !dToken.Valid {
-			ctx.AbortWithStatus(http.StatusUnauthorized)
-			return
-		}
-
-		claims := dToken.Claims.(jwt.MapClaims)
-
-		now := time.Now().Unix()
-		expiresAt := claims["exp"].(float64)
-		if float64(now) > expiresAt {
-			ctx.AbortWithStatus(http.StatusUnauthorized)
-			return
-		}
-
-		ctx.JSON(
-			http.StatusOK,
-			gin.H{
-				"username": claims["username"],
-				"type":     claims["type"],
-			},
-		)
 	}
 }
 
