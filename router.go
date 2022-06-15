@@ -65,29 +65,33 @@ func setRoutes(router *gin.Engine) {
 	router.POST("/cadastro", controllers.SignupPOST())
 
 	// User group
-	user := router.Group("/usuario")
-	user.GET("/:username", controllers.GetUserPage())
-	user.GET("/:username/get", controllers.GetPublicUserInfo())
-	user.GET("/:username/validate",
+	user := router.Group("/usuario/:username")
+	user.GET("", controllers.GetUserPage())
+	user.GET("/get", controllers.GetPublicUserInfo())
+	user.GET("/validate",
 		middlewares.AuthMiddleware(), controllers.GetAllUserInfo())
-	user.PUT("/:username/update",
+	user.PUT("/update",
 		middlewares.AuthMiddleware(), controllers.UpdateUser())
 
 	// Student group
-	student := router.Group("/aluno")
-	student.GET("/:username",
-		middlewares.IsStudentMiddleware(), controllers.GetStudentPage())
-	student.GET("/:username/get",
-		middlewares.IsStudentMiddleware(), controllers.GetStudentInfo())
+	student := router.Group("/aluno/:username", middlewares.IsStudentMiddleware())
+	student.GET("", controllers.GetStudentPage())
+	student.GET("/get", controllers.GetStudentInfo())
 
 	// Admin group
-	admin := router.Group("/admin")
-	admin.GET("/:username",
-		middlewares.IsAdminMiddleware(), controllers.GetAdminPage())
-	admin.GET("/:username/get",
-		middlewares.IsAdminMiddleware(), controllers.GetAdminInfo())
-	admin.PUT("/:username/update",
-		middlewares.IsAdminMiddleware(), controllers.UpdateAdmin())
+	admin := router.Group("/admin/:username", middlewares.IsAdminMiddleware())
+	admin.GET("", controllers.GetAdminPage())
+	admin.GET("/get", controllers.GetAdminInfo())
+	admin.PUT("/update", controllers.UpdateAdmin())
+
+	// Admin tools group
+	adminTools := admin.Group("/tools")
+
+	// Admin tools to manage others admins
+	adminToolsForAdmin := adminTools.Group("/admin/:target",
+		middlewares.IsSuperAdminMiddleware())
+	adminToolsForAdmin.PUT("/update", controllers.UpdateTargetAdmin())
+	adminToolsForAdmin.DELETE("/delete", controllers.DeleteTargetAdmin())
 }
 
 func createRouter() *gin.Engine {
