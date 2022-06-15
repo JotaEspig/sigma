@@ -81,7 +81,7 @@ func UpdateUser() gin.HandlerFunc {
 			return
 		}
 
-		ctx.JSON(http.StatusOK, nil)
+		ctx.Status(http.StatusOK)
 	}
 }
 
