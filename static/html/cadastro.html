@@ -1,17 +1,21 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- CSS -->
     <!--<link href="../css/padrao.css" rel="stylesheet">
     <link href="../css/login.css" rel="stylesheet">-->
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link href="../css/aluno_boot.css" rel="stylesheet">
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <link href="../css/aluno_boot.css" rel="stylesheet" />
     <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
@@ -22,60 +26,115 @@
     <script src="../js/signup.js"></script>
     <script src="../js/cookies.js"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-    
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"
+      integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+      crossorigin="anonymous"
+    ></script>
+
     <!--link para icon-->
-    <link rel="icon" type="jpg" href="../img/favicon.ico"/> 
-  
+    <link rel="icon" type="jpg" href="../img/favicon.ico" />
+
     <title>SIGMA</title>
-</head>
-<body>
-      <!--FORMULÁRIO DE LOGIN-->
-      <div class="container-fluid centered">
-        <div class="row justify-content-around">
-          <div class="col-5">
-            <div class="card">
-              <div class="card-body">
-                <h1>Cadastro</h1>
-                <form id="cadastroForm" method="post">
-                  <div class="form-group">
-                    <label for="nome_cad">Nome:</label>
-                    <input class="form-control" type="text" name="name" id="nome_cad" required="required" placeholder="Digite o seu nome" value="Macaco">
-                  </div>
-                  <div class="form-group">
-                    <label for="sobrenome_cad">Seu sobrenome:</label>
-                    <input class="form-control" type="text" name="surname" id="sobrenome_cad" required="required" placeholder="Digite o seu sobrenome" value="Loucão"/>
-                  </div>
-                  <div class="form-group">
-                    <label for="username_cad">Seu nome de usuário:</label>
-                    <input class="form-control" type="text" name="username" id="username_cad" required="required"  placeholder="Nome de usuário:" value="Zeke"/>
-                  </div>
-                  <div class="form-group">
-                    <label for="email">E-mail:</label>
-                    <input class="form-control" type="email" name="email" id="email" placeholder="ex. maria@gmail.com" value="zeke@gmail.com">
-                  </div>
-                  <div class="form-group">
-                    <label for="senha_cad">Sua senha:</label>
-                    <input class="form-control" type="password" name="password" id="senha_cad" required="required" placeholder="ex. C4rL0ta D!v 928", value="senha123"/>
-                  </div>
-                  <div class="form-group">
-                    <label for="confirmar_senha_cad">Confirme sua senha:</label>
-                    <input class="form-control" type="password" name="confirm_password" id="confirmar_senha_cad" required="required"  placeholder="ex. C4rL0ta D!v 928", 
-                    value="senha123"/>
-                  </div>
-                  <div class="form-group text-center">
-                    <input type="submit" class="btn btn-dark" value="Cadastrar"/> 
-                  </div>
-                  <div class="alert alert-danger d-none">
-                    Preencha o campo <span id="campo-erro"></span>!
-                  </div>
-                </form>
-              </div>
+  </head>
+  <body>
+    <!--FORMULÁRIO DE LOGIN-->
+    <div class="container-fluid centered">
+      <div class="row justify-content-around">
+        <div class="col-5">
+          <div class="card">
+            <div class="card-body">
+              <h1>Cadastro</h1>
+              <form id="cadastroForm" method="post">
+                <div class="form-group">
+                  <label for="nome_cad">Nome:</label>
+                  <input
+                    class="form-control"
+                    type="text"
+                    name="name"
+                    id="nome_cad"
+                    required="required"
+                    placeholder="Digite o seu nome"
+                    value="Macaco"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="sobrenome_cad">Seu sobrenome:</label>
+                  <input
+                    class="form-control"
+                    type="text"
+                    name="surname"
+                    id="sobrenome_cad"
+                    required="required"
+                    placeholder="Digite o seu sobrenome"
+                    value="Loucão"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="username_cad">Seu nome de usuário:</label>
+                  <input
+                    class="form-control"
+                    type="text"
+                    name="username"
+                    id="username_cad"
+                    required="required"
+                    placeholder="Nome de usuário:"
+                    value="Zeke"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="email">E-mail:</label>
+                  <input
+                    class="form-control"
+                    type="email"
+                    name="email"
+                    id="email"
+                    placeholder="ex. maria@gmail.com"
+                    value="zeke@gmail.com"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="senha_cad">Sua senha:</label>
+                  <input
+                    class="form-control"
+                    type="password"
+                    name="password"
+                    id="senha_cad"
+                    required="required"
+                    placeholder="ex. C4rL0ta D!v 928"
+                    ,
+                    value="senha123"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="confirmar_senha_cad">Confirme sua senha:</label>
+                  <input
+                    class="form-control"
+                    type="password"
+                    name="confirm_password"
+                    id="confirmar_senha_cad"
+                    required="required"
+                    placeholder="ex. C4rL0ta D!v 928"
+                    ,
+                    value="senha123"
+                  />
+                </div>
+                <div class="form-group text-center">
+                  <input type="submit" class="btn btn-dark" value="Cadastrar" />
+                </div>
+                <div class="alert alert-danger d-none">
+                  Preencha o campo <span id="campo-erro"></span>!
+                </div>
+              </form>
             </div>
           </div>
         </div>
-      </div>  
-
-</body>
+      </div>
+    </div>
+  </body>
 </html>
