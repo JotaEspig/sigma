@@ -46,16 +46,3 @@ func UpdateAdmin() gin.HandlerFunc {
 		ctx.Status(http.StatusOK)
 	}
 }
-
-func DeleteAdmin() gin.HandlerFunc {
-	return func(ctx *gin.Context) {
-		username := ctx.Param("username")
-		err := admin.RmAdmin(config.DB, username)
-		if err != nil {
-			ctx.AbortWithStatus(http.StatusInternalServerError)
-			return
-		}
-
-		ctx.Status(http.StatusOK)
-	}
-}
