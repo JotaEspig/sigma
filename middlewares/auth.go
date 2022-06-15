@@ -127,3 +127,17 @@ func IsAdminMiddleware() gin.HandlerFunc {
 		ctx.Next()
 	}
 }
+
+// BE CAREFUL WITH THIS MIDDLEWARE,
+// it need to be used with the IsAdminMiddleware to work properly
+func IsSuperAdminMiddleware() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		username := ctx.Param("username")
+		if username != "admin" {
+			ctx.AbortWithStatus(http.StatusUnauthorized)
+			return
+		}
+
+		ctx.Next()
+	}
+}
