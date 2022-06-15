@@ -46,7 +46,7 @@ func GetAllUserInfo() gin.HandlerFunc {
 	}
 }
 
-// Updates a user's info
+// Updates a user's info WITH RESTRICTIONS
 func UpdateUser() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		newValues := user.User{}
