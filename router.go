@@ -84,6 +84,10 @@ func setRoutes(router *gin.Engine) {
 	admin := router.Group("/admin")
 	admin.GET("/:username",
 		middlewares.IsAdminMiddleware(), controllers.GetAdminPage())
+	admin.GET("/:username/get",
+		middlewares.IsAdminMiddleware(), controllers.GetAdminInfo())
+	admin.PUT("/:username/update",
+		middlewares.IsAdminMiddleware(), controllers.UpdateAdmin())
 }
 
 func createRouter() *gin.Engine {
