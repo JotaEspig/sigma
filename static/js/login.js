@@ -20,7 +20,7 @@ function getPageURLFromResponse(response) {
             break;
 
         default:
-            url += "/user";
+            url += "/usuario";
             break;
     }
 

@@ -13,7 +13,7 @@
         $(document).ready(function () {
             var url = window.location.pathname;
             var username = url.substring(url.lastIndexOf('/') + 1);
-            var newURL = "/user/"+username+"/get"
+            var newURL = "/usuario/"+username+"/get"
             $.ajax({
                 type: "get",
                 url: newURL,
