@@ -79,6 +79,7 @@ func RmStudent(db *gorm.DB, username string) error {
 		return err
 	}
 
+	// TODO Jota: Update table users to remove user type as student
 	return db.Unscoped().Delete(&Student{}, "id = ?", u.ID).Error
 }
 

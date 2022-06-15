@@ -73,6 +73,7 @@ func RmAdmin(db *gorm.DB, username string) error {
 		return err
 	}
 
+	// TODO Jota: Update table users to remove user type as admin
 	return db.Unscoped().Delete(&Admin{UID: u.ID}).Error
 }
 
