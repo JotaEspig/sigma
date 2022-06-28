@@ -2,20 +2,11 @@ package controllers
 
 import (
 	"net/http"
-	"sigma/db"
+	"sigma/config"
 	"sigma/models/user"
 
 	"github.com/gin-gonic/gin"
 )
-
-// At the moment, this function just serves the html file
-func SignupGET() gin.HandlerFunc {
-	return func(ctx *gin.Context) {
-		ctx.HTML(
-			http.StatusOK, "cadastro.html", nil,
-		)
-	}
-}
 
 // Gets the values from the form, creates a user and inserts it in the database
 func SignupPOST() gin.HandlerFunc {
@@ -28,7 +19,7 @@ func SignupPOST() gin.HandlerFunc {
 
 		u := user.InitUser(usern, email, name, surname, passwd)
 
-		err := user.AddUser(db.DB, u)
+		err := user.AddUser(config.DB, u)
 		if err != nil {
 			ctx.Status(http.StatusConflict)
 			return

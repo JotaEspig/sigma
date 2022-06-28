@@ -1,6 +1,7 @@
 package main
 
 import (
+	"net/http"
 	"os"
 	"sigma/controllers"
 	"sigma/middlewares"
@@ -57,26 +58,40 @@ func setRoutes(router *gin.Engine) {
 	router.GET("/", controllers.LoginRedirect())
 	router.GET("/login", controllers.LoginGET())
 	router.POST("/login", controllers.LoginPOST())
+	router.GET("/login/validate", controllers.IsLogged())
 
 	// Cadastro
 	router.GET("/cadastro", controllers.SignupGET())
 	router.POST("/cadastro", controllers.SignupPOST())
 
-	user := router.Group("/user")
-
-	// Get user
-	user.GET("/:username", controllers.GetUserInfoPage())
-	user.POST("/:username", controllers.GetPublicUserInfo())
-
-	// TODO Jota: Check if validate is logical
-	// Validates User
-	user.GET("/validate", controllers.ValidateUser())
-	user.GET("/:username/validate",
+	// User group
+	user := router.Group("/usuario/:username")
+	user.GET("", controllers.GetUserPage())
+	user.GET("/get", controllers.GetPublicUserInfo())
+	user.GET("/validate",
 		middlewares.AuthMiddleware(), controllers.GetAllUserInfo())
+	user.PUT("/update",
+		middlewares.AuthMiddleware(), controllers.UpdateUser())
 
-	// Aluno
-	user.GET("/:username/aluno",
-		middlewares.AuthMiddleware(), controllers.GetAlunoPage())
+	// Student group
+	student := router.Group("/aluno/:username", middlewares.IsStudentMiddleware())
+	student.GET("", controllers.GetStudentPage())
+	student.GET("/get", controllers.GetStudentInfo())
+
+	// Admin group
+	admin := router.Group("/admin/:username", middlewares.IsAdminMiddleware())
+	admin.GET("", controllers.GetAdminPage())
+	admin.GET("/get", controllers.GetAdminInfo())
+	admin.PUT("/update", controllers.UpdateAdmin())
+
+	// Admin tools group
+	adminTools := admin.Group("/tools")
+
+	// Admin tools to manage others admins
+	adminToolsForAdmin := adminTools.Group("/admin/:target",
+		middlewares.IsSuperAdminMiddleware())
+	adminToolsForAdmin.PUT("/update", controllers.UpdateTargetAdmin())
+	adminToolsForAdmin.DELETE("/delete", controllers.DeleteTargetAdmin())
 }
 
 func createRouter() *gin.Engine {
@@ -88,6 +103,10 @@ func createRouter() *gin.Engine {
 	router.Static("css/", "static/css/")
 	router.Static("js/", "static/js/")
 	router.Static("img/", "static/img/")
+
+	router.NoRoute(func(ctx *gin.Context) {
+		ctx.HTML(http.StatusNotFound, "404.html", nil)
+	})
 
 	setRoutes(router)
 

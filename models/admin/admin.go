@@ -6,7 +6,7 @@ import (
 )
 
 type Admin struct {
-	UID  uint `gorm:"primary_key"`
+	UID  uint `gorm:"primary_key;column:id"`
 	Role string
 	User *user.User `gorm:"foreignKey:UID"`
 }

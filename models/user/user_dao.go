@@ -3,6 +3,7 @@ package user
 import (
 	// dbPKG means 'the package db', because if it's named db
 	// it will conflict with db variable in the functions below
+	"sigma/config"
 	dbPKG "sigma/db"
 
 	"gorm.io/gorm"
@@ -57,5 +58,5 @@ func RmUser(db *gorm.DB, username string) error {
 
 // AutoMigrate the user table
 func init() {
-	dbPKG.DB.AutoMigrate(&User{})
+	config.DB.AutoMigrate(&User{})
 }

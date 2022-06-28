@@ -1,3 +1,34 @@
+/**
+ * get url from response.
+ * Obs.: response must have the keys: username and type.
+ * @param {object} response 
+ * @returns url to be redirect
+ */
+function getPageURLFromResponse(response) {
+    var url = ""
+    switch (response["type"]) {
+        case "student":
+            url += "/aluno";
+            break;
+
+        case "teacher":
+            url += "/professor"
+            break;
+
+        case "admin":
+            url += "/admin";
+            break;
+
+        default:
+            url += "/usuario";
+            break;
+    }
+
+    url += "/" + response["username"];
+
+    return url
+}
+
 $(document).ready(function () {
 
     $("#loginForm").submit(function (e) { 
@@ -12,18 +43,18 @@ $(document).ready(function () {
             dataType: "json",
             statusCode: {
                 200: function(response) {
-                    token = response["token"];
-                    if (token != "") {
-                        setCookie("auth", token, 48 * 60); // 48 (hours) * 60 (minutes) = 2 days
-                        window.location = "/user/"+response["username"]+"/aluno";
-                    }
+                    var token = response["token"];
+                    setCookie("auth", token, 48 * 60); // 48 (hours) * 60 (minutes) = 2 days
+                    window.location = getPageURLFromResponse(response);
                 },
                 401: function() {
                     $("#Erro").html("Usuário e/ou senha incorretos");
+                    $("#username_login").val("");
                     $("#senha_login").val("");
                 },
                 502: function() {
                     alert("Ocorreu um erro no servidor. Tente novamente.");
+                    $("$username_login").val("");
                     $("#senha_login").val("");
                 }
             },
@@ -34,10 +65,10 @@ $(document).ready(function () {
         // Does a request to check if the cookie is legit and hasn't expired
         $.ajax({
             type: "get",
-            url: "/user/validate",
+            url: "/login/validate",
             statusCode: {
                 200: function(response) {
-                    window.location = "/user/" + response["user"]["username"] + "/aluno";
+                    window.location = getPageURLFromResponse(response);
                 }
             }
         });

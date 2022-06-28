@@ -3,6 +3,7 @@ package student
 import (
 	// dbPKG means 'the package db', because if it's named db
 	// it will conflict with db variable in the functions below
+	"sigma/config"
 	dbPKG "sigma/db"
 	"sigma/models/user"
 
@@ -78,10 +79,11 @@ func RmStudent(db *gorm.DB, username string) error {
 		return err
 	}
 
+	// TODO Jota: Update table users to remove user type as student
 	return db.Unscoped().Delete(&Student{}, "id = ?", u.ID).Error
 }
 
 // AutoMigrate the student table
 func init() {
-	dbPKG.DB.AutoMigrate(&Student{})
+	config.DB.AutoMigrate(&Student{})
 }

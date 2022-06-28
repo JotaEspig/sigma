@@ -2,7 +2,7 @@ $(document).ready(function () {
 
     var url = window.location.pathname;
     var username = url.split('/')[2];
-    var newURL = "/user/"+username+"/validate"
+    var newURL = "/aluno/"+username+"/get"
 
     $.ajax({
         type: "get",

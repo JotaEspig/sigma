@@ -1,7 +1,7 @@
 package tests
 
 import (
-	"sigma/db"
+	"sigma/config"
 	"sigma/models/classroom"
 	"testing"
 )
@@ -12,44 +12,40 @@ const (
 )
 
 func TestAddClassroom(t *testing.T) {
-	db.DB.AutoMigrate(&classroom.Classroom{})
-
 	c, err := classroom.InitClassroom(defClassroomName, defClassroomYear)
 	if err != nil {
 		t.Errorf("initializing classroom: %s", err)
 	}
 
-	err = classroom.AddClassroom(db.DB, c)
+	err = classroom.AddClassroom(config.DB, c)
 	if err != nil {
 		t.Errorf("adding legit classroom: %s", err)
 	}
 
 	// repeating the same action to check 'unique' columns
-	err = classroom.AddClassroom(db.DB, c)
+	err = classroom.AddClassroom(config.DB, c)
 	if err == nil {
 		t.Errorf("adding repeated classroom (it's not supposed to happen): %s", err)
 	}
 
-	err = classroom.RmClassroom(db.DB, c.ID)
+	err = classroom.RmClassroom(config.DB, c.ID)
 	if err != nil {
 		t.Errorf("removing legit classroom: %s", err)
 	}
 }
 
 func TestGetClassroom(t *testing.T) {
-	db.DB.AutoMigrate(&classroom.Classroom{})
-
 	c, err := classroom.InitClassroom(defClassroomName, defClassroomYear)
 	if err != nil {
 		t.Errorf("initializing classroom: %s", err)
 	}
 
-	err = classroom.AddClassroom(db.DB, c)
+	err = classroom.AddClassroom(config.DB, c)
 	if err != nil {
 		t.Errorf("adding legit classroom: %s", err)
 	}
 
-	c, err = classroom.GetClassroom(db.DB, c.ID)
+	c, err = classroom.GetClassroom(config.DB, c.ID)
 	if err != nil {
 		t.Errorf("getting legit classroom: %s", err)
 	}
@@ -58,7 +54,7 @@ func TestGetClassroom(t *testing.T) {
 	}
 
 	// Gets parcial info of classroom
-	c, err = classroom.GetClassroom(db.DB, c.ID, "name")
+	c, err = classroom.GetClassroom(config.DB, c.ID, "name")
 	if err != nil {
 		t.Errorf("getting parcial info of classroom: %s", err)
 	}
@@ -67,37 +63,35 @@ func TestGetClassroom(t *testing.T) {
 	}
 
 	// Gets non-existent classroom
-	_, err = classroom.GetClassroom(db.DB, 0)
+	_, err = classroom.GetClassroom(config.DB, 0)
 	if err == nil {
 		t.Errorf("getting non-existent classroom (it's not supposed to work): %s", err)
 	}
 
-	err = classroom.RmClassroom(db.DB, c.ID)
+	err = classroom.RmClassroom(config.DB, c.ID)
 	if err != nil {
 		t.Errorf("removing legit classroom: %s", err)
 	}
 }
 
 func TestUpdateClassroom(t *testing.T) {
-	db.DB.AutoMigrate(&classroom.Classroom{})
-
 	c, err := classroom.InitClassroom(defClassroomName, defClassroomYear)
 	if err != nil {
 		t.Errorf("initializing classroom: %s", err)
 	}
 
-	err = classroom.AddClassroom(db.DB, c)
+	err = classroom.AddClassroom(config.DB, c)
 	if err != nil {
 		t.Errorf("adding legit classroom: %s", err)
 	}
 
 	c.Name = "different classroom name"
-	err = classroom.UpdateClassroom(db.DB, c)
+	err = classroom.UpdateClassroom(config.DB, c)
 	if err != nil {
 		t.Errorf("updating legit classroom: %s", err)
 	}
 
-	c, err = classroom.GetClassroom(db.DB, c.ID)
+	c, err = classroom.GetClassroom(config.DB, c.ID)
 	if err != nil {
 		t.Errorf("getting legit classroom: %s", err)
 	}
@@ -105,7 +99,7 @@ func TestUpdateClassroom(t *testing.T) {
 		t.Errorf("updating legit classroom: classroom name is not updated")
 	}
 
-	err = classroom.RmClassroom(db.DB, c.ID)
+	err = classroom.RmClassroom(config.DB, c.ID)
 	if err != nil {
 		t.Errorf("removing legit classroom: %s", err)
 	}
@@ -113,19 +107,17 @@ func TestUpdateClassroom(t *testing.T) {
 }
 
 func TestRmClassroom(t *testing.T) {
-	db.DB.AutoMigrate(&classroom.Classroom{})
-
 	c, err := classroom.InitClassroom(defClassroomName, defClassroomYear)
 	if err != nil {
 		t.Errorf("initializing classroom: %s", err)
 	}
 
-	err = classroom.AddClassroom(db.DB, c)
+	err = classroom.AddClassroom(config.DB, c)
 	if err != nil {
 		t.Errorf("adding legit classroom: %s", err)
 	}
 
-	err = classroom.RmClassroom(db.DB, c.ID)
+	err = classroom.RmClassroom(config.DB, c.ID)
 	if err != nil {
 		t.Errorf("removing legit classroom: %s", err)
 	}

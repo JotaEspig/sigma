@@ -1,0 +1,136 @@
+
+
+*{
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+    cursor: default;
+}
+.centered{
+    padding: 30px 1.5% 0 1.5%;
+    margin: 0 0 0 0;
+}
+
+.text{
+    padding: 10% 1.5% 0 1.5%;
+    margin: 0 0 0 0;
+}
+
+.card{
+    background-color: #fffafa;
+}
+h1, h2{
+    font-size: 70px;
+    color: var(--titulo);
+    font-family: 'Ubuntu', sans-serif;
+    text-align: center;
+}
+
+h1:after{
+    content: ' ';
+    display: block;
+    width: 100%;
+    height: 3px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    background: -webkit-linear-gradient(left, rgba(147,184,189,0) 0%,rgba(147,184,189,0.8) 20%,rgb(125, 195, 204) 53%,rgba(147,184,189,0.8) 79%,rgba(147,184,189,0) 100%); 
+    background: linear-gradient(left, rgba(147,184,189,0) 0%,rgba(147,184,189,0.8) 20%,rgb(2, 155, 175) 53%,rgba(147,184,189,0.8) 79%,rgba(147,184,189,0) 100%); 
+  }
+
+/*--table--*/
+  .btn-dark {
+    color: #fff;
+    background-color: black;
+    border-color: #343a40;
+}
+
+.btn-dark:hover {
+    color: #fff;
+    background-color: #343a40;
+    border-color: #1d2124;
+}
+
+.link{
+    background: #e1eaeb;
+    color: #7f7c7c;
+    font-size: 16px;
+    padding: 10px 0px 10px 10px;
+    text-align: right;
+    border-top: 1px solid #dbe5e8;
+    -webkit-border-radius: 0 0  5px 5px;
+    border-radius: 0 0  5px 5px;
+  }
+
+.btn{
+    font-size: 18px;
+    padding: 4px 10px 4px;
+
+}
+
+
+
+/*--menu--*/
+.nav {
+    background: #1d1e20;
+    display: flex;
+    font-family: cursive;  
+    font-size: 20px;
+   
+}
+
+
+  .menu {
+    display: flex;
+    color: white;
+    background: #1d1e20;
+    display: flex;
+    flex-wrap: wrap;
+    font-family: cursive; 
+  }
+  
+  .menu li {
+    margin-left: 10px;
+  }
+
+.menu > li{
+  border-left: red;
+  border-right: red;
+}
+  
+  .menu li a{
+    display: block;
+    padding: 10px;
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+
+/*#logout{
+
+  padding: right !important;
+  color: black !important;
+  font-size: 20px;
+  text-align: center;
+}
+
+li > a#logout:hover{
+ 
+  cursor: pointer;
+
+}
+*/
+/*--botao perfil--*/
+.dropdown{
+  text-align: center;
+}
+.dropdown-menu{
+  background-color: black;
+  color: darkblue;
+}
+.dropdown-item{
+  color: darkblue;
+}
+.dropdown-item:hover{
+  color: darkblue;
+}
