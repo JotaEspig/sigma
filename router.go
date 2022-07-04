@@ -11,8 +11,6 @@ import (
 	"github.com/newrelic/go-agent/v3/newrelic"
 )
 
-// TODO Jota: Set the heroku production and staging
-
 func setNewRelicMiddleware(router *gin.Engine) {
 	nrAppName := os.Getenv("NR_APP_NAME")
 	nrAPIKey := os.Getenv("NR_API_KEY")
@@ -52,8 +50,6 @@ func getRouterEngine() *gin.Engine {
 
 // Set the routes to a router
 func setRoutes(router *gin.Engine) {
-	// TODO Jota: Create groups of routes to separate the route paths
-
 	// Login
 	router.GET("/", controllers.LoginRedirect())
 	router.GET("/login", controllers.LoginGET())
