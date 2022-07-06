@@ -73,7 +73,7 @@ h1:after{
 .nav {
     background: #1d1e20;
     display: flex;
-    font-family: cursive;  
+    font-family: 'Ubuntu', sans-serif;  
     font-size: 20px;
    
 }
@@ -85,7 +85,7 @@ h1:after{
     background: #1d1e20;
     display: flex;
     flex-wrap: wrap;
-    font-family: cursive; 
+    font-family: 'Ubuntu', sans-serif; 
   }
   
   .menu li {
