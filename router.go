@@ -67,7 +67,7 @@ func setRoutes(router *gin.Engine) {
 	user.PUT("/update", controllers.UpdateUser())
 
 	// Public user group (everyone can access this)
-	publicUser := user.Group("/:username")
+	publicUser := router.Group("/:username")
 	publicUser.GET("", controllers.GetUserPage())
 	publicUser.GET("/get", controllers.GetPublicUserInfo())
 
