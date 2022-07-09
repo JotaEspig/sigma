@@ -19,7 +19,8 @@
                 url: newURL,
                 dataType: "json",
                 success: function (response) {
-                    $("#user").html(JSON.stringify(response))
+                    $("#username").text(response.user.username);
+                    $("#user").text(JSON.stringify(response));
                 },
                 error: function() {
                     alert("fuck");
@@ -29,6 +30,8 @@
     </script>
 </head>
 <body>
+
+    <h1><span id="username"></span></h1>
 
     <span id="user"></span>
     
