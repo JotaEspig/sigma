@@ -9,19 +9,24 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+func AbortWithHTML(ctx *gin.Context, status int, file string) {
+	ctx.HTML(status, file, nil)
+	ctx.Abort()
+}
+
 func AuthMiddleware() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		username := ctx.Param("username")
 		token, err := ctx.Cookie("auth")
 		if token == "" || err != nil {
-			ctx.AbortWithStatus(http.StatusUnauthorized)
+			AbortWithHTML(ctx, http.StatusUnauthorized, "access_denied.html")
 			return
 		}
 
 		// check if token is valid
 		dToken, err := config.JWTService.ValidateToken(token)
 		if err != nil || !dToken.Valid {
-			ctx.AbortWithStatus(http.StatusUnauthorized)
+			AbortWithHTML(ctx, http.StatusUnauthorized, "access_denied.html")
 			return
 		}
 
@@ -36,7 +41,7 @@ func AuthMiddleware() gin.HandlerFunc {
 		now := time.Now().Unix()
 		expiresAt := claims["exp"].(float64)
 		if float64(now) > expiresAt {
-			ctx.AbortWithStatus(http.StatusUnauthorized)
+			AbortWithHTML(ctx, http.StatusUnauthorized, "access_denied.html")
 			return
 		}
 
@@ -49,26 +54,26 @@ func IsStudentMiddleware() gin.HandlerFunc {
 		username := ctx.Param("username")
 		token, err := ctx.Cookie("auth")
 		if token == "" || err != nil {
-			ctx.AbortWithStatus(http.StatusUnauthorized)
+			AbortWithHTML(ctx, http.StatusUnauthorized, "access_denied.html")
 			return
 		}
 
 		// check if token is valid
 		dToken, err := config.JWTService.ValidateToken(token)
 		if err != nil || !dToken.Valid {
-			ctx.AbortWithStatus(http.StatusUnauthorized)
+			AbortWithHTML(ctx, http.StatusUnauthorized, "access_denied.html")
 			return
 		}
 
 		claims := dToken.Claims.(jwt.MapClaims)
 
 		if claims["username"] != username {
-			ctx.AbortWithStatus(http.StatusUnauthorized)
+			AbortWithHTML(ctx, http.StatusUnauthorized, "access_denied.html")
 			return
 		}
 
 		if claims["type"] != "student" {
-			ctx.AbortWithStatus(http.StatusUnauthorized)
+			AbortWithHTML(ctx, http.StatusUnauthorized, "access_denied.html")
 			return
 		}
 
@@ -76,7 +81,7 @@ func IsStudentMiddleware() gin.HandlerFunc {
 		now := time.Now().Unix()
 		expiresAt := claims["exp"].(float64)
 		if float64(now) > expiresAt {
-			ctx.AbortWithStatus(http.StatusUnauthorized)
+			AbortWithHTML(ctx, http.StatusUnauthorized, "access_denied.html")
 			return
 		}
 
@@ -89,30 +94,30 @@ func IsAdminMiddleware() gin.HandlerFunc {
 		username := ctx.Param("username")
 		token, err := ctx.Cookie("auth")
 		if token == "" || err != nil {
-			ctx.AbortWithStatus(http.StatusUnauthorized)
+			AbortWithHTML(ctx, http.StatusUnauthorized, "access_denied.html")
 			return
 		}
 
 		// check if token is valid
 		dToken, err := config.JWTService.ValidateToken(token)
 		if err != nil || !dToken.Valid {
-			ctx.AbortWithStatus(http.StatusUnauthorized)
+			AbortWithHTML(ctx, http.StatusUnauthorized, "access_denied.html")
 			return
 		}
 
 		claims := dToken.Claims.(jwt.MapClaims)
 		if err != nil || claims == nil {
-			ctx.AbortWithStatus(http.StatusUnauthorized)
+			AbortWithHTML(ctx, http.StatusUnauthorized, "access_denied.html")
 			return
 		}
 
 		if claims["username"] != username {
-			ctx.AbortWithStatus(http.StatusUnauthorized)
+			AbortWithHTML(ctx, http.StatusUnauthorized, "access_denied.html")
 			return
 		}
 
 		if claims["type"] != "admin" {
-			ctx.AbortWithStatus(http.StatusUnauthorized)
+			AbortWithHTML(ctx, http.StatusUnauthorized, "access_denied.html")
 			return
 		}
 
@@ -120,7 +125,7 @@ func IsAdminMiddleware() gin.HandlerFunc {
 		now := time.Now().Unix()
 		expiresAt := claims["exp"].(float64)
 		if float64(now) > expiresAt {
-			ctx.AbortWithStatus(http.StatusUnauthorized)
+			AbortWithHTML(ctx, http.StatusUnauthorized, "access_denied.html")
 			return
 		}
 
@@ -134,7 +139,7 @@ func IsSuperAdminMiddleware() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		username := ctx.Param("username")
 		if username != "SUPERADMIN" {
-			ctx.AbortWithStatus(http.StatusUnauthorized)
+			AbortWithHTML(ctx, http.StatusUnauthorized, "access_denied.html")
 			return
 		}
 
