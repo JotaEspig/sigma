@@ -61,13 +61,15 @@ func setRoutes(router *gin.Engine) {
 	router.POST("/cadastro", controllers.SignupPOST())
 
 	// User group
-	user := router.Group("/usuario/:username")
-	user.GET("", controllers.GetUserPage())
-	user.GET("/get", controllers.GetPublicUserInfo())
-	user.GET("/validate",
+	user := router.Group("/usuario")
+	user.GET("", controllers.GetProfilePage())
+	user.GET("/get",
 		middlewares.AuthMiddleware(), controllers.GetAllUserInfo())
 	user.PUT("/update",
 		middlewares.AuthMiddleware(), controllers.UpdateUser())
+	publicUser := user.Group("/:username")
+	publicUser.GET("", controllers.GetUserPage())
+	publicUser.GET("/get", controllers.GetPublicUserInfo())
 
 	// Student group
 	student := router.Group("/aluno/:username", middlewares.IsStudentMiddleware())
