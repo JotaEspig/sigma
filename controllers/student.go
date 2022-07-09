@@ -13,7 +13,7 @@ import (
 
 func GetStudentInfo() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		username := ctx.Param("username")
+		username := ctx.GetString("username")
 		s, err := student.GetStudent(config.DB, username)
 		if err != nil {
 			ctx.AbortWithStatus(http.StatusNotFound)

@@ -46,7 +46,6 @@ func AuthMiddleware() gin.HandlerFunc {
 
 func IsStudentMiddleware() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		username := ctx.Param("username")
 		token, err := ctx.Cookie("auth")
 		if token == "" || err != nil {
 			AbortWithHTML(ctx, http.StatusUnauthorized, "access_denied.html")
@@ -62,11 +61,6 @@ func IsStudentMiddleware() gin.HandlerFunc {
 
 		claims := dToken.Claims.(jwt.MapClaims)
 
-		if claims["username"] != username {
-			AbortWithHTML(ctx, http.StatusUnauthorized, "access_denied.html")
-			return
-		}
-
 		if claims["type"] != "student" {
 			AbortWithHTML(ctx, http.StatusUnauthorized, "access_denied.html")
 			return
@@ -80,6 +74,7 @@ func IsStudentMiddleware() gin.HandlerFunc {
 			return
 		}
 
+		ctx.Set("username", claims["username"])
 		ctx.Next()
 	}
 }
