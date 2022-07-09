@@ -5,28 +5,19 @@
  * @returns url to be redirect
  */
 function getPageURLFromResponse(response) {
-    var url = ""
     switch (response["type"]) {
         case "student":
-            url += "/aluno";
-            break;
+            return "/aluno";
 
         case "teacher":
-            url += "/professor"
-            break;
+            return "/professor"
 
         case "admin":
-            url += "/admin";
-            break;
+            return "/admin";
 
         default:
-            url += "/usuario";
-            break;
+            return "/usuario";
     }
-
-    url += "/" + response["username"];
-
-    return url
 }
 
 $(document).ready(function () {
