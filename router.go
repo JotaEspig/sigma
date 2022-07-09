@@ -77,7 +77,7 @@ func setRoutes(router *gin.Engine) {
 	student.GET("/get", controllers.GetStudentInfo())
 
 	// Admin group
-	admin := router.Group("/admin/:username", middlewares.IsAdminMiddleware())
+	admin := router.Group("/admin", middlewares.IsAdminMiddleware())
 	admin.GET("", controllers.GetAdminPage())
 	admin.GET("/get", controllers.GetAdminInfo())
 	admin.PUT("/update", controllers.UpdateAdmin())
