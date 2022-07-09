@@ -72,7 +72,7 @@ func setRoutes(router *gin.Engine) {
 	publicUser.GET("/get", controllers.GetPublicUserInfo())
 
 	// Student group
-	student := router.Group("/aluno/:username", middlewares.IsStudentMiddleware())
+	student := router.Group("/aluno", middlewares.IsStudentMiddleware())
 	student.GET("", controllers.GetStudentPage())
 	student.GET("/get", controllers.GetStudentInfo())
 
