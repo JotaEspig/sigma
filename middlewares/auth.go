@@ -16,7 +16,6 @@ func AbortWithHTML(ctx *gin.Context, status int, file string) {
 
 func AuthMiddleware() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		username := ctx.Param("username")
 		token, err := ctx.Cookie("auth")
 		if token == "" || err != nil {
 			AbortWithHTML(ctx, http.StatusUnauthorized, "access_denied.html")
@@ -32,11 +31,6 @@ func AuthMiddleware() gin.HandlerFunc {
 
 		claims := dToken.Claims.(jwt.MapClaims)
 
-		if claims["username"] != username {
-			ctx.AbortWithStatus(http.StatusUnauthorized)
-			return
-		}
-
 		// checks if token is expired
 		now := time.Now().Unix()
 		expiresAt := claims["exp"].(float64)
@@ -45,6 +39,7 @@ func AuthMiddleware() gin.HandlerFunc {
 			return
 		}
 
+		ctx.Set("username", claims["username"])
 		ctx.Next()
 	}
 }

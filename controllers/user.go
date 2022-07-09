@@ -34,7 +34,7 @@ func GetPublicUserInfo() gin.HandlerFunc {
 // either user or its children (student, admin)
 func GetAllUserInfo() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		username := ctx.Param("username")
+		username := ctx.GetString("username")
 		u, err := user.GetUser(config.DB, username, "username", "type")
 		if err != nil {
 			ctx.AbortWithStatus(http.StatusNotFound)
@@ -50,7 +50,7 @@ func GetAllUserInfo() gin.HandlerFunc {
 func UpdateUser() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		newValues := user.User{}
-		username := ctx.Param("username")
+		username := ctx.GetString("username")
 		u, err := user.GetUser(config.DB, username, "id")
 		if err != nil {
 			ctx.AbortWithStatus(http.StatusNotFound)
