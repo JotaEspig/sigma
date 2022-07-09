@@ -14,7 +14,7 @@ import (
 
 func GetAdminInfo() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		username := ctx.Param("username")
+		username := ctx.GetString("username")
 		a, err := admin.GetAdmin(config.DB, username)
 		if err != nil {
 			ctx.AbortWithStatus(http.StatusNotFound)
@@ -28,7 +28,7 @@ func GetAdminInfo() gin.HandlerFunc {
 func UpdateAdmin() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		newValues := admin.Admin{}
-		username := ctx.Param("username")
+		username := ctx.GetString("username")
 		a, err := admin.GetAdmin(config.DB, username, "id")
 		if err != nil {
 			ctx.AbortWithStatus(http.StatusNotFound)

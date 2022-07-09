@@ -81,7 +81,6 @@ func IsStudentMiddleware() gin.HandlerFunc {
 
 func IsAdminMiddleware() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		username := ctx.Param("username")
 		token, err := ctx.Cookie("auth")
 		if token == "" || err != nil {
 			AbortWithHTML(ctx, http.StatusUnauthorized, "access_denied.html")
@@ -101,11 +100,6 @@ func IsAdminMiddleware() gin.HandlerFunc {
 			return
 		}
 
-		if claims["username"] != username {
-			AbortWithHTML(ctx, http.StatusUnauthorized, "access_denied.html")
-			return
-		}
-
 		if claims["type"] != "admin" {
 			AbortWithHTML(ctx, http.StatusUnauthorized, "access_denied.html")
 			return
@@ -119,15 +113,16 @@ func IsAdminMiddleware() gin.HandlerFunc {
 			return
 		}
 
+		ctx.Set("username", claims["username"])
 		ctx.Next()
 	}
 }
 
 // BE CAREFUL WITH THIS MIDDLEWARE,
-// it need to be used with the IsAdminMiddleware to work properly
+// it needs to be used with the IsAdminMiddleware to work properly
 func IsSuperAdminMiddleware() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		username := ctx.Param("username")
+		username := ctx.GetString("username")
 		if username != "SUPERADMIN" {
 			AbortWithHTML(ctx, http.StatusUnauthorized, "access_denied.html")
 			return
