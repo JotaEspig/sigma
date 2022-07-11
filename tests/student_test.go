@@ -84,7 +84,7 @@ func TestGetStudent(t *testing.T) {
 	// Adds user with year and status
 	err = student.AddStudent(config.DB, s)
 	if err != nil {
-		t.Errorf("adding legit user (without status): %s", err)
+		t.Errorf("adding legit user (with status): %s", err)
 	}
 
 	_, err = student.GetStudent(config.DB, u.Username)
