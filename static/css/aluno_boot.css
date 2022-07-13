@@ -134,3 +134,28 @@ li > a#logout:hover{
 .dropdown-item:hover{
   color: darkblue;
 }
+
+/* Cards de cria 
+
+.conteudo{ 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  width: 100px;
+  height: 100px;
+}
+
+.card2 {
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0px 2px 2px #0f10116b;
+}
+
+.middleCard{
+  background: url(https://i.pinimg.com/736x/f8/0b/8c/f80b8c231c4cc09339aa4f7293d429d0.jpg) center/cover;
+  height: 300px;
+  width: 100%;
+
+}
+*/
