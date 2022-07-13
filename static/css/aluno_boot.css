@@ -6,6 +6,7 @@ body {
   height: 100%;
   margin: 0 auto; /* Centraliza */
   padding: 100px;
+  padding-bottom: 30px;
   width: 70%; /* Define a largura do Corpo do Documento */
 }
 
@@ -86,8 +87,6 @@ h1:after{
     font-size: 20px;
    
 }
-
-
   .menu {
     display: flex;
     color: white;
@@ -115,29 +114,7 @@ h1:after{
   }
 
 /*--Botão de logout tem que ajeitar--*/
-#logout{
-  background: black;
-  margin-left: 1445px;
-  padding: 7px 15px 7px 15px; /*--Parametros do corpo do botão--*/
-  font-size: 12px;
-  border-top: 1px solid #dbe5e8;
-  -webkit-border-radius: 0 0  5px 5px;
-  border-radius: 0 0  5px 5px;
-  font-weight: bold;
-  color: #ffffff;
-  border: 1px solid #4ab3c6;
-  -webkit-border-radius: 4px;
-  border-radius: 4px;  
-  -webkit-transition: all 0.4s linear;
-  transition: all 0.4s  linear;
-  text-shadow: 0 1px 1px #333;
-}
- 
-#logout:hover{
-  color: #39bfd7;
-  background: #f7f7f7;
-  border: 1px solid #4ab3c6;
-}
+
 /*#logout{
 
   padding: right !important;
@@ -157,15 +134,19 @@ li > a#logout:hover{
   text-align: center;
 }
 .dropdown-menu{
-  background-color: black;
-  color: darkblue;
+  background-color: rgba(194, 195, 195, 0.8);
+  color: black;
 }
 .dropdown-item{
-  color: darkblue;
+  color: black;
 }
 .dropdown-item:hover{
-  color: darkblue;
+  background-color: rgba(91, 94, 95, 0.8);
+  color: rgba(194, 195, 195, 0.8);
 } 
+#logout:hover{
+  color: rgba(194, 195, 195, 0.8);
+}
 /*
 .conteudo{ 
   display: flex;
@@ -175,6 +156,7 @@ li > a#logout:hover{
   width: 100px;
   height: 100px;
 }
+
 
 .card2 {
   background: #fff;
