@@ -79,6 +79,41 @@ func IsStudentMiddleware() gin.HandlerFunc {
 	}
 }
 
+func IsTeacherMiddleware() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		token, err := ctx.Cookie("auth")
+		if token == "" || err != nil {
+			AbortWithHTML(ctx, http.StatusUnauthorized, "access_denied.html")
+			return
+		}
+
+		// check if token is valid
+		dToken, err := config.JWTService.ValidateToken(token)
+		if err != nil || !dToken.Valid {
+			AbortWithHTML(ctx, http.StatusUnauthorized, "access_denied.html")
+			return
+		}
+
+		claims := dToken.Claims.(jwt.MapClaims)
+
+		if claims["type"] != "teacher" {
+			AbortWithHTML(ctx, http.StatusUnauthorized, "access_denied.html")
+			return
+		}
+
+		// checks if token is expired
+		now := time.Now().Unix()
+		expiresAt := claims["exp"].(float64)
+		if float64(now) > expiresAt {
+			AbortWithHTML(ctx, http.StatusUnauthorized, "access_denied.html")
+			return
+		}
+
+		ctx.Set("username", claims["username"])
+		ctx.Next()
+	}
+}
+
 func IsAdminMiddleware() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		token, err := ctx.Cookie("auth")
