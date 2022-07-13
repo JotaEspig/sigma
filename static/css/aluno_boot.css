@@ -133,10 +133,8 @@ li > a#logout:hover{
 }
 .dropdown-item:hover{
   color: darkblue;
-}
-
-/* Cards de cria 
-
+} 
+/*
 .conteudo{ 
   display: flex;
   justify-content: center;
@@ -159,3 +157,7 @@ li > a#logout:hover{
 
 }
 */
+
+a{
+  text-decoration: none;
+}
