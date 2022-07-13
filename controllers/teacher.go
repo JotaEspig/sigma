@@ -8,7 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func GetTeacher() gin.HandlerFunc {
+func GetTeacherInfo() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		username := ctx.GetString("username")
 		t, err := teacher.GetTeacher(config.DB, username)
