@@ -39,20 +39,29 @@
     <title>SIGMA</title>
 </head>
 
-<body>
+<body >
     <!-- Menu -->
     <header class="header">
-        <nav class="nav navbar fixed-top">
-            <ul class="menu align-items-center">
-                <li>
-                    <a class="navbar-brand navbar-light" href="aluno.html">
-                        <img class="d-inline-block " src="../img/favicon.ico" width="40" height="40" style="cursor: pointer;">
-                    </a>
-                </li>
-                <li><a href="/">Home</a></li>
-                <li><a href="/">Extensão</a></li>
-                <li><a href="/">Contato</a></li>
-            </ul>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light" >
+            <a class="navbar-brand" href="#">SIGMA</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Bandeclay<span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Bandeclay</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Bandeclay</a>
+                    </li>
+                </ul>
+            </div>
+
             <div class="dropdown dropleft">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Perfil
@@ -64,12 +73,14 @@
                   <a class="dropdown-item" id="logout"  onclick="logout()">Logout</a>
                 </div>
             </div>
+
         </nav>
     </header>
     <h1>Bem vindo</h1>
     <h2>
         <span id="username" style="font-style:italic;"></span>
     </h2>
+
     <!-- Materias -->
     
     <h2>Matérias</h2> 
@@ -95,8 +106,7 @@
             </div>   
         </div>        
                 
-
-            -->
+        -->
              
 
         <!--Linha 1 de cards-->

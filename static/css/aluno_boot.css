@@ -5,8 +5,10 @@ html {
 body {
   height: 100%;
   margin: 0 auto; /* Centraliza */
+  margin-top: 0px;
   padding: 100px;
   padding-bottom: 30px;
+  padding-top: 80px;
   width: 70%; /* Define a largura do Corpo do Documento */
 }
 
@@ -48,7 +50,7 @@ h1:after{
   }
 
 /*--table--*/
-  .btn-dark {
+.btn-dark {
     color: #fff;
     background-color: black;
     border-color: #343a40;
@@ -80,38 +82,36 @@ h1:after{
 
 
 /*--menu--*/
-.nav {
-    background: #1d1e20;
+.navbar {
     display: flex;
     font-family: 'Ubuntu', sans-serif;  
     font-size: 20px;
    
 }
-  .menu {
-    display: flex;
-    color: white;
-    background: #1d1e20;
-    display: flex;
-    flex-wrap: wrap;
-    font-family: 'Ubuntu', sans-serif; 
-  }
+.navbar-nav {
+  display: flex;
+  color: white;
+  display: flex;
+  flex-wrap: wrap;
+  font-family: 'Ubuntu', sans-serif; 
+}
   
-  .menu li {
-    margin-left: 10px;
-  }
+.nav-item li {
+  margin-left: 10px;
+}
 
-.menu > li{
+.nav-item > li{
   border-left: red;
   border-right: red;
 }
   
-  .menu li a{
-    display: block;
-    padding: 10px;
-    color: white;
-    text-decoration: none;
-    cursor: pointer;
-  }
+.nav-item li a{
+  display: block;
+  padding: 10px;
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+}
 
 /*--Botão de logout tem que ajeitar--*/
 
