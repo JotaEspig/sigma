@@ -2,7 +2,6 @@ package student
 
 import (
 	"errors"
-	"sigma/models/classroom"
 	"sigma/models/user"
 )
 
@@ -11,7 +10,6 @@ type Student struct {
 	Status      string
 	ClassroomID uint       `gorm:"default:null"`
 	User        *user.User `gorm:"foreignKey:UID"`
-	Classroom   *classroom.Classroom
 }
 
 func InitStudent(u *user.User) (*Student, error) {
@@ -36,9 +34,6 @@ func (s *Student) ToMap() map[string]interface{} {
 
 	studentMap["status"] = s.Status
 	studentMap["classroom_id"] = s.ClassroomID
-	if s.Classroom != nil {
-		studentMap["classroom"] = s.Classroom.ToMap()
-	}
 
 	return studentMap
 }
