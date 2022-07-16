@@ -3,6 +3,8 @@ package tests
 import (
 	"sigma/config"
 	"sigma/models/classroom"
+	"sigma/models/student"
+	"sigma/models/user"
 	"testing"
 )
 
@@ -51,6 +53,43 @@ func TestGetClassroom(t *testing.T) {
 	}
 	if c.ID == 0 {
 		t.Errorf("getting legit classroom: classroom id is null")
+	}
+
+	// adding students to classroom
+	u := user.InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
+	err = user.AddUser(config.DB, u)
+	if err != nil {
+		t.Errorf("adding legit user: %s", err)
+	}
+
+	s, err := student.InitStudent(u)
+	if err != nil {
+		t.Errorf("initializing student: %s", err)
+	}
+
+	s.ClassroomID = c.ID
+	err = student.AddStudent(config.DB, s)
+	if err != nil {
+		t.Errorf("adding legit student: %s", err)
+	}
+
+	c, err = classroom.GetClassroom(config.DB, c.ID)
+	if err != nil {
+		t.Errorf("getting legit classroom: %s", err)
+	}
+	if len(c.Students) != 1 {
+		t.Errorf("getting legit classroom: students count is not 1")
+	}
+
+	// removing students and users after test
+	err = student.RmStudent(config.DB, defUsername)
+	if err != nil {
+		t.Errorf("removing legit student: %s", err)
+	}
+
+	err = user.RmUser(config.DB, defUsername)
+	if err != nil {
+		t.Errorf("removing legit user: %s", err)
 	}
 
 	// Gets parcial info of classroom

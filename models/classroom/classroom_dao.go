@@ -34,9 +34,17 @@ func GetClassroom(db *gorm.DB, id uint, params ...string) (*Classroom, error) {
 
 	columnsToUse := dbPKG.GetColumns(ClassroomParams, params...)
 
-	err := db.Select(columnsToUse).Where("id = ?", id).First(c).Error
+	err := db.Select(columnsToUse).Where("id = ?", id).Preload("Students").First(c).Error
+
 	if err != nil {
 		return nil, err
+	}
+
+	for i := range c.Students {
+		err = db.Model(&c.Students[i]).Association("User").Find(&c.Students[i].User)
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	return c, nil

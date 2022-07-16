@@ -2,12 +2,14 @@ package classroom
 
 import (
 	"errors"
+	"sigma/models/student"
 )
 
 type Classroom struct {
-	ID   uint `gorm:"primary_key"`
-	Name string
-	Year uint8
+	ID       uint   `gorm:"primary_key"`
+	Name     string `gorm:"not null"`
+	Year     uint8
+	Students []*student.Student
 }
 
 func InitClassroom(name string, year uint8) (*Classroom, error) {
