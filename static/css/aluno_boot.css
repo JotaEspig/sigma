@@ -5,10 +5,10 @@ html {
 body {
   height: 100%;
   margin: 0 auto; /* Centraliza */
-  margin-top: 0px;
+  margin-top: 0%;
   padding: 100px;
   padding-bottom: 30px;
-  padding-top: 80px;
+  padding-top: 0px;
   width: 70%; /* Define a largura do Corpo do Documento */
 }
 
@@ -38,7 +38,7 @@ h1, h2{
     text-align: center;
 }
 
-h1:after{
+.new:after, h1:after{
     content: ' ';
     display: block;
     width: 100%;
@@ -134,19 +134,17 @@ li > a#logout:hover{
   text-align: center;
 }
 .dropdown-menu{
-  background-color: rgba(194, 195, 195, 0.8);
+  background-color: rgba(91, 94, 95, 0.5);
   color: black;
 }
 .dropdown-item{
   color: black;
 }
 .dropdown-item:hover{
-  background-color: rgba(91, 94, 95, 0.8);
-  color: rgba(194, 195, 195, 0.8);
+  background-color: rgba(194, 195, 195, 0.5);
+  color: rgba(91, 94, 95, 1);
 } 
-#logout:hover{
-  color: rgba(194, 195, 195, 0.8);
-}
+
 /*
 .conteudo{ 
   display: flex;
