@@ -60,10 +60,6 @@ func GetStudent(db *gorm.DB, username string, params ...string) (*Student, error
 		return nil, err
 	}
 
-	if s.ClassroomID != 0 {
-		err = db.Model(s).Association("Classroom").Find(&s.Classroom)
-	}
-
 	return s, err
 }
 

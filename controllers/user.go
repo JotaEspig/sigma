@@ -8,6 +8,7 @@ import (
 	"sigma/config"
 	"sigma/models/admin"
 	"sigma/models/student"
+	"sigma/models/teacher"
 	"sigma/models/user"
 
 	"github.com/gin-gonic/gin"
@@ -34,7 +35,7 @@ func GetPublicUserInfo() gin.HandlerFunc {
 // either user or its children (student, admin)
 func GetAllUserInfo() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		username := ctx.Param("username")
+		username := ctx.GetString("username")
 		u, err := user.GetUser(config.DB, username, "username", "type")
 		if err != nil {
 			ctx.AbortWithStatus(http.StatusNotFound)
@@ -50,7 +51,7 @@ func GetAllUserInfo() gin.HandlerFunc {
 func UpdateUser() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		newValues := user.User{}
-		username := ctx.Param("username")
+		username := ctx.GetString("username")
 		u, err := user.GetUser(config.DB, username, "id")
 		if err != nil {
 			ctx.AbortWithStatus(http.StatusNotFound)
@@ -123,6 +124,23 @@ var getPublicInfoFuncs = map[string]func(*gin.Context, string){
 		)
 	},
 
+	"teacher": func(ctx *gin.Context, username string) {
+		t, err := teacher.GetTeacher(config.DB, username,
+			teacher.PublicTeacherParams...)
+
+		if err != nil {
+			ctx.AbortWithStatus(http.StatusNotFound)
+			return
+		}
+
+		ctx.JSON(
+			http.StatusOK,
+			gin.H{
+				"user": t.ToMap(),
+			},
+		)
+	},
+
 	"admin": func(ctx *gin.Context, username string) {
 		a, err := admin.GetAdmin(config.DB, username,
 			admin.PublicAdminParams...)
@@ -172,6 +190,22 @@ var getAllInfoFuncs = map[string]func(*gin.Context, string){
 			http.StatusOK,
 			gin.H{
 				"user": s.ToMap(),
+			},
+		)
+	},
+
+	"teacher": func(ctx *gin.Context, username string) {
+		t, err := teacher.GetTeacher(config.DB, username)
+
+		if err != nil {
+			ctx.AbortWithStatus(http.StatusNotFound)
+			return
+		}
+
+		ctx.JSON(
+			http.StatusOK,
+			gin.H{
+				"user": t.ToMap(),
 			},
 		)
 	},

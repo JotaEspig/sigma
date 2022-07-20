@@ -13,13 +13,14 @@
         $(document).ready(function () {
             var url = window.location.pathname;
             var username = url.substring(url.lastIndexOf('/') + 1);
-            var newURL = "/usuario/"+username+"/get"
+            var newURL = "/"+username+"/get"
             $.ajax({
                 type: "get",
                 url: newURL,
                 dataType: "json",
                 success: function (response) {
-                    $("#user").html(JSON.stringify(response))
+                    $("#username").text(response.user.username);
+                    $("#user").text(JSON.stringify(response));
                 },
                 error: function() {
                     alert("fuck");
@@ -29,6 +30,8 @@
     </script>
 </head>
 <body>
+
+    <h1><span id="username"></span></h1>
 
     <span id="user"></span>
     

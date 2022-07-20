@@ -11,8 +11,6 @@ import (
 	"github.com/newrelic/go-agent/v3/newrelic"
 )
 
-// TODO Jota: Set the heroku production and staging
-
 func setNewRelicMiddleware(router *gin.Engine) {
 	nrAppName := os.Getenv("NR_APP_NAME")
 	nrAPIKey := os.Getenv("NR_API_KEY")
@@ -52,8 +50,6 @@ func getRouterEngine() *gin.Engine {
 
 // Set the routes to a router
 func setRoutes(router *gin.Engine) {
-	// TODO Jota: Create groups of routes to separate the route paths
-
 	// Login
 	router.GET("/", controllers.LoginRedirect())
 	router.GET("/login", controllers.LoginGET())
@@ -65,21 +61,29 @@ func setRoutes(router *gin.Engine) {
 	router.POST("/cadastro", controllers.SignupPOST())
 
 	// User group
-	user := router.Group("/usuario/:username")
-	user.GET("", controllers.GetUserPage())
-	user.GET("/get", controllers.GetPublicUserInfo())
-	user.GET("/validate",
-		middlewares.AuthMiddleware(), controllers.GetAllUserInfo())
-	user.PUT("/update",
-		middlewares.AuthMiddleware(), controllers.UpdateUser())
+	user := router.Group("/usuario", middlewares.AuthMiddleware())
+	user.GET("", controllers.GetProfilePage())
+	user.GET("/get", controllers.GetAllUserInfo())
+	user.PUT("/update", controllers.UpdateUser())
+
+	// Public user group (everyone can access this)
+	publicUser := router.Group("/:username")
+	publicUser.GET("", controllers.GetUserPage())
+	publicUser.GET("/get", controllers.GetPublicUserInfo())
 
 	// Student group
-	student := router.Group("/aluno/:username", middlewares.IsStudentMiddleware())
+	student := router.Group("/aluno", middlewares.IsStudentMiddleware())
 	student.GET("", controllers.GetStudentPage())
 	student.GET("/get", controllers.GetStudentInfo())
 
+	// Teacher group
+	teacher := router.Group("/professor", middlewares.IsTeacherMiddleware())
+	teacher.GET("", controllers.GetTeacherPage())
+	teacher.GET("/get", controllers.GetTeacherInfo())
+	teacher.GET("/update", controllers.UpdateTeacher())
+
 	// Admin group
-	admin := router.Group("/admin/:username", middlewares.IsAdminMiddleware())
+	admin := router.Group("/admin", middlewares.IsAdminMiddleware())
 	admin.GET("", controllers.GetAdminPage())
 	admin.GET("/get", controllers.GetAdminInfo())
 	admin.PUT("/update", controllers.UpdateAdmin())

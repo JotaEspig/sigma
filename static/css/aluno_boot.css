@@ -1,4 +1,16 @@
+html {
+  height: 100%; /* Define o tamanho do Documento HTML */
+}
 
+body {
+  height: 100%;
+  margin: 0 auto; /* Centraliza */
+  margin-top: 0px;
+  padding: 100px;
+  padding-bottom: 30px;
+  padding-top: 80px;
+  width: 70%; /* Define a largura do Corpo do Documento */
+}
 
 *{
     margin: 0px;
@@ -38,7 +50,7 @@ h1:after{
   }
 
 /*--table--*/
-  .btn-dark {
+.btn-dark {
     color: #fff;
     background-color: black;
     border-color: #343a40;
@@ -70,41 +82,38 @@ h1:after{
 
 
 /*--menu--*/
-.nav {
-    background: #1d1e20;
+.navbar {
     display: flex;
-    font-family: cursive;  
+    font-family: 'Ubuntu', sans-serif;  
     font-size: 20px;
    
 }
-
-
-  .menu {
-    display: flex;
-    color: white;
-    background: #1d1e20;
-    display: flex;
-    flex-wrap: wrap;
-    font-family: cursive; 
-  }
+.navbar-nav {
+  display: flex;
+  color: white;
+  display: flex;
+  flex-wrap: wrap;
+  font-family: 'Ubuntu', sans-serif; 
+}
   
-  .menu li {
-    margin-left: 10px;
-  }
+.nav-item li {
+  margin-left: 10px;
+}
 
-.menu > li{
+.nav-item > li{
   border-left: red;
   border-right: red;
 }
   
-  .menu li a{
-    display: block;
-    padding: 10px;
-    color: white;
-    text-decoration: none;
-    cursor: pointer;
-  }
+.nav-item li a{
+  display: block;
+  padding: 10px;
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+}
 
+/*--Botão de logout tem que ajeitar--*/
 
 /*#logout{
 
@@ -125,12 +134,47 @@ li > a#logout:hover{
   text-align: center;
 }
 .dropdown-menu{
-  background-color: black;
-  color: darkblue;
+  background-color: rgba(194, 195, 195, 0.8);
+  color: black;
 }
 .dropdown-item{
-  color: darkblue;
+  color: black;
 }
 .dropdown-item:hover{
-  color: darkblue;
+  background-color: rgba(91, 94, 95, 0.8);
+  color: rgba(194, 195, 195, 0.8);
+} 
+#logout:hover{
+  color: rgba(194, 195, 195, 0.8);
+}
+/*
+.conteudo{ 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  width: 100px;
+  height: 100px;
+}
+
+*/
+.card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 2px 2px #5c62686b;
+}
+
+h5 {
+  margin : 10px;
+}
+
+img{
+  margin: center;
+  text-align: center;
+}
+
+a{
+  text-decoration: none;
+  cursor: pointer;
+  
 }

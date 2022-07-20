@@ -1,43 +1,39 @@
-/*
-The functions below are the functions that an admin can call
-*/
-
 package controllers
 
 import (
 	"net/http"
 	"sigma/config"
-	"sigma/models/admin"
+	"sigma/models/teacher"
 
 	"github.com/gin-gonic/gin"
 )
 
-func GetAdminInfo() gin.HandlerFunc {
+func GetTeacherInfo() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		username := ctx.GetString("username")
-		a, err := admin.GetAdmin(config.DB, username)
+		t, err := teacher.GetTeacher(config.DB, username)
 		if err != nil {
 			ctx.AbortWithStatus(http.StatusNotFound)
 			return
 		}
 
-		ctx.JSON(http.StatusOK, a.ToMap())
+		ctx.JSON(http.StatusOK, t.ToMap())
 	}
 }
 
-func UpdateAdmin() gin.HandlerFunc {
+func UpdateTeacher() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		newValues := admin.Admin{}
+		newValues := teacher.Teacher{}
 		username := ctx.GetString("username")
-		a, err := admin.GetAdmin(config.DB, username, "id")
+		t, err := teacher.GetTeacher(config.DB, username, "id")
 		if err != nil {
 			ctx.AbortWithStatus(http.StatusNotFound)
 			return
 		}
 
 		ctx.ShouldBindJSON(&newValues)
-		newValues.UID = a.UID
-		err = admin.UpdateAdmin(config.DB, &newValues)
+		newValues.UID = t.UID
+		err = teacher.UpdateTeacher(config.DB, &newValues)
 		if err != nil {
 			ctx.AbortWithStatus(http.StatusInternalServerError)
 			return
