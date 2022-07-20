@@ -170,3 +170,9 @@ img{
   margin: center;
   text-align: center;
 }
+
+a{
+  text-decoration: none;
+  cursor: pointer;
+  
+}
