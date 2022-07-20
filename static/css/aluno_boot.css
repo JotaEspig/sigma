@@ -160,6 +160,7 @@ li > a#logout:hover{
   background: #fff;
   border-radius: 10px;
   box-shadow: 0px 2px 2px #5c62686b;
+  cursor: pointer;
 }
 
 h5 {
@@ -174,5 +175,4 @@ img{
 a{
   text-decoration: none;
   cursor: pointer;
-  
 }
