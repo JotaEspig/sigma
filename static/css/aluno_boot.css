@@ -38,7 +38,7 @@ h1, h2{
     text-align: center;
 }
 
-h1:after{
+.new:after, h1:after{
     content: ' ';
     display: block;
     width: 100%;
@@ -144,9 +144,7 @@ li > a#logout:hover{
   background-color: rgba(194, 195, 195, 0.5);
   color: rgba(91, 94, 95, 1);
 } 
-#logout:hover{
-  color: rgba(194, 195, 195, 0.8);
-}
+
 /*
 .conteudo{ 
   display: flex;
@@ -171,8 +169,4 @@ h5 {
 img{
   margin: center;
   text-align: center;
-}
-
-a{
-  text-decoration: none;
 }
