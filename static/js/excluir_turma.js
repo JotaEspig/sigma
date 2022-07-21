@@ -1,10 +1,17 @@
-var tabela = document.querySelector("#tabela_turma");
+$(document).ready(function () {
+    $("#tabela_turma").on("click", ".remover", function(){
+        let tr = $(this).closest('tr');
+        
+        let confirmado = confirm('Deseja deletar?');
+        if(confirmado){
+            alert('Confirmado!');
+        }else{
+            alert('Negado!'); 
+            return;  
+        }
 
-tabela.addEventListener("click", function() {
-    var elementoClicado = event.target;
-    if (elementoClicado.classList.contains("btn-excluir")) {
-        var celula = elementoClicado.parentNode;
-        var linha = celula.parentNode;
-        linha.remove();
-    }
-})
+        tr.fadeOut(400, function() {
+            tr.remove();  
+        });
+    });
+});
