@@ -27,6 +27,5 @@ function getCookie(key) {
  * @param {string} key cookie key
  */
 function eraseCookie(key) {
-    var keyValue = getCookie(key);
-    setCookie(key, keyValue, '-1');
+    document.cookie = key+"=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 }

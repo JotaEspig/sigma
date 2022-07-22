@@ -5,7 +5,7 @@ services:
     image: postgres
     container_name: "sigma-database"
     environment:
-      - POSTGRES_DB=postgres
+      - POSTGRES_DB=sigma
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     ports:

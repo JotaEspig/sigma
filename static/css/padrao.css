@@ -4,25 +4,29 @@ ex.:  https://paletton.com/#uid=13q0u0kiCFn8GVde7NVmtwSqXtg
 
 @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@1,700;1,900&family=Ubuntu:ital,wght@1,300&display=swap');
 
-/* TODO Samuel: Proposta: pegar um tom de azul menos vibrante. 
- * Obs.: Eder tinha comentado que parecia simpsons
-*/
-
 /*--Definições de variaveis--*/
-:root{
-    --titulo: #00e5fff8;
-    --bg_botao: #3d9db3;
+:root{/*
+    --titulo: white;
+    --texto: #f7f7f7;
+    --bg_botao: rgb(68, 67, 90);
     --enquadro: #f7f7f7;
     --borda: #4ab3c6;
-    --letra_transition: #39bfd7;
+    --letra_transition: white;
     --letras_label: rgba(147,184,189,0.8) 20%;
-    --bg: #f2fbff;
+    
+*/
+    --bg: rgba(68, 67, 90, 0.8) 20%;
+    --bg_pag: rgb(99, 96, 114);
+    --letras_label: rgba(147,184,189,0.8) 20%;
 }
 html{
     font-family: sans-serif;
     line-height: 1.15;
     -webkit-text-size-adjust: 100%;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    box-sizing: border-box;
+    -ms-overflow-style: scrollbar;
+    background-color: var(--bg_pag);
 }
 
 /*--Limitações de conteudo--*/
@@ -38,7 +42,6 @@ html{
   }
 
 body{
-    background-color: #f2fbff;
     font-size: 1rem;
     font-weight: 400;
     line-height: 1.5;

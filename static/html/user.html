@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- JQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            var url = window.location.pathname;
+            var username = url.substring(url.lastIndexOf('/') + 1);
+            var newURL = "/"+username+"/get"
+            $.ajax({
+                type: "get",
+                url: newURL,
+                dataType: "json",
+                success: function (response) {
+                    $("#username").text(response.user.username);
+                    $("#user").text(JSON.stringify(response));
+                },
+                error: function() {
+                    alert("fuck");
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+
+    <h1><span id="username"></span></h1>
+
+    <span id="user"></span>
+    
+</body>
+</html>
