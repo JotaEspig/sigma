@@ -10,8 +10,8 @@ import (
 // Creates superadmin in database
 func createSuperAdmin(db *gorm.DB) {
 	// creates defaults values in database
-	u := user.InitUser("SUPERADMIN", "superadmin@gmail.com",
-		"SUPERADMIN", "SUPERADMIN", "SUPERADMIN")
+	u := user.InitUser("admin", "admin@gmail.com",
+		"admin", "admin", "admin")
 	u.ID = 1
 	user.AddUser(db, u)
 
