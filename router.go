@@ -1,6 +1,7 @@
 package main
 
 import (
+	"io"
 	"net/http"
 	"os"
 	"sigma/controllers"
@@ -33,10 +34,13 @@ func getRouterEngine() *gin.Engine {
 	routerMode := os.Getenv("ROUTER_MODE")
 	if routerMode == "release" {
 		gin.SetMode(gin.ReleaseMode)
-		router := gin.New()
-		router.Use(gin.Recovery())
-		// Don't use logs middleware
-		return router
+		gin.DisableConsoleColor()
+
+		// Logging to a file.
+		f, _ := os.Create("gin.log")
+		gin.DefaultWriter = io.MultiWriter(f)
+
+		return gin.Default()
 	}
 
 	if routerMode == "staging" {
@@ -90,6 +94,11 @@ func setRoutes(router *gin.Engine) {
 
 	// Admin tools group
 	adminTools := admin.Group("/tools")
+
+	// Admin tools to manage classrooms
+	adminTools.Group("/classroom")
+	adminTools.GET("/get", controllers.GetAllClassroomsInfo())
+	adminTools.GET("/:id/get", controllers.GetClassroomInfo())
 
 	// Admin tools to manage others admins
 	adminToolsForAdmin := adminTools.Group("/admin/:target",
