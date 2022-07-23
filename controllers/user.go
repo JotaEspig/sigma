@@ -1,6 +1,3 @@
-/*
-The functions below are the functions that a user can call
-*/
 package controllers
 
 import (
@@ -85,6 +82,10 @@ func UpdateUser() gin.HandlerFunc {
 		ctx.Status(http.StatusOK)
 	}
 }
+
+// <>----<>----<>----<>----<>----<>----<>----<>----<>----<>----<>----<>----<>----<>
+// The maps below are used to get the correct function according to the user type
+// <>----<>----<>----<>----<>----<>----<>----<>----<>----<>----<>----<>----<>----<>
 
 // Contains functions to get public info of
 // either user or its children (student, admin)

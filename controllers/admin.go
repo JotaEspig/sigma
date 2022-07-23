@@ -1,7 +1,3 @@
-/*
-The functions below are the functions that an admin can call
-*/
-
 package controllers
 
 import (
