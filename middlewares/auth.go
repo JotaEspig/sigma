@@ -158,7 +158,9 @@ func IsAdminMiddleware() gin.HandlerFunc {
 func IsSuperAdminMiddleware() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		username := ctx.GetString("username")
-		if username != "SUPERADMIN" {
+
+		// the username being "admin" means that the user is a super admin
+		if username != "admin" {
 			AbortWithHTML(ctx, http.StatusUnauthorized, "access_denied.html")
 			return
 		}
