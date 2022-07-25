@@ -28,7 +28,8 @@
 
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-    
+    <script src="../../js/excluir_turma.js"></script>
+
     <!--link para icon-->
     <link rel="icon" type="jpg" href="../../img/favicon.ico"/>  
 
@@ -173,14 +174,16 @@
     </selection>
 
     <!-- Tabela de noticias -->    
+    
     <h2 id="new">Notícias</h2>
     <div class="list-group">
-        <table class="table table-hover">
+        <table id="tabela_noticia" class="table table-hover">
             <thead>
                 <tr onclick="location.href='materiaAluno.html'">
                     <th scope="col">Matéria</th>
                     <th scope="col">Atividade</th>
                     <th scope="col">Data</th>
+                    <th>Visto</th>
                 </tr>
             </thead>
             <tbody>
@@ -188,16 +191,28 @@
                     <th scope="row">Português</th>
                     <td>Redação</td>
                     <td>10/10</td>
+                    <td class="custom-control custom-checkbox">
+                        <input type="checkbox" class="remover custom-control-input " id="customCheck1">
+                        <label class="custom-control-label" for="customCheck1"></label>
+                    </td>
                 </tr>
-                <tr onclick="location.href='materiaAluno.html'">
+                <tr onclick="location.href='materiaAluno.html'"> <!-- Basicamente ele redireciona  tudo que tem no tr-->
                     <th scope="row">Matemática</th>
                     <td>Lista de Atividade</td>
                     <td>13/10</td>
+                    <td class="custom-control custom-checkbox"> <!-- Não funciona direito por causa do redirecionamento -->
+                        <input type="checkbox" class="remover custom-control-input " id="customCheck1">
+                        <label class="custom-control-label" for="customCheck1"></label> 
+                    </td>
                 </tr>
                 <tr onclick="location.href='materiaAluno.html'">
                     <th scope="row">Desen. Projeto</th>
                     <td>Av 3</td>
                     <td>35/02</td>
+                    <td class="custom-control custom-checkbox">
+                        <input type="checkbox" class="remover custom-control-input " id="customCheck1">
+                        <label class="custom-control-label" for="customCheck1"></label>
+                    </td>
                 </tr>
             </tbody>
           </table>
