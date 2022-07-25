@@ -93,7 +93,7 @@ func TestGetClassroom(t *testing.T) {
 	}
 
 	// Gets parcial info of classroom
-	c, err = classroom.GetClassroom(config.DB, c.ID, "name")
+	c, err = classroom.GetClassroom(config.DB, c.ID, "id", "name")
 	if err != nil {
 		t.Errorf("getting parcial info of classroom: %s", err)
 	}
