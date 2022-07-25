@@ -175,6 +175,15 @@ func TestRmAdmin(t *testing.T) {
 		t.Errorf("removing legit admin: %s", err)
 	}
 
+	u, err = user.GetUser(config.DB, u.Username, "username", "type")
+	if err != nil {
+		t.Errorf("getting legit user: %s", err)
+	}
+
+	if u.Type == "admin" {
+		t.Errorf("user type is admin, it's not supposed to happen")
+	}
+
 	err = user.RmUser(config.DB, u.Username)
 	if err != nil {
 		t.Errorf("removing legit user: %s", err)

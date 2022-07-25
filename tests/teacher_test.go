@@ -227,6 +227,15 @@ func TestRmTeacher(t *testing.T) {
 		t.Errorf("getting legit teacher: %s", err)
 	}
 
+	u, err = user.GetUser(config.DB, u.Username, "username", "type")
+	if err != nil {
+		t.Errorf("getting legit user: %s", err)
+	}
+
+	if u.Type == "teacher" {
+		t.Errorf("user type is teacher, it's not supposed to happen")
+	}
+
 	err = user.RmUser(config.DB, defUsername)
 	if err != nil {
 		t.Errorf("removing legit user: %s", err)
