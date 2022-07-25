@@ -113,6 +113,46 @@ func TestGetClassroom(t *testing.T) {
 	}
 }
 
+func TestGetAllClassrooms(t *testing.T) {
+	c1, err := classroom.InitClassroom(defClassroomName, defClassroomYear)
+	if err != nil {
+		t.Errorf("initializing classroom: %s", err)
+	}
+
+	err = classroom.AddClassroom(config.DB, c1)
+	if err != nil {
+		t.Errorf("adding legit classroom: %s", err)
+	}
+
+	c2, err := classroom.InitClassroom("other classroom name", defClassroomYear)
+	if err != nil {
+		t.Errorf("initializing classroom: %s", err)
+	}
+
+	err = classroom.AddClassroom(config.DB, c2)
+	if err != nil {
+		t.Errorf("adding legit classroom: %s", err)
+	}
+
+	cs, err := classroom.GetAllClassrooms(config.DB)
+	if err != nil {
+		t.Errorf("getting all classrooms: %s", err)
+	}
+	if len(cs) != 2 {
+		t.Errorf("getting all classrooms: classrooms count is 0")
+	}
+
+	err = classroom.RmClassroom(config.DB, c1.ID)
+	if err != nil {
+		t.Errorf("removing legit classroom: %s", err)
+	}
+
+	err = classroom.RmClassroom(config.DB, c2.ID)
+	if err != nil {
+		t.Errorf("removing legit classroom: %s", err)
+	}
+}
+
 func TestUpdateClassroom(t *testing.T) {
 	c, err := classroom.InitClassroom(defClassroomName, defClassroomYear)
 	if err != nil {
