@@ -70,13 +70,20 @@ func UpdateStudent(db *gorm.DB, s *Student) error {
 
 // Removes a student from a database
 func RmStudent(db *gorm.DB, username string) error {
-	u, err := user.GetUser(db, username, "id")
-	if err != nil {
-		return err
-	}
+	return db.Transaction(func(tx *gorm.DB) error {
+		u, err := user.GetUser(db, username, "id")
+		if err != nil {
+			return err
+		}
 
-	// TODO Jota: Update table users to remove user type as student
-	return db.Unscoped().Delete(&Student{}, "id = ?", u.ID).Error
+		// Updates the type of the user to be empty
+		err = db.Model(u).Update("type", "").Error
+		if err != nil {
+			return err
+		}
+
+		return db.Unscoped().Delete(&Student{}, "id = ?", u.ID).Error
+	})
 }
 
 // AutoMigrate the student table

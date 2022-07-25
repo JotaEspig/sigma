@@ -71,12 +71,20 @@ func UpdateTeacher(db *gorm.DB, t *Teacher) error {
 
 // Deletes a teacher from the database
 func RmTeacher(db *gorm.DB, username string) error {
-	u, err := user.GetUser(db, username, "id")
-	if err != nil {
-		return err
-	}
+	return db.Transaction(func(tx *gorm.DB) error {
+		u, err := user.GetUser(db, username, "id")
+		if err != nil {
+			return err
+		}
 
-	return db.Delete(&Teacher{UID: u.ID}).Error
+		// Updates the type of the user to be empty
+		err = db.Model(u).Update("type", "").Error
+		if err != nil {
+			return err
+		}
+
+		return db.Unscoped().Delete(&Teacher{}, "id = ?", u.ID).Error
+	})
 }
 
 func init() {

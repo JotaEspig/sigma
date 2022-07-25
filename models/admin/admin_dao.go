@@ -68,13 +68,20 @@ func UpdateAdmin(db *gorm.DB, a *Admin) error {
 
 // Removes an admin from a database
 func RmAdmin(db *gorm.DB, username string) error {
-	u, err := user.GetUser(db, username, "id")
-	if err != nil {
-		return err
-	}
+	return db.Transaction(func(tx *gorm.DB) error {
+		u, err := user.GetUser(db, username, "id")
+		if err != nil {
+			return err
+		}
 
-	// TODO Jota: Update table users to remove user type as admin
-	return db.Unscoped().Delete(&Admin{UID: u.ID}).Error
+		// Updates the type of the user to be empty
+		err = db.Model(u).Update("type", "").Error
+		if err != nil {
+			return err
+		}
+
+		return db.Unscoped().Delete(&Admin{}, "id = ?", u.ID).Error
+	})
 }
 
 // AutoMigrate the admin table
