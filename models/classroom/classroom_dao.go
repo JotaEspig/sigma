@@ -5,6 +5,7 @@ import (
 	// it will conflict with db variable in the functions below
 	"sigma/config"
 	dbPKG "sigma/db"
+	"sigma/models/user"
 
 	"gorm.io/gorm"
 )
@@ -40,7 +41,11 @@ func GetClassroom(db *gorm.DB, id uint, params ...string) (*Classroom, error) {
 	}
 
 	for i := range c.Students {
-		err = db.Model(&c.Students[i]).Association("User").Find(&c.Students[i].User)
+		user_id := c.Students[i].UID
+		// Loads parcial user data for each student to avoid loading the whole user
+		err = db.Model(&user.User{}).Select("id", "name", "surname").Where("id = ?", user_id).
+			First(&c.Students[i].User).Error
+
 		if err != nil {
 			return nil, err
 		}
