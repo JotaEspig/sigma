@@ -110,7 +110,7 @@ func setRoutes(router *gin.Engine) {
 func createRouter() *gin.Engine {
 	router := getRouterEngine()
 
-	router.LoadHTMLGlob("static/html/*.html")
+	router.LoadHTMLGlob("static/html/**/*.html")
 
 	// Loads the img, css and js folders
 	router.Static("css/", "static/css/")
