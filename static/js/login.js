@@ -45,7 +45,7 @@ $(document).ready(function () {
                 },
                 502: function() {
                     alert("Ocorreu um erro no servidor. Tente novamente.");
-                    $("$username_login").val("");
+                    $("#username_login").val("");
                     $("#senha_login").val("");
                 }
             },
