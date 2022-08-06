@@ -10,7 +10,7 @@ html {
     padding-bottom: 30px;
     padding-top: 0px;
     width: 70%; /* Define a largura do Corpo do Documento */
-    background-color: #e2e8f0;
+    /*background-color: #e2e8f0;*/
 }
   
 *{
@@ -91,6 +91,6 @@ h1, h2{
     background: linear-gradient(left, rgba(147,184,189,0) 0%,rgba(147,184,189,0.8) 20%,rgb(2, 155, 175) 53%,rgba(147,184,189,0.8) 79%,rgba(147,184,189,0) 100%); 
 }
 
-.remover{
-  text-align: center;
+.card {
+  border-radius: 7.5px ;
 }
