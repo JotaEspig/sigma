@@ -61,9 +61,9 @@ func GetAdmin(db *gorm.DB, username string, params ...string) (*Admin, error) {
 	return a, err
 }
 
-// Updates an admin in a database
+// Default function to update an admin in a database
 func UpdateAdmin(db *gorm.DB, a *Admin) error {
-	return db.Model(a).Updates(a).Error
+	return db.Model(a).Omit("id").Updates(a).Error
 }
 
 // Removes an admin from a database

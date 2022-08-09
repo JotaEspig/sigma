@@ -63,9 +63,9 @@ func GetStudent(db *gorm.DB, username string, params ...string) (*Student, error
 	return s, err
 }
 
-// Updates a student in a database
+// Default function to update a student in a database
 func UpdateStudent(db *gorm.DB, s *Student) error {
-	return db.Model(s).Updates(s).Error
+	return db.Model(s).Omit("id").Updates(s).Error
 }
 
 // Removes a student from a database

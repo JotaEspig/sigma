@@ -64,9 +64,9 @@ func GetTeacher(db *gorm.DB, username string, params ...string) (*Teacher, error
 	return t, nil
 }
 
-// Updates a teacher in the database
+// Default function to update a teacher in the database
 func UpdateTeacher(db *gorm.DB, t *Teacher) error {
-	return db.Model(t).Updates(t).Error
+	return db.Model(t).Omit("id").Updates(t).Error
 }
 
 // Deletes a teacher from the database
