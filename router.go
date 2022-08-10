@@ -64,6 +64,8 @@ func setRoutes(router *gin.Engine) {
 	router.GET("/cadastro", controllers.SignupGET())
 	router.POST("/cadastro", controllers.SignupPOST())
 
+	router.GET("/search/users/:username", controllers.SearchUsers())
+
 	// User group
 	user := router.Group("/usuario", middlewares.AuthMiddleware())
 	user.GET("", controllers.GetProfilePage())

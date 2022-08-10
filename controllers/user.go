@@ -46,6 +46,27 @@ func GetAllUserInfo() gin.HandlerFunc {
 	}
 }
 
+// Searchs for user using ILIKE clause
+func SearchUsers() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		users := []user.User{}
+		username := ctx.Param("username")
+		err := config.DB.Select("id", "username").Where("username ILIKE ?", "%"+username+"%").
+			Limit(10).Find(&users).Error
+		if err != nil || len(users) == 0 {
+			ctx.AbortWithStatus(http.StatusNotFound)
+			return
+		}
+
+		ctx.JSON(
+			http.StatusOK,
+			gin.H{
+				"users": users,
+			},
+		)
+	}
+}
+
 // Updates a user's info WITH RESTRICTIONS
 func UpdateUser() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
