@@ -94,16 +94,15 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- Adicionar prof-->
+                    <!-- Adicionar materia-->
                     <li class="nav-item active d-flex">
-                        <a class="nav-link" onclick="AddTableRow()" data-toggle="modal" data-target="#adicionarProf">Adicionar professor</a>
+                        <a class="nav-link" onclick="AddTableRow()" data-toggle="modal" data-target="#adicionarMateria">Adicionar materia</a>
                     </li>    
-                    <div style="color: black;" class="modal fade" id="adicionarProf" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div style="color: black;" class="modal fade" id="adicionarMateria" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Adicionar professor</h5>
+                                    <h5 class="modal-title" id="exampleModalLabel">Adicionar materia</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -111,20 +110,8 @@
                                 <div class="modal-body">
                                     <form>
                                         <div class="form-group">
-                                            <label for="formGroupExampleInput">Nome</label>
-                                            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Ex.: 9° A">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="formGroupExampleInput2">Email</label>
-                                            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Ex.: carlotadiv@gmail.com">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="formGroupExampleInput2">Materia</label>
-                                            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Ex.: Portugues">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="formGroupExampleInput2">Algo amais?</label>
-                                            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Ex.: sla">
+                                            <label for="formGroupExampleInput">Nome da materia</label>
+                                            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Ex.: Geografia">
                                         </div>
                                     </form>
                                 </div>
@@ -175,19 +162,18 @@
                   Perfil
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <a class="dropdown-item" href="#">Acessar perfil</a>
-                  <a class="dropdown-item" href="#">lorota</a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" id="logout"  onclick="logout()">Logout</a>
+                    <a class="dropdown-item" href="#">Acessar perfil</a>
+                    <a class="dropdown-item" href="#">lorota</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" id="logout"  onclick="logout()">Logout</a>
                 </div>
             </div>
 
         </nav>
     </header>
-    <!-- Tabela de noticias -->    
+    <!-- Tabela de Alunos -->    
     <h2>Turma</h2>
-    <h3>Professores: <span id="" style="font-style:italic;"></span></h3>
-   <hr>
+    <hr>
     <div class="list-group">
           <table id="tabela_turma" class="table table-hover"> 
             <thead>
@@ -230,8 +216,41 @@
                         </span>
                     </td>
                 </tr>
-            </tbody>       
+            </tbody>   
         </table>
+    </div>
+    
+    <!-- Tabela de Materias -->  
+    <h2>Materias</h2>
+    <!--Linha 1 de cards-->
+    <div class="card-deck" >
+        <div class="card" onclick="location.href='../aluno/materiaAluno.html '">
+            <img class="card-img-top" src="https://media.istockphoto.com/photos/lot-of-different-books-picture-id803134370" alt="Achar imagem para a matéria">
+            <div class="card-body" style="cursor: pointer;">
+                <h5 class="card-title" style="cursor: pointer;">Matéria</h5>
+                <p class="card-text" style="cursor: pointer;">Bandeclay</p>
+            </div>
+        </div>
+
+        <div class="card" onclick="location.href='../aluno/materiaAluno.html '">
+            <img class="card-img-top" src="https://media.istockphoto.com/photos/lot-of-different-books-picture-id803134370" alt="Achar imagem para a matéria">
+            <div class="card-body" style="cursor: pointer;">
+                <h5 class="card-title" style="cursor: pointer;">Matéria</h5>
+                <p class="card-text" style="cursor: pointer;">Bandeclay</p>
+            </div>
+        </div>
+
+        <div class="card" onclick="location.href='../aluno/materiaAluno.html '">
+            <img class="card-img-top" src="https://media.istockphoto.com/photos/lot-of-different-books-picture-id803134370" alt="Achar imagem para a matéria">
+            <div class="card-body" style="cursor: pointer;">
+                <h5 class="card-title" style="cursor: pointer;">Matéria</h5>
+                <p class="card-text" style="cursor: pointer;">Bandeclay</p>
+                <span class="remover btn btn-danger">
+                    Excluir
+                </span>
+            </div>
+        </div>
+
     </div>
 </body>
 
