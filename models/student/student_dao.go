@@ -24,8 +24,7 @@ var PublicStudentParams = []string{
 // Adds a student to a database.
 func AddStudent(db *gorm.DB, s *Student) error {
 	return db.Transaction(func(tx *gorm.DB) error {
-		s.User.Type = "student"
-		err := user.UpdateUser(db, s.User)
+		err := db.Model(s.User).Update("type", "student").Error
 		if err != nil {
 			return err
 		}
