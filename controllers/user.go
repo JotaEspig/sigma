@@ -23,6 +23,7 @@ func GetPublicUserInfo() gin.HandlerFunc {
 			return
 		}
 
+		// Gets the specific function according to the user type
 		f := getPublicInfoFuncs[u.Type]
 		f(ctx, u.Username)
 	}
@@ -39,6 +40,7 @@ func GetAllUserInfo() gin.HandlerFunc {
 			return
 		}
 
+		// Gets the specific function according to the user type
 		f := getAllInfoFuncs[u.Type]
 		f(ctx, u.Username)
 	}
@@ -85,6 +87,7 @@ func UpdateUser() gin.HandlerFunc {
 
 // <>----<>----<>----<>----<>----<>----<>----<>----<>----<>----<>----<>----<>----<>
 // The maps below are used to get the correct function according to the user type
+// because the functions need to act differently depending on the user type
 // <>----<>----<>----<>----<>----<>----<>----<>----<>----<>----<>----<>----<>----<>
 
 // Contains functions to get public info of
