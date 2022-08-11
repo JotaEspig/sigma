@@ -56,8 +56,8 @@ func getRouterEngine() *gin.Engine {
 func setRoutes(router *gin.Engine) {
 	// Login
 	router.GET("/", controllers.LoginRedirect())
-	router.GET("/login", controllers.LoginGET())
-	router.POST("/login", controllers.LoginPOST())
+	router.GET("/login", controllers.GetLoginPage())
+	router.POST("/login", controllers.Login())
 	router.GET("/login/validate", controllers.IsLogged())
 
 	// Cadastro
