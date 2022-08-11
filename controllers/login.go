@@ -71,3 +71,11 @@ func IsLogged() gin.HandlerFunc {
 		)
 	}
 }
+
+// Logouts the user and redirects to login page
+func Logout() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		ctx.SetCookie("auth", "", -1, "/", "", false, true)
+		ctx.Redirect(http.StatusFound, "/login")
+	}
+}
