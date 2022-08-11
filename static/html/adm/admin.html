@@ -23,7 +23,7 @@
    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
    <!-- JavaScript -->
-   <script src="../../js/signup.js"></script>
+   <script src="../../js/admin.js"></script>
    <script src="../../js/cookies.js"></script>
    <script src="../../js/excluir_turma.js"></script>
 
@@ -69,26 +69,22 @@
                                 <span aria-hidden="true">&times;</span>
                               </button>
                             </div>
-                            <div class="modal-body">
-                                <form>
+                            <form id="form-cadastro-turma">
+                                <div class="modal-body">
                                     <div class="form-group">
-                                      <label for="formGroupExampleInput">Turma</label>
-                                      <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Ex.: 9° A">
+                                      <label for="name">Nome da turma</label>
+                                      <input type="text" class="form-control" name="name" id="name" placeholder="Ex.: 9° A">
                                     </div>
                                     <div class="form-group">
-                                      <label for="formGroupExampleInput2">Ano</label>
-                                      <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Ex.: 2019">
+                                      <label for="year">Ano</label>
+                                      <input type="number" class="form-control" name="year" id="year" placeholder="Ex.: 2019">
                                     </div>
-                                    <div class="form-group">
-                                        <label for="formGroupExampleInput">Periodo</label>
-                                        <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Ex.: Vespertino">
-                                    </div>
-                                  </form>
-                            </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Fechar</button>
-                              <button type="button" class="btn btn-outline-info">Salvar mudanças</button>
-                            </div>
+                                </div>
+                                <div class="modal-footer">
+                                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Fechar</button>
+                                <input type="submit" class="btn btn-outline-info" id="cadastro-turma" value="Cadastrar">
+                                </div>
+                            </form>
                           </div>
                         </div>
                     </div>
@@ -109,16 +105,12 @@
                                 <div class="modal-body">
                                     <form>
                                         <div class="form-group">
-                                            <label for="formGroupExampleInput">Turma</label>
-                                            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Ex.: 9° A">
+                                            <label for="class-name">Turma</label>
+                                            <input type="text" class="form-control" id="class-name" placeholder="Ex.: 9° A">
                                         </div>
                                         <div class="form-group">
-                                            <label for="formGroupExampleInput2">Ano</label>
-                                            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Ex.: 2019">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="formGroupExampleInput">Periodo</label>
-                                            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Ex.: Vespertino">
+                                            <label for="class-year">Ano</label>
+                                            <input type="text" class="form-control" id="class-year" placeholder="Ex.: 2019">
                                         </div>
                                     </form>
                                 </div>
