@@ -9,6 +9,31 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+func AddClassroom() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		name := ctx.PostForm("name")
+		year, err := strconv.ParseUint(ctx.PostForm("year"), 10, 32)
+		if err != nil {
+			ctx.AbortWithStatus(http.StatusBadRequest)
+			return
+		}
+
+		c, err := classroom.InitClassroom(name, uint8(year))
+		if err != nil {
+			ctx.AbortWithStatus(http.StatusBadRequest)
+			return
+		}
+
+		err = classroom.AddClassroom(config.DB, c)
+		if err != nil {
+			ctx.AbortWithStatus(http.StatusBadRequest)
+			return
+		}
+
+		ctx.Status(http.StatusOK)
+	}
+}
+
 func GetAllClassroomsInfo() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		classrooms, err := classroom.GetAllClassrooms(config.DB)

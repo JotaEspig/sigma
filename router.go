@@ -101,9 +101,10 @@ func setRoutes(router *gin.Engine) {
 	adminTools := admin.Group("/tools")
 
 	// Admin tools to manage classrooms
-	adminTools.Group("/classroom")
-	adminTools.GET("/get", controllers.GetAllClassroomsInfo())
-	adminTools.GET("/:id/get", controllers.GetClassroomInfo())
+	adminToolsForClassroom := adminTools.Group("/classroom")
+	adminToolsForClassroom.POST("/add", controllers.AddClassroom())
+	adminToolsForClassroom.GET("/get", controllers.GetAllClassroomsInfo())
+	adminToolsForClassroom.GET("/:id/get", controllers.GetClassroomInfo())
 
 	// Admin tools to manage others admins
 	adminToolsForAdmin := adminTools.Group("/admin/:target",
