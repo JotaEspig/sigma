@@ -108,6 +108,7 @@ func setRoutes(router *gin.Engine) {
 	// Admin tools to manage others admins
 	adminToolsForAdmin := adminTools.Group("/admin/:target",
 		middlewares.IsSuperAdminMiddleware())
+	adminToolsForAdmin.POST("/add", controllers.AddTargetAdmin())
 	adminToolsForAdmin.PUT("/update", controllers.UpdateTargetAdmin())
 	adminToolsForAdmin.DELETE("/delete", controllers.DeleteTargetAdmin())
 }
