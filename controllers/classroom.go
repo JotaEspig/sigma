@@ -18,7 +18,7 @@ func AddClassroom() gin.HandlerFunc {
 			return
 		}
 
-		c, err := classroom.InitClassroom(name, uint8(year))
+		c, err := classroom.InitClassroom(name, uint16(year))
 		if err != nil {
 			ctx.AbortWithStatus(http.StatusBadRequest)
 			return
