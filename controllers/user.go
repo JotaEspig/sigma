@@ -58,10 +58,15 @@ func SearchUsers() gin.HandlerFunc {
 			return
 		}
 
+		usersMap := make([]map[string]interface{}, len(users))
+		for i, u := range users {
+			usersMap[i] = u.ToMap()
+		}
+
 		ctx.JSON(
 			http.StatusOK,
 			gin.H{
-				"users": users,
+				"users": usersMap,
 			},
 		)
 	}
