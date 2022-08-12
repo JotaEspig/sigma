@@ -107,11 +107,12 @@ func setRoutes(router *gin.Engine) {
 	adminToolsForClassroom.GET("/:id/get", controllers.GetClassroomInfo())
 
 	// Admin tools to manage others admins
-	adminToolsForAdmin := adminTools.Group("/admin/:target",
+	adminToolsForAdmin := adminTools.Group("/admin",
 		middlewares.IsSuperAdminMiddleware())
-	adminToolsForAdmin.POST("/add", controllers.AddTargetAdmin())
-	adminToolsForAdmin.PUT("/update", controllers.UpdateTargetAdmin())
-	adminToolsForAdmin.DELETE("/delete", controllers.DeleteTargetAdmin())
+	adminToolsForAdmin.POST("/add", controllers.AddAdmin())
+	adminToolsForAdmin.GET("/:username/get", controllers.GetAdminInfo())
+	adminToolsForAdmin.PUT("/:username/update", controllers.UpdateAdmin())
+	adminToolsForAdmin.DELETE("/:username/delete", controllers.DeleteAdmin())
 }
 
 func createRouter() *gin.Engine {
