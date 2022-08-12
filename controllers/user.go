@@ -92,14 +92,8 @@ func UpdateUser() gin.HandlerFunc {
 		newValues.ID = u.ID
 		// These lines exists to make sure that the user
 		// is not changing the password, or type of the user
-		if newValues.HashedPassword != "" {
-			ctx.AbortWithStatus(http.StatusBadRequest)
-			return
-		}
-		if newValues.Type != "" {
-			ctx.AbortWithStatus(http.StatusBadRequest)
-			return
-		}
+		newValues.HashedPassword = ""
+		newValues.Type = ""
 
 		err = user.UpdateUser(config.DB, &newValues)
 		if err != nil {
