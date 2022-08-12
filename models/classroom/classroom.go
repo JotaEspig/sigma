@@ -8,11 +8,11 @@ import (
 type Classroom struct {
 	ID       uint   `gorm:"primary_key"`
 	Name     string `gorm:"not null"`
-	Year     uint8
+	Year     uint16
 	Students []*student.Student
 }
 
-func InitClassroom(name string, year uint8) (*Classroom, error) {
+func InitClassroom(name string, year uint16) (*Classroom, error) {
 	if name == "" {
 		return nil, errors.New("classroom: Name cannot be empty")
 	}
