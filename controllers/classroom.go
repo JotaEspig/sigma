@@ -11,14 +11,17 @@ import (
 
 func AddClassroom() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		name := ctx.PostForm("name")
-		year, err := strconv.ParseUint(ctx.PostForm("year"), 10, 32)
+		r := struct {
+			Name string `json:"name"`
+			Year int    `json:"year"`
+		}{}
+		err := ctx.BindJSON(&r)
 		if err != nil {
 			ctx.AbortWithStatus(http.StatusBadRequest)
 			return
 		}
 
-		c, err := classroom.InitClassroom(name, uint16(year))
+		c, err := classroom.InitClassroom(r.Name, uint16(r.Year))
 		if err != nil {
 			ctx.AbortWithStatus(http.StatusBadRequest)
 			return

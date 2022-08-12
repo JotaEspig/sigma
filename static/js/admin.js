@@ -2,7 +2,9 @@ $(document).ready(function () {
     $("#form-cadastro-turma").on("submit", function (e) {
         e.preventDefault();
 
-        let data = $(this).serialize();
+        let name = $("#name-cadastro-turma").val();
+        let year = parseInt($("#year-cadastro-turma").val());
+        let data = JSON.stringify({name: name, year: year});
 
         $.ajax({
             type: 'post',
