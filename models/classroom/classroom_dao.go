@@ -49,16 +49,6 @@ func GetClassroom(db *gorm.DB, id uint, params ...string) (*Classroom, error) {
 	return c, nil
 }
 
-// Updates a classroom in a database
-func UpdateClassroom(db *gorm.DB, c *Classroom) error {
-	return db.Model(c).Updates(c).Error
-}
-
-// Removes a classroom from a database
-func RmClassroom(db *gorm.DB, id uint) error {
-	return db.Unscoped().Delete(&Classroom{}, "id = ?", id).Error
-}
-
 func init() {
 	config.DB.AutoMigrate(&Classroom{})
 }
