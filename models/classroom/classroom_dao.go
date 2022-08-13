@@ -24,11 +24,6 @@ var PublicClassroomParams = []string{
 	"year",
 }
 
-// Adds a classroom to a database
-func AddClassroom(db *gorm.DB, c *Classroom) error {
-	return db.Create(c).Error
-}
-
 // Gets a classroom from a database
 func GetClassroom(db *gorm.DB, id uint, params ...string) (*Classroom, error) {
 	c := &Classroom{}

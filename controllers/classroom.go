@@ -27,7 +27,7 @@ func AddClassroom() gin.HandlerFunc {
 			return
 		}
 
-		err = classroom.AddClassroom(config.DB, c)
+		err = config.DB.Create(c).Error
 		if err != nil {
 			ctx.AbortWithStatus(http.StatusBadRequest)
 			return
