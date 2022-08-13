@@ -1,12 +1,11 @@
 package main
 
-import "sigma/config"
+import (
+	"sigma/server"
+)
 
 func main() {
-	// Creates superadmin in database if it doesn't exist
-	createSuperAdmin(config.DB)
-
 	// Creates and runs the router
-	router := createRouter()
+	router := server.CreateRouter()
 	router.Run()
 }

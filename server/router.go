@@ -1,9 +1,10 @@
-package main
+package server
 
 import (
 	"io"
 	"net/http"
 	"os"
+	"sigma/config"
 	"sigma/controllers"
 	"sigma/middlewares"
 
@@ -115,7 +116,7 @@ func setRoutes(router *gin.Engine) {
 	adminToolsForAdmin.DELETE("/:username/delete", controllers.DeleteAdmin())
 }
 
-func createRouter() *gin.Engine {
+func CreateRouter() *gin.Engine {
 	router := getRouterEngine()
 
 	router.LoadHTMLGlob("static/html/**/*.html")
@@ -130,6 +131,6 @@ func createRouter() *gin.Engine {
 	})
 
 	setRoutes(router)
-
+	createSuperAdmin(config.DB)
 	return router
 }
