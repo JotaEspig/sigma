@@ -49,20 +49,6 @@ func GetClassroom(db *gorm.DB, id uint, params ...string) (*Classroom, error) {
 	return c, nil
 }
 
-// Gets all classroom from a database
-func GetAllClassrooms(db *gorm.DB, params ...string) ([]Classroom, error) {
-	classrooms := []Classroom{}
-
-	columnsToUse := dbPKG.GetColumns(ClassroomParams, params...)
-
-	err := db.Select(columnsToUse).Find(&classrooms).Error
-	if err != nil {
-		return classrooms, err
-	}
-
-	return classrooms, nil
-}
-
 // Updates a classroom in a database
 func UpdateClassroom(db *gorm.DB, c *Classroom) error {
 	return db.Model(c).Updates(c).Error

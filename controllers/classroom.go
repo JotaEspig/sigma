@@ -39,7 +39,8 @@ func AddClassroom() gin.HandlerFunc {
 
 func GetAllClassroomsInfo() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		classrooms, err := classroom.GetAllClassrooms(config.DB)
+		classrooms := []classroom.Classroom{}
+		err := config.DB.Find(&classrooms).Error
 		if err != nil {
 			ctx.AbortWithStatus(http.StatusNotFound)
 			return
