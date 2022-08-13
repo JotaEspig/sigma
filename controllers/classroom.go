@@ -64,7 +64,8 @@ func GetClassroomInfo() gin.HandlerFunc {
 			return
 		}
 
-		c, err := classroom.GetClassroom(config.DB, uint(classroom_id))
+		c := classroom.Classroom{}
+		err = config.DB.Preload("Students.User").First(&c, classroom_id).Error
 		if err != nil {
 			ctx.AbortWithStatus(http.StatusNotFound)
 			return
@@ -72,4 +73,8 @@ func GetClassroomInfo() gin.HandlerFunc {
 
 		ctx.JSON(http.StatusOK, c.ToMap())
 	}
+}
+
+func init() {
+	config.DB.AutoMigrate(&classroom.Classroom{})
 }
