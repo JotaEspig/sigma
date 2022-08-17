@@ -26,7 +26,7 @@ var PublicAdminParams = []string{
 func AddAdmin(db *gorm.DB, a *Admin) error {
 	return db.Transaction(func(tx *gorm.DB) error {
 		a.User.Type = "admin"
-		err := user.UpdateUser(db, a.User)
+		err := db.Model(a.User).Update("type", a.User.Type).Error
 		if err != nil {
 			return err
 		}
