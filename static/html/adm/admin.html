@@ -58,7 +58,7 @@
                     </li>
                     <!-- Cadastrar turma-->
                     <li class="nav-item active d-flex">
-                        <a class="nav-link" onclick="AddTableRow()" data-toggle="modal" data-target="#cadastrarTurma">Cadastrar Turma</a>
+                        <a class="nav-link"  data-toggle="modal" data-target="#cadastrarTurma">Cadastrar Turma</a>
                     </li> 
                     <div style="color: black;" class="modal fade" id="cadastrarTurma" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
@@ -81,8 +81,8 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Fechar</button>
-                                <input type="submit" class="btn btn-outline-info" id="cadastro-turma" value="Cadastrar">
+                                    <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Fechar</button>
+                                    <button type="submit" class="btn btn-outline-info" id="cadastro-turma" onclick="cadastrarTurma()"> Cadastro</button>
                                 </div>
                             </form>
                           </div>
@@ -91,7 +91,7 @@
 
                     <!-- Procurar turma-->
                     <li class="nav-item active d-flex">
-                        <a class="nav-link" onclick="AddTableRow()" data-toggle="modal" data-target="#procurarTurma">Procurar Turma</a>
+                        <a class="nav-link"  data-toggle="modal" data-target="#procurarTurma">Procurar Turma</a>
                     </li>    
                     <div style="color: black;" class="modal fade" id="procurarTurma" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
@@ -150,52 +150,12 @@
                 <tr style="text-align: center;">
                     <th scope="col">Turmas</th>
                     <th scope="col">Ano</th>
-                    <th scoope="col">Periodo</th>
                     <th scoope="col">Ações</th>
                 </tr>
             </thead>
              
-            <tbody tr style="text-align: center;">
-                <tr onclick="location.href='turmaAdm.html'">
-                    <td scope="row">1°</td>
-                    <td>2020</td>
-                    <td>Matutino</td>
-                    <td class="td-acoes">
-                        <span class="remover btn btn-danger">
-                            Excluir
-                        </span>
-                    </td>
-                </tr>
-                <tr onclick="location.href='turmaAdm.html'">
-                    <td scope="row">1°</td>
-                    <td>2020</td>
-                    <td>Vespertino</td>
-                    <td class="td-acoes">
-                        <span class="remover btn btn-danger">
-                            Excluir
-                        </span>
-                    </td>
-                </tr>
-                <tr onclick="location.href='turmaAdm.html'">
-                    <td scope="row">2°</td>
-                    <td>2020</td>
-                    <td>Matutino</td>
-                    <td class="td-acoes">
-                        <span class="remover btn btn-danger">
-                            Excluir
-                        </span>
-                    </td>
-                </tr>
-                <tr onclick="location.href='turmaAdm.html'">
-                    <td scope="row">2°</td>
-                    <td>2020</td>
-                    <td>Vespertino</td>
-                    <td class="td-acoes">
-                    <span class="remover btn btn-danger">
-                        Excluir
-                    </span>
-                    </td>
-                </tr>
+            <tbody tr style="text-align: center;" id = "corpo_tabela">
+                
             </tbody>       
         </table>
     </div>

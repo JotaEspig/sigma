@@ -32,3 +32,19 @@ $(document).ready(function () {
         });
     });
 });
+
+function cadastrarTurma() {
+    let name = $("#name-cadastro-turma").val();
+    let year = parseInt($("#year-cadastro-turma").val());
+    $("#corpo_tabela").append(`
+                                <tr>
+                                    <td scope="row">${name}°</td>
+                                    <td>${year}</td>
+                                    <td class="td-acoes">
+                                    <span class="remover btn btn-danger">
+                                        Excluir
+                                    </span>
+                                    </td>
+                                </tr>
+                            `);
+}
