@@ -55,6 +55,10 @@ func getRouterEngine() *gin.Engine {
 
 // Set the routes to a router
 func setRoutes(router *gin.Engine) {
+	router.NoRoute(func(ctx *gin.Context) {
+		ctx.HTML(http.StatusNotFound, "404.html", nil)
+	})
+
 	// Login
 	router.GET("/", func(ctx *gin.Context) {
 		ctx.Redirect(http.StatusFound, "/login")
@@ -126,9 +130,21 @@ func CreateRouter() *gin.Engine {
 	router.Static("js/", "static/js/")
 	router.Static("img/", "static/img/")
 
-	router.NoRoute(func(ctx *gin.Context) {
-		ctx.HTML(http.StatusNotFound, "404.html", nil)
-	})
+	setRoutes(router)
+	createSuperAdmin(config.DB)
+	return router
+}
+
+func CreateTestRouter() *gin.Engine {
+	router := getRouterEngine()
+
+	// Using different paths for files
+	router.LoadHTMLGlob("../static/html/**/*.html")
+
+	// Loads the img, css and js folders
+	router.Static("css/", "../static/css/")
+	router.Static("js/", "../static/js/")
+	router.Static("img/", "../static/img/")
 
 	setRoutes(router)
 	createSuperAdmin(config.DB)
