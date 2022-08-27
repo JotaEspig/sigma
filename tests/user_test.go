@@ -6,15 +6,6 @@ import (
 	"testing"
 )
 
-// Constants to use in tests, def = default
-const (
-	defUsername = "TestUsername"
-	defPasswd   = "TestPasswd"
-	defName     = "TestName"
-	defSurname  = "TestSurname"
-	defEmail    = "TestEmail"
-)
-
 func TestUserValidate(t *testing.T) {
 	u1 := user.InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
 	u2 := user.InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
