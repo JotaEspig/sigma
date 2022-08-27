@@ -11,18 +11,23 @@ import (
 
 // Constants to use in tests, def = default
 const (
-	defUsername = "TestUsername"
-	defPasswd   = "TestPasswd"
-	defName     = "TestName"
-	defSurname  = "TestSurname"
-	defEmail    = "TestEmail"
+	defUsername      = "TestUsername"
+	defPasswd        = "TestPasswd"
+	defName          = "TestName"
+	defSurname       = "TestSurname"
+	defEmail         = "TestEmail"
+	defClassroomName = "TestClassroom"
+	defClassroomYear = 42069
 )
 
 // logs in and gets the token
 func getToken(router *gin.Engine, username, password string) (string, bool) {
 	w := httptest.NewRecorder()
-	req, _ := http.NewRequest("POST", "/login",
-		bytes.NewBuffer([]byte("username="+username+"&password="+password)))
+	req, _ := http.NewRequest(
+		"POST",
+		"/login",
+		bytes.NewBuffer([]byte("username="+username+"&password="+password)),
+	)
 	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 	router.ServeHTTP(w, req)
 
