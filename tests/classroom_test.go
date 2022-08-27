@@ -16,6 +16,27 @@ import (
 func TestAddClassroom(t *testing.T) {
 	router := server.CreateTestRouter()
 
+	token, ok := getToken(router, "admin", "admin")
+	assert.Equal(t, true, ok)
+
+	w := httptest.NewRecorder()
+	req, _ := http.NewRequest("POST", "/admin/tools/classroom/add",
+		bytes.NewBuffer([]byte(`{"name": "test", "year": 2022}`)))
+	req.AddCookie(&http.Cookie{
+		Name:  "auth",
+		Value: token,
+	})
+
+	router.ServeHTTP(w, req)
+	assert.Equal(t, 200, w.Code)
+
+	err := config.DB.Unscoped().Delete(&classroom.Classroom{}, "name = ?", "test").Error
+	assert.Equal(t, nil, err)
+}
+
+func TestGetClassroom(t *testing.T) {
+	router := server.CreateTestRouter()
+
 	w := httptest.NewRecorder()
 	req, _ := http.NewRequest("POST", "/login",
 		bytes.NewBuffer([]byte(`username=admin&password=admin`)))
@@ -43,12 +64,15 @@ func TestAddClassroom(t *testing.T) {
 	router.ServeHTTP(w, req)
 	assert.Equal(t, 200, w.Code)
 
+	w = httptest.NewRecorder()
+	req, _ = http.NewRequest("GET", "/admin/tools/classroom/get", nil)
+	req.AddCookie(&http.Cookie{
+		Name:  "auth",
+		Value: token,
+	})
+
 	err := config.DB.Unscoped().Delete(&classroom.Classroom{}, "name = ?", "test").Error
 	assert.Equal(t, nil, err)
-}
-
-func TestGetClassroom(t *testing.T) {
-	_ = server.CreateRouter()
 
 	// Test GetClassroom endpoint with http.NewRequest
 	t.Skip("Skipping GetClassroom endpoint test, because it's not implemented yet")
