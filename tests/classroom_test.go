@@ -3,6 +3,7 @@ package tests
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"sigma/config"
@@ -20,8 +21,13 @@ func TestAddClassroom(t *testing.T) {
 	assert.Equal(t, true, ok)
 
 	w := httptest.NewRecorder()
-	req, _ := http.NewRequest("POST", "/admin/tools/classroom/add",
-		bytes.NewBuffer([]byte(`{"name": "test", "year": 2022}`)))
+	req, _ := http.NewRequest(
+		"POST",
+		"/admin/tools/classroom/add",
+		bytes.NewBuffer([]byte(
+			`{"name": `+defClassroomName+`, "year": `+fmt.Sprint(defClassroomYear)+`}`,
+		)),
+	)
 	req.AddCookie(&http.Cookie{
 		Name:  "auth",
 		Value: token,
@@ -30,7 +36,7 @@ func TestAddClassroom(t *testing.T) {
 	router.ServeHTTP(w, req)
 	assert.Equal(t, 200, w.Code)
 
-	err := config.DB.Unscoped().Delete(&classroom.Classroom{}, "name = ?", "test").Error
+	err := config.DB.Unscoped().Delete(&classroom.Classroom{}, "name = ?", defClassroomName).Error
 	assert.Equal(t, nil, err)
 }
 
@@ -53,9 +59,14 @@ func TestGetClassroom(t *testing.T) {
 	token, ok := jsonResp["token"]
 	assert.Equal(t, true, ok)
 
-	w = httptest.NewRecorder()
-	req, _ = http.NewRequest("POST", "/admin/tools/classroom/add",
-		bytes.NewBuffer([]byte(`{"name": "test", "year": 2022}`)))
+	w := httptest.NewRecorder()
+	req, _ := http.NewRequest(
+		"POST",
+		"/admin/tools/classroom/add",
+		bytes.NewBuffer([]byte(
+			`{"name": `+defClassroomName+`, "year": `+fmt.Sprint(defClassroomYear)+`}`,
+		)),
+	)
 	req.AddCookie(&http.Cookie{
 		Name:  "auth",
 		Value: token,
