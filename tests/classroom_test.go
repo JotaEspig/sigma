@@ -43,20 +43,7 @@ func TestAddClassroom(t *testing.T) {
 func TestGetClassroom(t *testing.T) {
 	router := server.CreateTestRouter()
 
-	w := httptest.NewRecorder()
-	req, _ := http.NewRequest("POST", "/login",
-		bytes.NewBuffer([]byte(`username=admin&password=admin`)))
-	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
-
-	router.ServeHTTP(w, req)
-
-	assert.Equal(t, 200, w.Code)
-
-	// Gets json from writer
-	jsonResp := map[string]string{}
-	json.Unmarshal(w.Body.Bytes(), &jsonResp)
-
-	token, ok := jsonResp["token"]
+	token, ok := getToken(router, "admin", "admin")
 	assert.Equal(t, true, ok)
 
 	w := httptest.NewRecorder()
