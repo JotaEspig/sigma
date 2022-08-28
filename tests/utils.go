@@ -17,7 +17,7 @@ const (
 	defSurname       = "TestSurname"
 	defEmail         = "TestEmail"
 	defClassroomName = "TestClassroom"
-	defClassroomYear = 42069
+	defClassroomYear = 1111
 )
 
 // logs in and gets the token
