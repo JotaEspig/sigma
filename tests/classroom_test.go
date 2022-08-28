@@ -25,7 +25,7 @@ func TestAddClassroom(t *testing.T) {
 		"POST",
 		"/admin/tools/classroom/add",
 		bytes.NewBuffer([]byte(
-			`{"name": `+defClassroomName+`, "year": `+fmt.Sprint(defClassroomYear)+`}`,
+			`{"name": "`+defClassroomName+`", "year": `+fmt.Sprint(defClassroomYear)+`}`,
 		)),
 	)
 	req.AddCookie(&http.Cookie{
@@ -51,7 +51,7 @@ func TestGetClassroom(t *testing.T) {
 		"POST",
 		"/admin/tools/classroom/add",
 		bytes.NewBuffer([]byte(
-			`{"name": `+defClassroomName+`, "year": `+fmt.Sprint(defClassroomYear)+`}`,
+			`{"name": "`+defClassroomName+`", "year": `+fmt.Sprint(defClassroomYear)+`}`,
 		)),
 	)
 	req.AddCookie(&http.Cookie{
