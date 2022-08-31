@@ -1,4 +1,22 @@
 $(document).ready(function () {
+
+    $.ajax({
+        type : "get",
+        url: "/admin/tools/classroom/get",
+        statusCode: {
+            200: function(data){
+                for (let item of data){
+                    let id = item.id
+                    let name = item.name
+                    let year = item.year
+                    cadastrarTurma(id, name, year)
+                    
+
+                }
+            }
+        }
+    })
+
     $("#form-cadastro-turma").on("submit", function (e) {
         e.preventDefault();
 
@@ -33,9 +51,14 @@ $(document).ready(function () {
     });
 });
 
-function cadastrarTurma() {
-    let name = $("#name-cadastro-turma").val();
-    let year = parseInt($("#year-cadastro-turma").val());
+
+
+
+
+
+
+
+function cadastrarTurma(id, name, year) {
     $("#corpo_tabela").append(`
                                 <tr>
                                     <td scope="row">${name}°</td>
@@ -48,3 +71,4 @@ function cadastrarTurma() {
                                 </tr>
                             `);
 }
+
