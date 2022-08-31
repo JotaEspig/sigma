@@ -17,6 +17,23 @@ $(document).ready(function () {
         }
     })
 
+    $("#form-user-search").on("submit", function (e) {
+        e.preventDefault();
+
+        let username = $("#username-search").val();
+        let url = "/search/users/"+username;
+
+        $.ajax({
+            type: "get",
+            url: url,
+            statusCode: {
+                200: function (data) {
+                    alert(data)
+                }
+            }
+        });
+    });
+
     $("#form-cadastro-turma").on("submit", function (e) {
         e.preventDefault();
 
