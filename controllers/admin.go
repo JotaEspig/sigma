@@ -13,13 +13,14 @@ import (
 func AddAdmin() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		username := ctx.Param("username")
-		u, err := user.GetUser(config.DB, username, "id")
+		u := user.User{}
+		err := config.DB.Select("id").Where("username = ?", username).First(&u).Error
 		if err != nil {
 			ctx.AbortWithStatus(http.StatusNotFound)
 			return
 		}
 
-		a, err := admin.InitAdmin(u)
+		a, err := admin.InitAdmin(&u)
 		if err != nil {
 			ctx.AbortWithStatus(http.StatusInternalServerError)
 			return

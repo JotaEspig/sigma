@@ -4,7 +4,6 @@ import (
 	// dbPKG means 'the package db', because if it's named db
 	// it will conflict with db variable in the functions below
 	"sigma/config"
-	dbPKG "sigma/db"
 
 	"gorm.io/gorm"
 )
@@ -28,17 +27,6 @@ var PublicUserParams = []string{
 	"surname",
 	"email",
 	"type",
-}
-
-// Gets a user from a database
-func GetUser(db *gorm.DB, username string, params ...string) (*User, error) {
-	u := &User{}
-
-	columnsToUse := dbPKG.GetColumns(UserParams, params...)
-
-	err := db.Select(columnsToUse).Where("username = ?", username).First(u).Error
-
-	return u, err
 }
 
 // Default function to update a user in a database

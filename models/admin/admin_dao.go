@@ -44,7 +44,8 @@ func AddAdmin(db *gorm.DB, a *Admin) error {
 func GetAdmin(db *gorm.DB, username string, params ...string) (*Admin, error) {
 	a := &Admin{}
 
-	u, err := user.GetUser(db, username, "id")
+	u := user.User{}
+	err := config.DB.Select("id").Where("username = ?", username).First(&u).Error
 	if err != nil {
 		return nil, err
 	}
@@ -69,7 +70,8 @@ func UpdateAdmin(db *gorm.DB, a *Admin) error {
 // Removes an admin from a database
 func RmAdmin(db *gorm.DB, username string) error {
 	return db.Transaction(func(tx *gorm.DB) error {
-		u, err := user.GetUser(db, username, "id")
+		u := user.User{}
+		err := config.DB.Select("id").Where("username = ?", username).First(&u).Error
 		if err != nil {
 			return err
 		}
