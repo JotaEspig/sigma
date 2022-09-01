@@ -44,7 +44,8 @@ func AddAdmin(db *gorm.DB, a *Admin) error {
 func GetAdmin(db *gorm.DB, username string, params ...string) (*Admin, error) {
 	a := &Admin{}
 
-	u, err := user.GetUser(db, username, "id")
+	u := user.User{}
+	err := config.DB.Select("id").Where("username = ?", username).First(&u).Error
 	if err != nil {
 		return nil, err
 	}

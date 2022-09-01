@@ -42,7 +42,8 @@ func AddStudent(db *gorm.DB, s *Student) error {
 func GetStudent(db *gorm.DB, username string, params ...string) (*Student, error) {
 	s := &Student{}
 
-	u, err := user.GetUser(db, username, "id")
+	u := user.User{}
+	err := config.DB.Select("id").Where("username = ?", username).First(&u).Error
 	if err != nil {
 		return nil, err
 	}
@@ -70,7 +71,8 @@ func UpdateStudent(db *gorm.DB, s *Student) error {
 // Removes a student from a database
 func RmStudent(db *gorm.DB, username string) error {
 	return db.Transaction(func(tx *gorm.DB) error {
-		u, err := user.GetUser(db, username, "id")
+		u := user.User{}
+		err := config.DB.Select("id").Where("username = ?", username).First(&u).Error
 		if err != nil {
 			return err
 		}

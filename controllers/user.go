@@ -16,7 +16,8 @@ import (
 func GetPublicUserInfo() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		username := ctx.Param("username")
-		u, err := user.GetUser(config.DB, username, "username", "type")
+		u := user.User{}
+		err := config.DB.Select("username", "type").Where("username = ?", username).First(&u).Error
 
 		if err != nil {
 			ctx.AbortWithStatus(http.StatusNotFound)
@@ -34,7 +35,8 @@ func GetPublicUserInfo() gin.HandlerFunc {
 func GetAllUserInfo() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		username := ctx.GetString("username")
-		u, err := user.GetUser(config.DB, username, "username", "type")
+		u := user.User{}
+		err := config.DB.Select("username", "type").Where("username = ?", username).First(&u).Error
 		if err != nil {
 			ctx.AbortWithStatus(http.StatusNotFound)
 			return
@@ -77,7 +79,8 @@ func UpdateUser() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		newValues := user.User{}
 		username := ctx.GetString("username")
-		u, err := user.GetUser(config.DB, username, "id")
+		u := user.User{}
+		err := config.DB.Select("id").Where("username = ?", username).First(&u).Error
 		if err != nil {
 			ctx.AbortWithStatus(http.StatusNotFound)
 			return
@@ -115,8 +118,8 @@ func UpdateUser() gin.HandlerFunc {
 // "" means user has no type
 var getPublicInfoFuncs = map[string]func(*gin.Context, string){
 	"": func(ctx *gin.Context, username string) {
-		u, err := user.GetUser(config.DB, username,
-			user.PublicUserParams...)
+		u := user.User{}
+		err := config.DB.Omit("password").Where("username = ?", username).First(&u).Error
 
 		if err != nil {
 			ctx.AbortWithStatus(http.StatusNotFound)
@@ -187,7 +190,8 @@ var getPublicInfoFuncs = map[string]func(*gin.Context, string){
 // either user or its children (student, admin)
 var getAllInfoFuncs = map[string]func(*gin.Context, string){
 	"": func(ctx *gin.Context, username string) {
-		u, err := user.GetUser(config.DB, username)
+		u := user.User{}
+		err := config.DB.Where("username = ?", username).First(&u).Error
 
 		if err != nil {
 			ctx.AbortWithStatus(http.StatusNotFound)

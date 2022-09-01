@@ -16,7 +16,8 @@ func Login() gin.HandlerFunc {
 		usern := ctx.PostForm("username")
 		passwd := ctx.PostForm("password")
 
-		u, err := user.GetUser(config.DB, usern, "username", "password", "type")
+		u := user.User{}
+		err := config.DB.Select("username", "password", "type").Where("username = ?", usern).First(&u).Error
 		if err != nil || !u.Validate(usern, passwd) {
 			ctx.Status(http.StatusUnauthorized)
 			return
