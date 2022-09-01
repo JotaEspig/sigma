@@ -11,7 +11,7 @@ func TestAddStudent(t *testing.T) {
 	u := user.InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
 
 	// Adds user to be able to use student
-	user.AddUser(config.DB, u)
+	config.DB.Create(u)
 
 	u, err := user.GetUser(config.DB, u.Username)
 	if err != nil {
@@ -67,7 +67,7 @@ func TestGetStudent(t *testing.T) {
 	u := user.InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
 
 	// Adds if user's not added in the database
-	user.AddUser(config.DB, u)
+	config.DB.Create(u)
 
 	u, err := user.GetUser(config.DB, defUsername)
 	if err != nil {
@@ -121,7 +121,7 @@ func TestUpdateStudent(t *testing.T) {
 	u := user.InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
 
 	// Adds if user's not added in the database
-	user.AddUser(config.DB, u)
+	config.DB.Create(u)
 
 	u, err := user.GetUser(config.DB, defUsername)
 	if err != nil {
@@ -170,7 +170,7 @@ func TestRmStudent(t *testing.T) {
 	u := user.InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
 
 	// Adds if user's not added in the database
-	user.AddUser(config.DB, u)
+	config.DB.Create(u)
 
 	u, err := user.GetUser(config.DB, defUsername)
 	if err != nil {

@@ -24,13 +24,13 @@ func TestUserValidate(t *testing.T) {
 func TestAddUser(t *testing.T) {
 	u := user.InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
 
-	err := user.AddUser(config.DB, u)
+	err := config.DB.Create(u).Error
 	if err != nil {
 		t.Errorf("adding legit user: %s", err)
 	}
 
 	// repeating the same action
-	err = user.AddUser(config.DB, u)
+	err = config.DB.Create(u).Error
 	if err == nil {
 		t.Errorf("adding repeated user (it's not supposed to happen): %s", err)
 	}
@@ -45,7 +45,7 @@ func TestGetUser(t *testing.T) {
 	u := user.InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
 
 	// Adds if user's not added in the database
-	user.AddUser(config.DB, u)
+	config.DB.Create(u)
 
 	u, err := user.GetUser(config.DB, defUsername)
 	if err != nil {
@@ -89,7 +89,7 @@ func TestUpdateUser(t *testing.T) {
 	u := user.InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
 
 	// Adds if user's not added in the database
-	user.AddUser(config.DB, u)
+	config.DB.Create(u)
 
 	u, err := user.GetUser(config.DB, defUsername)
 	if err != nil {
@@ -133,7 +133,7 @@ func TestRmUser(t *testing.T) {
 	u := user.InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
 
 	// Adds if user's not added in the database
-	user.AddUser(config.DB, u)
+	config.DB.Create(u)
 
 	err := user.RmUser(config.DB, defUsername)
 	if err != nil {

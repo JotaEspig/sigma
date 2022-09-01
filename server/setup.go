@@ -13,7 +13,7 @@ func createSuperAdmin(db *gorm.DB) {
 	u := user.InitUser("admin", "admin@gmail.com",
 		"admin", "admin", "admin")
 	u.ID = 1
-	user.AddUser(db, u)
+	db.Create(u)
 
 	a, err := admin.InitAdmin(u)
 	if err != nil {

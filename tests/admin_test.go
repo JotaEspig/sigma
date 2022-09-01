@@ -11,7 +11,7 @@ func TestAddAdmin(t *testing.T) {
 	u := user.InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
 
 	// Adds user to be able to use admin
-	user.AddUser(config.DB, u)
+	config.DB.Create(u)
 
 	u, err := user.GetUser(config.DB, u.Username)
 	if err != nil {
@@ -63,7 +63,7 @@ func TestGetAdmin(t *testing.T) {
 	u := user.InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
 
 	// Adds user to be able to use admin
-	user.AddUser(config.DB, u)
+	config.DB.Create(u)
 
 	u, err := user.GetUser(config.DB, u.Username)
 	if err != nil {
@@ -114,7 +114,7 @@ func TestUpdateAdmin(t *testing.T) {
 	u := user.InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
 
 	// Adds user to be able to use admin
-	user.AddUser(config.DB, u)
+	config.DB.Create(u)
 
 	u, err := user.GetUser(config.DB, u.Username)
 	if err != nil {
@@ -153,7 +153,7 @@ func TestRmAdmin(t *testing.T) {
 	u := user.InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
 
 	// Adds user to be able to use admin
-	user.AddUser(config.DB, u)
+	config.DB.Create(u)
 
 	u, err := user.GetUser(config.DB, u.Username)
 	if err != nil {
