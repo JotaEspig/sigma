@@ -21,26 +21,6 @@ func TestUserValidate(t *testing.T) {
 	}
 }
 
-func TestAddUser(t *testing.T) {
-	u := user.InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
-
-	err := config.DB.Create(u).Error
-	if err != nil {
-		t.Errorf("adding legit user: %s", err)
-	}
-
-	// repeating the same action
-	err = config.DB.Create(u).Error
-	if err == nil {
-		t.Errorf("adding repeated user (it's not supposed to happen): %s", err)
-	}
-
-	err = user.RmUser(config.DB, defUsername)
-	if err != nil {
-		t.Errorf("removing legit user: %s", err)
-	}
-}
-
 func TestGetUser(t *testing.T) {
 	u := user.InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
 
