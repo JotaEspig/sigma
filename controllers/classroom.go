@@ -9,6 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// AddClassroom adds a classroom to the database
 func AddClassroom() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		r := struct {
@@ -37,6 +38,7 @@ func AddClassroom() gin.HandlerFunc {
 	}
 }
 
+// GetAllClassroomsInfo gets parcial information about every classroom
 func GetAllClassroomsInfo() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		classrooms := []classroom.Classroom{}
@@ -55,17 +57,18 @@ func GetAllClassroomsInfo() gin.HandlerFunc {
 	}
 }
 
+// GetClassroomInfo gets all information about a classroom
 func GetClassroomInfo() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		id := ctx.Param("id")
-		classroom_id, err := strconv.ParseUint(id, 10, 32)
+		classroomID, err := strconv.ParseUint(id, 10, 32)
 		if err != nil {
 			ctx.AbortWithStatus(http.StatusNotFound)
 			return
 		}
 
 		c := classroom.Classroom{}
-		err = config.DB.Preload("Students.User").First(&c, classroom_id).Error
+		err = config.DB.Preload("Students.User").First(&c, classroomID).Error
 		if err != nil {
 			ctx.AbortWithStatus(http.StatusNotFound)
 			return

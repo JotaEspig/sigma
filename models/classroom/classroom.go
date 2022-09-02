@@ -5,6 +5,7 @@ import (
 	"sigma/models/student"
 )
 
+// Classroom represents a classroom
 type Classroom struct {
 	ID       uint   `gorm:"primary_key"`
 	Name     string `gorm:"not null"`
@@ -12,6 +13,7 @@ type Classroom struct {
 	Students []*student.Student
 }
 
+// InitClassroom initializes a classroom struct
 func InitClassroom(name string, year uint16) (*Classroom, error) {
 	if name == "" {
 		return nil, errors.New("classroom: Name cannot be empty")
@@ -25,7 +27,7 @@ func InitClassroom(name string, year uint16) (*Classroom, error) {
 	return c, nil
 }
 
-// Function that returns a map containing classroom info
+// ToMap returns a map containing classroom info
 func (c *Classroom) ToMap() map[string]interface{} {
 	classroomMap := make(map[string]interface{})
 	classroomMap["id"] = c.ID

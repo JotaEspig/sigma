@@ -10,19 +10,19 @@ import (
 	"gorm.io/gorm"
 )
 
-// Slice of all admin params
+// AdminParams is a slice of all admin params
 var AdminParams = []string{
 	"id",
 	"role",
 }
 
-// Slice of public admin params
+// PublicAdminParams is a slice of public admin params
 var PublicAdminParams = []string{
 	"id",
 	"role",
 }
 
-// Adds an admin to a database.
+// AddAdmin adds an admin to a database.
 func AddAdmin(db *gorm.DB, a *Admin) error {
 	return db.Transaction(func(tx *gorm.DB) error {
 		a.User.Type = "admin"
@@ -40,7 +40,7 @@ func AddAdmin(db *gorm.DB, a *Admin) error {
 	})
 }
 
-// Gets an admin from a database
+// GetAdmin gets an admin from a database
 func GetAdmin(db *gorm.DB, username string, params ...string) (*Admin, error) {
 	a := &Admin{}
 
@@ -62,12 +62,12 @@ func GetAdmin(db *gorm.DB, username string, params ...string) (*Admin, error) {
 	return a, err
 }
 
-// Default function to update an admin in a database
+// UpdateAdmin is the default function to update an admin in a database
 func UpdateAdmin(db *gorm.DB, a *Admin) error {
 	return db.Model(a).Omit("id").Updates(a).Error
 }
 
-// Removes an admin from a database
+// RmAdmin removes an admin from a database
 func RmAdmin(db *gorm.DB, username string) error {
 	return db.Transaction(func(tx *gorm.DB) error {
 		u := user.User{}

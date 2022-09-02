@@ -9,7 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// Adds an admin to the database
+// AddAdmin adds an admin to the database
 func AddAdmin() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		username := ctx.Param("username")
@@ -35,7 +35,7 @@ func AddAdmin() gin.HandlerFunc {
 	}
 }
 
-// Gets an admin from the database using username store in the context
+// GetAdminInfo gets an admin from the database using username store in the context
 // (if not found, then from parameter at url)
 func GetAdminInfo() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
@@ -54,7 +54,7 @@ func GetAdminInfo() gin.HandlerFunc {
 	}
 }
 
-// Updates an admin from the database using username store in the context
+// UpdateAdmin updates an admin from the database using username store in the context
 // (if not found, then from parameter at url)
 func UpdateAdmin() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
@@ -82,7 +82,7 @@ func UpdateAdmin() gin.HandlerFunc {
 	}
 }
 
-// Deletes an admin from the database
+// DeleteAdmin deletes an admin from the database
 func DeleteAdmin() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		username := ctx.Param("username")

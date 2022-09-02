@@ -10,7 +10,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// Does the login process, it validates the user and password and return a token in JSON
+// Login does the login process, it validates the user and password and return a token in JSON
 func Login() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		usern := ctx.PostForm("username")
@@ -39,7 +39,7 @@ func Login() gin.HandlerFunc {
 	}
 }
 
-// If user it's logged, it sends JSON with username and type of the user
+// IsLogged checks if user it's logged, it sends JSON with username and type of the user
 func IsLogged() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		token, err := ctx.Cookie("auth")
@@ -73,7 +73,7 @@ func IsLogged() gin.HandlerFunc {
 	}
 }
 
-// Logouts the user and redirects to login page
+// Logout logouts the user and redirects to login page
 func Logout() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		ctx.SetCookie("auth", "", -1, "/", "", false, true)

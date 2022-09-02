@@ -11,7 +11,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// Generic route for user, gets PUBLIC info of
+// GetPublicUserInfo is a generic route for user, gets PUBLIC info of
 // either user or its children (student, admin)
 func GetPublicUserInfo() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
@@ -30,7 +30,7 @@ func GetPublicUserInfo() gin.HandlerFunc {
 	}
 }
 
-// Generic route for user, gets ALL info of
+// GetAllUserInfo is a generic route for user, gets ALL info of
 // either user or its children (student, admin)
 func GetAllUserInfo() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
@@ -48,7 +48,7 @@ func GetAllUserInfo() gin.HandlerFunc {
 	}
 }
 
-// Searchs for user using ILIKE clause
+// SearchUsers searchs for user using ILIKE clause
 func SearchUsers() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		users := []user.User{}
@@ -74,7 +74,7 @@ func SearchUsers() gin.HandlerFunc {
 	}
 }
 
-// Updates a user's info WITH RESTRICTIONS
+// UpdateUser updates a logged user's info WITH RESTRICTIONS
 func UpdateUser() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		newValues := user.User{}

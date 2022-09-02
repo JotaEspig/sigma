@@ -14,6 +14,8 @@ func abortWithHTML(ctx *gin.Context, status int, file string) {
 	ctx.Abort()
 }
 
+// AuthMiddleware is a middleware to check if a user is logged or not
+// and it set the username to the context to be used in next processes
 func AuthMiddleware() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		token, err := ctx.Cookie("auth")
@@ -44,6 +46,7 @@ func AuthMiddleware() gin.HandlerFunc {
 	}
 }
 
+// IsStudentMiddleware is a middleware to check if the user is logged and if it's a student or not
 func IsStudentMiddleware() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		token, err := ctx.Cookie("auth")
@@ -79,6 +82,7 @@ func IsStudentMiddleware() gin.HandlerFunc {
 	}
 }
 
+// IsTeacherMiddleware is a middleware to check if the user is logged and if it's a teacher or not
 func IsTeacherMiddleware() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		token, err := ctx.Cookie("auth")
@@ -114,6 +118,7 @@ func IsTeacherMiddleware() gin.HandlerFunc {
 	}
 }
 
+// IsAdminMiddleware is a middleware to check if the user is logged and if it's a admin or not
 func IsAdminMiddleware() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		token, err := ctx.Cookie("auth")
@@ -153,8 +158,9 @@ func IsAdminMiddleware() gin.HandlerFunc {
 	}
 }
 
-// BE CAREFUL WITH THIS MIDDLEWARE,
-// it needs to be used with the IsAdminMiddleware to work properly
+// IsSuperAdminMiddleware is a middleware that adds one more layer to check
+// if username equals "admin".
+// It needs to be used with the IsAdminMiddleware to work properly
 func IsSuperAdminMiddleware() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		username := ctx.GetString("username")

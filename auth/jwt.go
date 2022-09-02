@@ -24,13 +24,13 @@ type authClaims struct {
 	Type     string `json:"type"`
 }
 
-// Parameters used in jwt authentication
+// JWTService is a struct with parameters used in jwt authentication
 type JWTService struct {
 	SecretKey string
 	Issuer    string
 }
 
-// Creates a default jwtService struct
+// JWTAuthService creates a default jwtService struct
 func JWTAuthService() *JWTService {
 	return &JWTService{
 		SecretKey: getSecretKey(),
@@ -38,7 +38,7 @@ func JWTAuthService() *JWTService {
 	}
 }
 
-// Generates a token according to the username.
+// GenerateToken generates a token according to the username.
 // Returns error if an error has occurred in getting the signed token
 func (service *JWTService) GenerateToken(username string, userType string) (string, error) {
 	claims := &authClaims{
@@ -55,7 +55,7 @@ func (service *JWTService) GenerateToken(username string, userType string) (stri
 	return encodedToken, err
 }
 
-// Validates the token, according to the secret key
+// ValidateToken validates the token, according to the secret key
 func (service *JWTService) ValidateToken(encodedToken string) (*jwt.Token, error) {
 	keyFunc := func(token *jwt.Token) (interface{}, error) {
 		// Checks if the token is valid trying to convert it to HMAC

@@ -8,6 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// GetStudentInfo gets student info according to the username
 func GetStudentInfo() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		username := ctx.GetString("username")

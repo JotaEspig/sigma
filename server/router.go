@@ -120,6 +120,7 @@ func setRoutes(router *gin.Engine) {
 	adminToolsForAdmin.DELETE("/:username/delete", controllers.DeleteAdmin())
 }
 
+// CreateRouter creates a normal router to running the program
 func CreateRouter() *gin.Engine {
 	router := getRouterEngine()
 
@@ -135,6 +136,7 @@ func CreateRouter() *gin.Engine {
 	return router
 }
 
+// CreateTestRouter creates a "testing" router to be used in Test functions
 func CreateTestRouter() *gin.Engine {
 	router := getRouterEngine()
 

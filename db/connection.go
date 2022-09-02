@@ -9,10 +9,12 @@ import (
 	"gorm.io/gorm/logger"
 )
 
+// Connection contains the database connection
 type Connection struct {
 	db *gorm.DB
 }
 
+// ConnInit initializes a connection with database
 func ConnInit() *Connection {
 	conn := &Connection{}
 	conn.connectDB()
@@ -32,7 +34,7 @@ func (c *Connection) connectDB() {
 	c.db = newDB
 }
 
-// Gets the database variable from the connection
+// GetDB gets the database variable from the connection
 func (c *Connection) GetDB() *gorm.DB {
 	return c.db
 }

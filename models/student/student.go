@@ -5,6 +5,7 @@ import (
 	"sigma/models/user"
 )
 
+// Student represents a student role in sigma
 type Student struct {
 	UID         uint `gorm:"primary_key;column:id"`
 	Status      string
@@ -12,6 +13,7 @@ type Student struct {
 	User        *user.User `gorm:"foreignKey:UID"`
 }
 
+// InitStudent initializes a student struct
 func InitStudent(u *user.User) (*Student, error) {
 	if u.ID == 0 {
 		return nil, errors.New("student: UserID cannot be 0")
@@ -25,7 +27,7 @@ func InitStudent(u *user.User) (*Student, error) {
 	return s, nil
 }
 
-// Adds student value to map contaning user info
+// ToMap adds student value to map contaning user info
 func (s *Student) ToMap() map[string]interface{} {
 	studentMap := make(map[string]interface{})
 	if s.User != nil {

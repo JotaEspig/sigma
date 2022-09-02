@@ -8,6 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// GetTeacherInfo gets teacher info according to the username
 func GetTeacherInfo() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		username := ctx.GetString("username")
@@ -21,6 +22,7 @@ func GetTeacherInfo() gin.HandlerFunc {
 	}
 }
 
+// UpdateTeacher updates the teacher that is logged in
 func UpdateTeacher() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		newValues := teacher.Teacher{}
