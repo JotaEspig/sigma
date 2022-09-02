@@ -34,11 +34,6 @@ func UpdateUser(db *gorm.DB, u *User) error {
 	return db.Model(u).Omit("username", "password", "type").Updates(u).Error
 }
 
-// Removes a user from a database
-func RmUser(db *gorm.DB, username string) error {
-	return db.Unscoped().Delete(&User{}, "username = ?", username).Error
-}
-
 // AutoMigrate the user table
 func init() {
 	config.DB.AutoMigrate(&User{})
