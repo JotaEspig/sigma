@@ -4,7 +4,6 @@ import (
 	// dbPKG means 'the package db', because if it's named db
 	// it will conflict with db variable in the functions below
 	"sigma/config"
-	dbPKG "sigma/db"
 	"sigma/models/user"
 
 	"gorm.io/gorm"
@@ -20,31 +19,6 @@ var TeacherParams = []string{
 var PublicTeacherParams = []string{
 	"id",
 	"education",
-}
-
-// Gets a teacher from a database
-func GetTeacher(db *gorm.DB, username string, params ...string) (*Teacher, error) {
-	t := &Teacher{}
-
-	u := user.User{}
-	err := config.DB.Select("id").Where("username = ?", username).First(&u).Error
-	if err != nil {
-		return nil, err
-	}
-
-	columnsToUse := dbPKG.GetColumns(TeacherParams, params...)
-
-	err = db.Select(columnsToUse).Where("id = ?", u.ID).First(t).Error
-	if err != nil {
-		return nil, err
-	}
-
-	err = db.Model(t).Association("User").Find(&t.User)
-	if err != nil {
-		return nil, err
-	}
-
-	return t, nil
 }
 
 // Default function to update a teacher in the database

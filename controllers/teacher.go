@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"sigma/config"
 	"sigma/models/teacher"
+	"sigma/models/user"
 
 	"github.com/gin-gonic/gin"
 )
@@ -29,7 +30,15 @@ return db.Transaction(func(tx *gorm.DB) error {
 func GetTeacherInfo() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		username := ctx.GetString("username")
-		t, err := teacher.GetTeacher(config.DB, username)
+		u := user.User{}
+		t := teacher.Teacher{}
+		err := config.DB.Select("id").Where("username = ?", username).First(&u).Error
+		if err != nil {
+			ctx.AbortWithStatus(http.StatusNotFound)
+			return
+		}
+
+		err = config.DB.Preload("User").Where("id = ?", u.ID).First(&t).Error
 		if err != nil {
 			ctx.AbortWithStatus(http.StatusNotFound)
 			return
@@ -44,7 +53,15 @@ func UpdateTeacher() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		newValues := teacher.Teacher{}
 		username := ctx.GetString("username")
-		t, err := teacher.GetTeacher(config.DB, username, "id")
+		u := user.User{}
+		t := teacher.Teacher{}
+		err := config.DB.Select("id").Where("username = ?", username).First(&u).Error
+		if err != nil {
+			ctx.AbortWithStatus(http.StatusNotFound)
+			return
+		}
+
+		err = config.DB.Preload("User").Where("id = ?", u.ID).First(&t).Error
 		if err != nil {
 			ctx.AbortWithStatus(http.StatusNotFound)
 			return
