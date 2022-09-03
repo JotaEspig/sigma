@@ -26,7 +26,7 @@ var PublicTeacherParams = []string{
 func AddTeacher(db *gorm.DB, t *Teacher) error {
 	return db.Transaction(func(tx *gorm.DB) error {
 		t.User.Type = "teacher"
-		err := user.UpdateUser(db, t.User)
+		err := db.Model(t.User).Omit("username", "password", "type").Updates(t.User).Error
 		if err != nil {
 			return err
 		}

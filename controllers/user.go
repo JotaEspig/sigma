@@ -98,7 +98,7 @@ func UpdateUser() gin.HandlerFunc {
 		newValues.HashedPassword = ""
 		newValues.Type = ""
 
-		err = user.UpdateUser(config.DB, &newValues)
+		err = config.DB.Model(u).Omit("username", "password", "type").Updates(&newValues).Error
 		if err != nil {
 			ctx.AbortWithStatus(http.StatusInternalServerError)
 			return
