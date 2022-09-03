@@ -8,6 +8,23 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+/*
+return db.Transaction(func(tx *gorm.DB) error {
+		t.User.Type = "teacher"
+		err := db.Model(t.User).Omit("username", "password", "type").Updates(t.User).Error
+		if err != nil {
+			return err
+		}
+
+		err = tx.Create(t).Error
+		if err != nil {
+			return err
+		}
+
+		return nil
+	})
+*/
+
 // GetTeacherInfo gets teacher info according to the username
 func GetTeacherInfo() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
