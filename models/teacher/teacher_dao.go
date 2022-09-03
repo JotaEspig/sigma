@@ -21,11 +21,6 @@ var PublicTeacherParams = []string{
 	"education",
 }
 
-// Default function to update a teacher in the database
-func UpdateTeacher(db *gorm.DB, t *Teacher) error {
-	return db.Model(t).Omit("id").Updates(t).Error
-}
-
 // Deletes a teacher from the database
 func RmTeacher(db *gorm.DB, username string) error {
 	return db.Transaction(func(tx *gorm.DB) error {

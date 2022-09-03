@@ -69,7 +69,7 @@ func UpdateTeacher() gin.HandlerFunc {
 
 		ctx.ShouldBindJSON(&newValues)
 		newValues.UID = t.UID
-		err = teacher.UpdateTeacher(config.DB, &newValues)
+		err = config.DB.Model(t).Omit("id").Updates(t).Error
 		if err != nil {
 			ctx.AbortWithStatus(http.StatusInternalServerError)
 			return
