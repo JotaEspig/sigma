@@ -8,27 +8,6 @@ import (
 	"gorm.io/gorm"
 )
 
-// Slice of all user params
-var UserParams = []string{
-	"id",
-	"username",
-	"name",
-	"surname",
-	"email",
-	"password",
-	"type",
-}
-
-// Slice of public user params
-var PublicUserParams = []string{
-	"id",
-	"username",
-	"name",
-	"surname",
-	"email",
-	"type",
-}
-
 // Default function to update a user in a database
 func UpdateUser(db *gorm.DB, u *User) error {
 	return db.Model(u).Omit("username", "password", "type").Updates(u).Error
