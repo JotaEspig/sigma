@@ -254,3 +254,8 @@ var getAllInfoFuncs = map[string]func(*gin.Context, string){
 		)
 	},
 }
+
+// AutoMigrate the user table
+func init() {
+	config.DB.AutoMigrate(&user.User{})
+}
