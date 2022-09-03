@@ -28,7 +28,7 @@ func InitClassroom(name string, year uint16) (*Classroom, error) {
 }
 
 // ToMap returns a map containing classroom info
-func (c *Classroom) ToMap() map[string]interface{} {
+func (c Classroom) ToMap() map[string]interface{} {
 	classroomMap := make(map[string]interface{})
 	classroomMap["id"] = c.ID
 	classroomMap["name"] = c.Name

@@ -27,7 +27,7 @@ func InitTeacher(u *user.User) (*Teacher, error) {
 }
 
 // ToMap adds teacher value to map contaning user info
-func (t *Teacher) ToMap() map[string]interface{} {
+func (t Teacher) ToMap() map[string]interface{} {
 	teacherMap := make(map[string]interface{})
 	if t.User != nil {
 		teacherMap = t.User.ToMap()

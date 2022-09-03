@@ -27,7 +27,7 @@ func InitAdmin(u *user.User) (*Admin, error) {
 }
 
 // ToMap adds admin value to map contaning user info
-func (a *Admin) ToMap() map[string]interface{} {
+func (a Admin) ToMap() map[string]interface{} {
 	adminMap := make(map[string]interface{})
 	if a.User != nil {
 		adminMap = a.User.ToMap()
