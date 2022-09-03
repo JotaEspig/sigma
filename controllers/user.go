@@ -11,14 +11,17 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+type userImpl interface {
+	ToMap() map[string]interface{}
+}
+
 // GetPublicUserInfo is a generic route for user, gets PUBLIC info of
 // either user or its children (student, admin)
 func GetPublicUserInfo() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		username := ctx.Param("username")
 		u := user.User{}
-		err := config.DB.Select("username", "type").Where("username = ?", username).First(&u).Error
-
+		err := config.DB.Select("id", "type").Where("username = ?", username).First(&u).Error
 		if err != nil {
 			ctx.AbortWithStatus(http.StatusNotFound)
 			return
@@ -26,7 +29,18 @@ func GetPublicUserInfo() gin.HandlerFunc {
 
 		// Gets the specific function according to the user type
 		f := getPublicInfoFuncs[u.Type]
-		f(ctx, u.Username)
+		uImpl, err := f(u.ID)
+		if err != nil {
+			ctx.AbortWithStatus(http.StatusNotFound)
+			return
+		}
+
+		ctx.JSON(
+			http.StatusOK,
+			gin.H{
+				"user": uImpl.ToMap(),
+			},
+		)
 	}
 }
 
@@ -36,7 +50,7 @@ func GetAllUserInfo() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		username := ctx.GetString("username")
 		u := user.User{}
-		err := config.DB.Select("username", "type").Where("username = ?", username).First(&u).Error
+		err := config.DB.Select("id", "type").Where("username = ?", username).First(&u).Error
 		if err != nil {
 			ctx.AbortWithStatus(http.StatusNotFound)
 			return
@@ -44,7 +58,18 @@ func GetAllUserInfo() gin.HandlerFunc {
 
 		// Gets the specific function according to the user type
 		f := getAllInfoFuncs[u.Type]
-		f(ctx, u.Username)
+		uImpl, err := f(u.ID)
+		if err != nil {
+			ctx.AbortWithStatus(http.StatusNotFound)
+			return
+		}
+
+		ctx.JSON(
+			http.StatusOK,
+			gin.H{
+				"user": uImpl.ToMap(),
+			},
+		)
 	}
 }
 
@@ -116,142 +141,57 @@ func UpdateUser() gin.HandlerFunc {
 // Contains functions to get public info of
 // either user or its children (student, admin)
 // "" means user has no type
-var getPublicInfoFuncs = map[string]func(*gin.Context, string){
-	"": func(ctx *gin.Context, username string) {
+var getPublicInfoFuncs = map[string]func(uint) (userImpl, error){
+	"": func(id uint) (userImpl, error) {
 		u := user.User{}
-		err := config.DB.Omit("password").Where("username = ?", username).First(&u).Error
-
-		if err != nil {
-			ctx.AbortWithStatus(http.StatusNotFound)
-			return
-		}
-
-		ctx.JSON(
-			http.StatusOK,
-			gin.H{
-				"user": u.ToMap(),
-			},
-		)
+		err := config.DB.Where("id = ?", id).First(&u).Error
+		return u, err
 	},
 
-	"student": func(ctx *gin.Context, username string) {
-		s, err := student.GetStudent(config.DB, username,
-			student.PublicStudentParams...)
-
-		if err != nil {
-			ctx.AbortWithStatus(http.StatusNotFound)
-			return
-		}
-
-		ctx.JSON(
-			http.StatusOK,
-			gin.H{
-				"user": s.ToMap(),
-			},
-		)
+	"student": func(id uint) (userImpl, error) {
+		s := student.Student{}
+		err := config.DB.Preload("User").Where("id = ?", id).First(&s).Error
+		return s, err
 	},
 
-	"teacher": func(ctx *gin.Context, username string) {
-		t, err := teacher.GetTeacher(config.DB, username,
-			teacher.PublicTeacherParams...)
-
-		if err != nil {
-			ctx.AbortWithStatus(http.StatusNotFound)
-			return
-		}
-
-		ctx.JSON(
-			http.StatusOK,
-			gin.H{
-				"user": t.ToMap(),
-			},
-		)
+	"teacher": func(id uint) (userImpl, error) {
+		t := teacher.Teacher{}
+		err := config.DB.Preload("User").Where("id = ?", id).First(&t).Error
+		return t, err
 	},
 
-	"admin": func(ctx *gin.Context, username string) {
-		a, err := admin.GetAdmin(config.DB, username,
-			admin.PublicAdminParams...)
-
-		if err != nil {
-			ctx.AbortWithStatus(http.StatusNotFound)
-			return
-		}
-
-		ctx.JSON(
-			http.StatusOK,
-			gin.H{
-				"user": a.ToMap(),
-			},
-		)
+	"admin": func(id uint) (userImpl, error) {
+		a := admin.Admin{}
+		err := config.DB.Preload("User").Where("id = ?", id).First(&a).Error
+		return a, err
 	},
 }
 
 // Contains functions to get all info of
 // either user or its children (student, admin)
-var getAllInfoFuncs = map[string]func(*gin.Context, string){
-	"": func(ctx *gin.Context, username string) {
+var getAllInfoFuncs = map[string]func(uint) (userImpl, error){
+	"": func(id uint) (userImpl, error) {
 		u := user.User{}
-		err := config.DB.Where("username = ?", username).First(&u).Error
-
-		if err != nil {
-			ctx.AbortWithStatus(http.StatusNotFound)
-			return
-		}
-
-		ctx.JSON(
-			http.StatusOK,
-			gin.H{
-				"user": u.ToMap(),
-			},
-		)
+		err := config.DB.Where("id = ?", id).First(&u).Error
+		return u, err
 	},
 
-	"student": func(ctx *gin.Context, username string) {
-		s, err := student.GetStudent(config.DB, username)
-
-		if err != nil {
-			ctx.AbortWithStatus(http.StatusNotFound)
-			return
-		}
-
-		ctx.JSON(
-			http.StatusOK,
-			gin.H{
-				"user": s.ToMap(),
-			},
-		)
+	"student": func(id uint) (userImpl, error) {
+		s := student.Student{}
+		err := config.DB.Preload("User").Where("id = ?", id).First(&s).Error
+		return s, err
 	},
 
-	"teacher": func(ctx *gin.Context, username string) {
-		t, err := teacher.GetTeacher(config.DB, username)
-
-		if err != nil {
-			ctx.AbortWithStatus(http.StatusNotFound)
-			return
-		}
-
-		ctx.JSON(
-			http.StatusOK,
-			gin.H{
-				"user": t.ToMap(),
-			},
-		)
+	"teacher": func(id uint) (userImpl, error) {
+		t := teacher.Teacher{}
+		err := config.DB.Preload("User").Where("id = ?", id).First(&t).Error
+		return t, err
 	},
 
-	"admin": func(ctx *gin.Context, username string) {
-		a, err := admin.GetAdmin(config.DB, username)
-
-		if err != nil {
-			ctx.AbortWithStatus(http.StatusNotFound)
-			return
-		}
-
-		ctx.JSON(
-			http.StatusOK,
-			gin.H{
-				"user": a.ToMap(),
-			},
-		)
+	"admin": func(id uint) (userImpl, error) {
+		a := admin.Admin{}
+		err := config.DB.Preload("User").Where("id = ?", id).First(&a).Error
+		return a, err
 	},
 }
 
