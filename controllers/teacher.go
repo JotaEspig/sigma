@@ -78,3 +78,7 @@ func UpdateTeacher() gin.HandlerFunc {
 		ctx.Status(http.StatusOK)
 	}
 }
+
+func init() {
+	config.DB.AutoMigrate(&teacher.Teacher{})
+}
