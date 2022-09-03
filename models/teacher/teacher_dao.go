@@ -4,9 +4,6 @@ import (
 	// dbPKG means 'the package db', because if it's named db
 	// it will conflict with db variable in the functions below
 	"sigma/config"
-	"sigma/models/user"
-
-	"gorm.io/gorm"
 )
 
 // Slice of all teacher params
@@ -19,25 +16,6 @@ var TeacherParams = []string{
 var PublicTeacherParams = []string{
 	"id",
 	"education",
-}
-
-// Deletes a teacher from the database
-func RmTeacher(db *gorm.DB, username string) error {
-	return db.Transaction(func(tx *gorm.DB) error {
-		u := user.User{}
-		err := config.DB.Select("id").Where("username = ?", username).First(&u).Error
-		if err != nil {
-			return err
-		}
-
-		// Updates the type of the user to be empty
-		err = db.Model(u).Update("type", "").Error
-		if err != nil {
-			return err
-		}
-
-		return db.Unscoped().Delete(&Teacher{}, "id = ?", u.ID).Error
-	})
 }
 
 func init() {
