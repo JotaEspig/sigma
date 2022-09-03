@@ -22,24 +22,6 @@ var PublicTeacherParams = []string{
 	"education",
 }
 
-// Adds a teacher to a database.
-func AddTeacher(db *gorm.DB, t *Teacher) error {
-	return db.Transaction(func(tx *gorm.DB) error {
-		t.User.Type = "teacher"
-		err := db.Model(t.User).Omit("username", "password", "type").Updates(t.User).Error
-		if err != nil {
-			return err
-		}
-
-		err = tx.Create(t).Error
-		if err != nil {
-			return err
-		}
-
-		return nil
-	})
-}
-
 // Gets a teacher from a database
 func GetTeacher(db *gorm.DB, username string, params ...string) (*Teacher, error) {
 	t := &Teacher{}
