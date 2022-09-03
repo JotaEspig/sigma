@@ -1,8 +1,6 @@
 package main
 
-import (
-	"sigma/server"
-)
+import "sigma/server"
 
 func main() {
 	// Creates and runs the router
