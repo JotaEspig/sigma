@@ -9,7 +9,7 @@ $(document).ready(function () {
                     let id = item.id
                     let name = item.name
                     let year = item.year
-                    cadastrarTurma(id, name, year)
+                    addClassroomOnTable(id, name, year)
                     
 
                 }
@@ -37,15 +37,12 @@ $(document).ready(function () {
     $("#form-cadastro-turma").on("submit", function (e) {
         e.preventDefault();
 
-        let name = $("#name-cadastro-turma").val();
-        let year = parseInt($("#year-cadastro-turma").val());
-        let data = JSON.stringify({name: name, year: year});
+        let data = $(this).serialize();
 
         $.ajax({
             type: 'post',
             url: '/admin/tools/classroom/add',
             data: data,
-            dataType: 'json',
             statusCode: {
                 200: function () {
                     swal({
@@ -68,24 +65,20 @@ $(document).ready(function () {
     });
 });
 
-
-
-
-
-
-
-
-function cadastrarTurma(id, name, year) {
+function addClassroomOnTable(id, name, year) {
     $("#corpo_tabela").append(`
-                                <tr>
-                                    <td scope="row">${name}°</td>
-                                    <td>${year}</td>
-                                    <td class="td-acoes">
-                                    <span class="remover btn btn-danger">
-                                        Excluir
-                                    </span>
-                                    </td>
-                                </tr>
-                            `);
-}
+        <tr id='${id}'>
+            <td scope="row" id='name'></td>
+            <td id='year'></td>
+            <td class="td-acoes">
+            <span class="remover btn btn-danger">
+                Excluir
+            </span>
+            </td>
+        </tr>
+    `);
 
+    let classroomTable = $("#corpo_tabela").find("#"+id);
+    classroomTable.find("#name").text(name);
+    classroomTable.find("#year").text(year);
+}

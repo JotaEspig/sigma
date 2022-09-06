@@ -12,17 +12,15 @@ import (
 // AddClassroom adds a classroom to the database
 func AddClassroom() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		r := struct {
-			Name string `json:"name"`
-			Year int    `json:"year"`
-		}{}
-		err := ctx.BindJSON(&r)
+		name := ctx.PostForm("name")
+		yearStr := ctx.PostForm("year")
+		year, err := strconv.Atoi(yearStr)
 		if err != nil {
 			ctx.AbortWithStatus(http.StatusBadRequest)
 			return
 		}
 
-		c, err := classroom.InitClassroom(r.Name, uint16(r.Year))
+		c, err := classroom.InitClassroom(name, uint16(year))
 		if err != nil {
 			ctx.AbortWithStatus(http.StatusBadRequest)
 			return
