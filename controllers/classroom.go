@@ -78,6 +78,18 @@ func GetClassroomInfo() gin.HandlerFunc {
 	}
 }
 
+// DeleteClassroom deletes a classroom from the database
+func DeleteClassroom() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		id := ctx.PostForm("id")
+		err := config.DB.Unscoped().Delete(&classroom.Classroom{}, id).Error
+		if err != nil {
+			ctx.AbortWithStatus(http.StatusNotFound)
+		}
+		ctx.Status(http.StatusOK)
+	}
+}
+
 func init() {
 	config.DB.AutoMigrate(&classroom.Classroom{})
 }
