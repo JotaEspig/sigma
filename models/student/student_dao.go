@@ -86,8 +86,3 @@ func RmStudent(db *gorm.DB, username string) error {
 		return db.Unscoped().Delete(&Student{}, "id = ?", u.ID).Error
 	})
 }
-
-// AutoMigrate the student table
-func init() {
-	config.DB.AutoMigrate(&Student{})
-}

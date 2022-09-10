@@ -21,3 +21,8 @@ func GetStudentInfo() gin.HandlerFunc {
 		ctx.JSON(http.StatusOK, s.ToMap())
 	}
 }
+
+// AutoMigrate the student table
+func init() {
+	config.DB.AutoMigrate(&student.Student{})
+}
