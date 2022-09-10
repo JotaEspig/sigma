@@ -9,6 +9,7 @@ import (
 	"sigma/config"
 	"sigma/models/classroom"
 	"sigma/server"
+	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -25,9 +26,11 @@ func TestAddClassroom(t *testing.T) {
 		"POST",
 		"/admin/tools/classroom/add",
 		bytes.NewBuffer([]byte(
-			`{"name": "`+defClassroomName+`", "year": `+fmt.Sprint(defClassroomYear)+`}`,
+			"name="+strings.ReplaceAll(defClassroomName, " ", "+")+
+				"&year="+fmt.Sprint(defClassroomYear),
 		)),
 	)
+	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 	req.AddCookie(&http.Cookie{
 		Name:  "auth",
 		Value: token,
@@ -51,9 +54,11 @@ func TestGetClassroom(t *testing.T) {
 		"POST",
 		"/admin/tools/classroom/add",
 		bytes.NewBuffer([]byte(
-			`{"name": "`+defClassroomName+`", "year": `+fmt.Sprint(defClassroomYear)+`}`,
+			`name=`+strings.ReplaceAll(defClassroomName, " ", "+")+
+				`&year=`+fmt.Sprint(defClassroomYear),
 		)),
 	)
+	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 	req.AddCookie(&http.Cookie{
 		Name:  "auth",
 		Value: token,
@@ -113,9 +118,11 @@ func TestGetAllClassrooms(t *testing.T) {
 		"POST",
 		"/admin/tools/classroom/add",
 		bytes.NewBuffer([]byte(
-			`{"name": "`+defClassroomName+`", "year": `+fmt.Sprint(defClassroomYear)+`}`,
+			`name=`+strings.ReplaceAll(defClassroomName, " ", "+")+
+				`&year=`+fmt.Sprint(defClassroomYear),
 		)),
 	)
+	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 	req.AddCookie(&http.Cookie{
 		Name:  "auth",
 		Value: token,
