@@ -54,12 +54,16 @@ func AddAdmin() gin.HandlerFunc {
 // (if not found, then from parameter at url)
 func GetAdminInfo() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		username := ctx.GetString("username")
-		if username == "" {
-			username = ctx.Param("username")
+		username := getUsername(ctx)
+		u := user.User{}
+		a := admin.Admin{}
+		err := config.DB.Select("id").Where("username = ?", username).First(&u).Error
+		if err != nil {
+			ctx.AbortWithStatus(http.StatusNotFound)
+			return
 		}
 
-		a, err := admin.GetAdmin(config.DB, username)
+		err = config.DB.Preload("User").Where("id = ?", u.ID).First(&a).Error
 		if err != nil {
 			ctx.AbortWithStatus(http.StatusNotFound)
 			return
@@ -75,7 +79,15 @@ func UpdateAdmin() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		username := getUsername(ctx)
 		newValues := admin.Admin{}
-		a, err := admin.GetAdmin(config.DB, username, "id")
+		u := user.User{}
+		a := admin.Admin{}
+		err := config.DB.Select("id").Where("username = ?", username).First(&u).Error
+		if err != nil {
+			ctx.AbortWithStatus(http.StatusNotFound)
+			return
+		}
+
+		err = config.DB.Preload("User").Where("id = ?", u.ID).First(&a).Error
 		if err != nil {
 			ctx.AbortWithStatus(http.StatusNotFound)
 			return
@@ -83,7 +95,7 @@ func UpdateAdmin() gin.HandlerFunc {
 
 		ctx.ShouldBindJSON(&newValues)
 		newValues.UID = a.UID
-		err = admin.UpdateAdmin(config.DB, &newValues)
+		err = config.DB.Model(a).Omit("id").Updates(a).Error
 		if err != nil {
 			ctx.AbortWithStatus(http.StatusInternalServerError)
 			return
@@ -97,7 +109,21 @@ func UpdateAdmin() gin.HandlerFunc {
 func DeleteAdmin() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		username := getUsername(ctx)
-		err := admin.RmAdmin(config.DB, username)
+		err := config.DB.Transaction(func(tx *gorm.DB) error {
+			u := user.User{}
+			err := config.DB.Select("id").Where("username = ?", username).First(&u).Error
+			if err != nil {
+				return err
+			}
+
+			// Updates the type of the user to be empty
+			err = config.DB.Model(u).Update("type", "").Error
+			if err != nil {
+				return err
+			}
+
+			return config.DB.Unscoped().Delete(&admin.Admin{}, "id = ?", u.ID).Error
+		})
 		if err != nil {
 			ctx.AbortWithStatus(http.StatusInternalServerError)
 			return
