@@ -7,6 +7,7 @@ import (
 	"sigma/models/user"
 
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 )
 
 // AddAdmin adds an admin to the database
@@ -26,11 +27,25 @@ func AddAdmin() gin.HandlerFunc {
 			return
 		}
 
-		err = admin.AddAdmin(config.DB, a)
+		err = config.DB.Transaction(func(tx *gorm.DB) error {
+			a.User.Type = "admin"
+			err := config.DB.Model(a.User).Update("type", a.User.Type).Error
+			if err != nil {
+				return err
+			}
+
+			err = tx.Create(a).Error
+			if err != nil {
+				return err
+			}
+
+			return nil
+		})
 		if err != nil {
 			ctx.AbortWithStatus(http.StatusNotFound)
 			return
 		}
+
 		ctx.Status(http.StatusOK)
 	}
 }

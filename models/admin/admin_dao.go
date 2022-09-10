@@ -22,24 +22,6 @@ var PublicAdminParams = []string{
 	"role",
 }
 
-// AddAdmin adds an admin to a database.
-func AddAdmin(db *gorm.DB, a *Admin) error {
-	return db.Transaction(func(tx *gorm.DB) error {
-		a.User.Type = "admin"
-		err := db.Model(a.User).Update("type", a.User.Type).Error
-		if err != nil {
-			return err
-		}
-
-		err = tx.Create(a).Error
-		if err != nil {
-			return err
-		}
-
-		return nil
-	})
-}
-
 // GetAdmin gets an admin from a database
 func GetAdmin(db *gorm.DB, username string, params ...string) (*Admin, error) {
 	a := &Admin{}

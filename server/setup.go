@@ -20,5 +20,18 @@ func createSuperAdmin(db *gorm.DB) {
 		panic(err)
 	}
 
-	admin.AddAdmin(db, a)
+	db.Transaction(func(tx *gorm.DB) error {
+		a.User.Type = "admin"
+		err := db.Model(a.User).Update("type", a.User.Type).Error
+		if err != nil {
+			return err
+		}
+
+		err = tx.Create(a).Error
+		if err != nil {
+			return err
+		}
+
+		return nil
+	})
 }
