@@ -19,7 +19,7 @@ type userImpl interface {
 // either user or its children (student, admin)
 func GetPublicUserInfo() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		username := ctx.Param("username")
+		username := getUsername(ctx)
 		u := user.User{}
 		err := config.DB.Select("id", "type").Where("username = ?", username).First(&u).Error
 		if err != nil {
@@ -48,7 +48,7 @@ func GetPublicUserInfo() gin.HandlerFunc {
 // either user or its children (student, admin)
 func GetAllUserInfo() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		username := ctx.GetString("username")
+		username := getUsername(ctx)
 		u := user.User{}
 		err := config.DB.Select("id", "type").Where("username = ?", username).First(&u).Error
 		if err != nil {
@@ -77,7 +77,7 @@ func GetAllUserInfo() gin.HandlerFunc {
 func SearchUsers() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		users := []user.User{}
-		username := ctx.Param("username")
+		username := getUsername(ctx)
 		err := config.DB.Select("id", "username").Where("username ILIKE ?", "%"+username+"%").
 			Limit(10).Find(&users).Error
 		if err != nil || len(users) == 0 {
@@ -103,7 +103,7 @@ func SearchUsers() gin.HandlerFunc {
 func UpdateUser() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		newValues := user.User{}
-		username := ctx.GetString("username")
+		username := getUsername(ctx)
 		u := user.User{}
 		err := config.DB.Select("id").Where("username = ?", username).First(&u).Error
 		if err != nil {

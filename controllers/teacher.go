@@ -29,7 +29,7 @@ return db.Transaction(func(tx *gorm.DB) error {
 // GetTeacherInfo gets teacher info according to the username
 func GetTeacherInfo() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		username := ctx.GetString("username")
+		username := getUsername(ctx)
 		u := user.User{}
 		t := teacher.Teacher{}
 		err := config.DB.Select("id").Where("username = ?", username).First(&u).Error
@@ -52,7 +52,7 @@ func GetTeacherInfo() gin.HandlerFunc {
 func UpdateTeacher() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		newValues := teacher.Teacher{}
-		username := ctx.GetString("username")
+		username := getUsername(ctx)
 		u := user.User{}
 		t := teacher.Teacher{}
 		err := config.DB.Select("id").Where("username = ?", username).First(&u).Error

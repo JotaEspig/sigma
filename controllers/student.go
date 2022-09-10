@@ -12,7 +12,7 @@ import (
 // GetStudentInfo gets student info according to the username
 func GetStudentInfo() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		username := ctx.GetString("username")
+		username := getUsername(ctx)
 		u := user.User{}
 		s := student.Student{}
 		err := config.DB.Select("id").Where("username = ?", username).First(&u).Error
