@@ -4,7 +4,6 @@ import (
 	// dbPKG means 'the package db', because if it's named db
 	// it will conflict with db variable in the functions below
 	"sigma/config"
-	dbPKG "sigma/db"
 	"sigma/models/user"
 
 	"gorm.io/gorm"
@@ -36,31 +35,6 @@ func AddStudent(db *gorm.DB, s *Student) error {
 
 		return nil
 	})
-}
-
-// Gets a student from a database
-func GetStudent(db *gorm.DB, username string, params ...string) (*Student, error) {
-	s := &Student{}
-
-	u := user.User{}
-	err := config.DB.Select("id").Where("username = ?", username).First(&u).Error
-	if err != nil {
-		return nil, err
-	}
-
-	columnsToUse := dbPKG.GetColumns(StudentParams, params...)
-
-	err = db.Select(columnsToUse).Where("id = ?", u.ID).First(s).Error
-	if err != nil {
-		return nil, err
-	}
-
-	err = db.Model(s).Association("User").Find(&s.User)
-	if err != nil {
-		return nil, err
-	}
-
-	return s, err
 }
 
 // Default function to update a student in a database
