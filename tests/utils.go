@@ -15,7 +15,7 @@ const (
 	defPasswd        = "TestPasswd"
 	defName          = "TestName"
 	defSurname       = "TestSurname"
-	defEmail         = "TestEmail"
+	defEmail         = "TestEmail@gmail.com"
 	defClassroomName = "TestClassroom"
 	defClassroomYear = uint16(1111)
 )
