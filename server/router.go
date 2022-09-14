@@ -138,7 +138,8 @@ func CreateRouter() *gin.Engine {
 
 // CreateTestRouter creates a "testing" router to be used in Test functions
 func CreateTestRouter() *gin.Engine {
-	router := getRouterEngine()
+	router := gin.New()
+	router.Use(gin.Recovery())
 
 	// Using different paths for files
 	router.LoadHTMLGlob("../static/html/**/*.html")

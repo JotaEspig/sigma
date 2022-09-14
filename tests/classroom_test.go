@@ -46,29 +46,15 @@ func TestAddClassroom(t *testing.T) {
 func TestGetClassroom(t *testing.T) {
 	router := server.CreateTestRouter()
 
+	c, _ := classroom.InitClassroom(defClassroomName, defClassroomYear)
+	err := config.DB.Create(c).Error
+	assert.Equal(t, nil, err)
+
 	token, ok := getToken(router, "admin", "admin")
 	assert.Equal(t, true, ok)
 
 	w := httptest.NewRecorder()
-	req, _ := http.NewRequest(
-		"POST",
-		"/admin/tools/classroom/add",
-		bytes.NewBuffer([]byte(
-			`name=`+strings.ReplaceAll(defClassroomName, " ", "+")+
-				`&year=`+fmt.Sprint(defClassroomYear),
-		)),
-	)
-	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
-	req.AddCookie(&http.Cookie{
-		Name:  "auth",
-		Value: token,
-	})
-
-	router.ServeHTTP(w, req)
-	assert.Equal(t, 200, w.Code)
-
-	w = httptest.NewRecorder()
-	req, _ = http.NewRequest("GET", "/admin/tools/classroom/get", nil)
+	req, _ := http.NewRequest("GET", "/admin/tools/classroom/get", nil)
 	req.AddCookie(&http.Cookie{
 		Name:  "auth",
 		Value: token,
@@ -98,41 +84,27 @@ func TestGetClassroom(t *testing.T) {
 	})
 
 	router.ServeHTTP(w, req)
-	c := classroom.Classroom{}
-	json.Unmarshal(w.Body.Bytes(), &c)
-	assert.Equal(t, defClassroomName, c.Name)
-	assert.Equal(t, defClassroomYear, c.Year)
+	cNew := classroom.Classroom{}
+	json.Unmarshal(w.Body.Bytes(), &cNew)
+	assert.Equal(t, defClassroomName, cNew.Name)
+	assert.Equal(t, defClassroomYear, cNew.Year)
 
-	err := config.DB.Unscoped().Delete(&classroom.Classroom{}, "name = ?", defClassroomName).Error
+	err = config.DB.Unscoped().Delete(&classroom.Classroom{}, "name = ?", defClassroomName).Error
 	assert.Equal(t, nil, err)
 }
 
 func TestGetAllClassrooms(t *testing.T) {
 	router := server.CreateTestRouter()
 
+	c, _ := classroom.InitClassroom(defClassroomName, defClassroomYear)
+	err := config.DB.Create(c).Error
+	assert.Equal(t, nil, err)
+
 	token, ok := getToken(router, "admin", "admin")
 	assert.Equal(t, true, ok)
 
 	w := httptest.NewRecorder()
-	req, _ := http.NewRequest(
-		"POST",
-		"/admin/tools/classroom/add",
-		bytes.NewBuffer([]byte(
-			`name=`+strings.ReplaceAll(defClassroomName, " ", "+")+
-				`&year=`+fmt.Sprint(defClassroomYear),
-		)),
-	)
-	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
-	req.AddCookie(&http.Cookie{
-		Name:  "auth",
-		Value: token,
-	})
-
-	router.ServeHTTP(w, req)
-	assert.Equal(t, 200, w.Code)
-
-	w = httptest.NewRecorder()
-	req, _ = http.NewRequest("GET", "/admin/tools/classroom/get", nil)
+	req, _ := http.NewRequest("GET", "/admin/tools/classroom/get", nil)
 	req.AddCookie(&http.Cookie{
 		Name:  "auth",
 		Value: token,
@@ -143,6 +115,6 @@ func TestGetAllClassrooms(t *testing.T) {
 	json.Unmarshal(w.Body.Bytes(), &classrooms)
 	assert.GreaterOrEqual(t, len(classrooms), 1)
 
-	err := config.DB.Unscoped().Delete(&classroom.Classroom{}, "name = ?", defClassroomName).Error
+	err = config.DB.Unscoped().Delete(&classroom.Classroom{}, "name = ?", defClassroomName).Error
 	assert.Equal(t, nil, err)
 }
