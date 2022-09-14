@@ -50,7 +50,11 @@ $(document).ready(function () {
                         text: "Turma cadastrada com sucesso!",
                         icon: "success",
                         button: "Ok"
-                    });
+                    }).then(
+                        function() {
+                            window.location.reload();
+                        }
+                    );
                 },
                 400: function () {
                     swal({
