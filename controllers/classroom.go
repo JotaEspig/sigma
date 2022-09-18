@@ -51,7 +51,12 @@ func GetAllClassroomsInfo() gin.HandlerFunc {
 			classroomsMap[i] = c.ToMap()
 		}
 
-		ctx.JSON(http.StatusOK, classroomsMap)
+		ctx.JSON(
+			http.StatusOK,
+			gin.H{
+				"classrooms": classroomsMap,
+			},
+		)
 	}
 }
 
@@ -72,7 +77,12 @@ func GetClassroomInfo() gin.HandlerFunc {
 			return
 		}
 
-		ctx.JSON(http.StatusOK, c.ToMap())
+		ctx.JSON(
+			http.StatusOK,
+			gin.H{
+				"classroom": c.ToMap(),
+			},
+		)
 	}
 }
 
