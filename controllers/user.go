@@ -111,19 +111,12 @@ func UpdateUser() gin.HandlerFunc {
 			return
 		}
 
-		err = ctx.ShouldBindJSON(&newValues)
-		if err != nil {
-			ctx.AbortWithStatus(http.StatusBadRequest)
-			return
-		}
-
 		newValues.ID = u.ID
-		// These lines exists to make sure that the user
-		// is not changing the password, or type of the user
-		newValues.HashedPassword = ""
-		newValues.Type = ""
+		newValues.Email = ctx.PostForm("email")
+		newValues.Name = ctx.PostForm("name")
+		newValues.Surname = ctx.PostForm("surname")
 
-		err = config.DB.Model(u).Omit("username", "password", "type").Updates(&newValues).Error
+		err = config.DB.Model(u).Updates(&newValues).Error
 		if err != nil {
 			ctx.AbortWithStatus(http.StatusInternalServerError)
 			return
