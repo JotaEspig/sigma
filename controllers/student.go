@@ -27,7 +27,12 @@ func GetStudentInfo() gin.HandlerFunc {
 			return
 		}
 
-		ctx.JSON(http.StatusOK, s.ToMap())
+		ctx.JSON(
+			http.StatusOK,
+			gin.H{
+				"student": s.ToMap(),
+			},
+		)
 	}
 }
 
