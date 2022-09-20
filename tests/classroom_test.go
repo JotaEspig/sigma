@@ -53,29 +53,14 @@ func TestGetClassroom(t *testing.T) {
 	token, ok := getToken(router, "admin", "admin")
 	assert.Equal(t, true, ok)
 
+	err = config.DB.Where("name = ? AND year = ?", defClassroomName, defClassroomYear).
+		Select("id").First(c).Error
+	assert.Equal(t, nil, err)
+
 	w := httptest.NewRecorder()
-	req, _ := http.NewRequest("GET", "/admin/tools/classroom/get", nil)
-	req.AddCookie(&http.Cookie{
-		Name:  "auth",
-		Value: token,
-	})
-
-	router.ServeHTTP(w, req)
-	classrooms := []classroom.Classroom{}
-	json.Unmarshal(w.Body.Bytes(), &classrooms)
-
-	classID := 0
-	for _, c := range classrooms {
-		if c.Name == defClassroomName && c.Year == defClassroomYear {
-			classID = int(c.ID)
-			break
-		}
-	}
-
-	w = httptest.NewRecorder()
-	req, _ = http.NewRequest(
+	req, _ := http.NewRequest(
 		"GET",
-		"/admin/tools/classroom/"+fmt.Sprint(classID)+"/get",
+		"/admin/tools/classroom/"+fmt.Sprint(c.ID)+"/get",
 		nil,
 	)
 	req.AddCookie(&http.Cookie{
@@ -84,10 +69,12 @@ func TestGetClassroom(t *testing.T) {
 	})
 
 	router.ServeHTTP(w, req)
-	cNew := classroom.Classroom{}
-	json.Unmarshal(w.Body.Bytes(), &cNew)
-	assert.Equal(t, defClassroomName, cNew.Name)
-	assert.Equal(t, defClassroomYear, cNew.Year)
+	jsonResponse := map[string]classroom.Classroom{
+		"classroom": {},
+	}
+	json.Unmarshal(w.Body.Bytes(), &jsonResponse)
+	assert.Equal(t, defClassroomName, jsonResponse["classroom"].Name)
+	assert.Equal(t, defClassroomYear, jsonResponse["classroom"].Year)
 
 	err = config.DB.Unscoped().Delete(&classroom.Classroom{}, "name = ?", defClassroomName).Error
 	assert.Equal(t, nil, err)
@@ -111,9 +98,11 @@ func TestGetAllClassrooms(t *testing.T) {
 	})
 
 	router.ServeHTTP(w, req)
-	classrooms := []classroom.Classroom{}
-	json.Unmarshal(w.Body.Bytes(), &classrooms)
-	assert.GreaterOrEqual(t, len(classrooms), 1)
+	jsonResponse := map[string][]classroom.Classroom{
+		"classrooms": {},
+	}
+	json.Unmarshal(w.Body.Bytes(), &jsonResponse)
+	assert.GreaterOrEqual(t, len(jsonResponse["classrooms"]), 1)
 
 	err = config.DB.Unscoped().Delete(&classroom.Classroom{}, "name = ?", defClassroomName).Error
 	assert.Equal(t, nil, err)
