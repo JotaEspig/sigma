@@ -5,13 +5,11 @@ $(document).ready(function () {
         url: "/admin/tools/classroom/get",
         statusCode: {
             200: function(data){
-                for (let item of data){
+                for (let item of data["classrooms"]){
                     let id = item.id
                     let name = item.name
                     let year = item.year
                     addClassroomOnTable(id, name, year)
-                    
-
                 }
             }
         }
