@@ -1,53 +1,4 @@
-html {
-  height: 100%; /* Define o tamanho do Documento HTML */
-}
-
-body {
-  height: 100%;
-  margin: 0 auto; /* Centraliza */
-  margin-top: 0%;
-  padding: 100px;
-  padding-bottom: 30px;
-  padding-top: 0px;
-  width: 70%; /* Define a largura do Corpo do Documento */
-}
-
-*{
-    margin: 0px;
-    padding: 0px;
-    list-style: none;
-    cursor: default;
-}
-.centered{
-    padding: 30px 1.5% 0 1.5%;
-    margin: 0 0 0 0;
-}
-
-.text{
-    padding: 10% 1.5% 0 1.5%;
-    margin: 0 0 0 0;
-}
-
-.card{
-    background-color: #fffafa;
-}
-h1, h2{
-    font-size: 70px;
-    color: var(--titulo);
-    font-family: 'Ubuntu', sans-serif;
-    text-align: center;
-}
-
-.new:after, h1:after{
-    content: ' ';
-    display: block;
-    width: 100%;
-    height: 3px;
-    margin-top: 15px;
-    margin-bottom: 15px;
-    background: -webkit-linear-gradient(left, rgba(147,184,189,0) 0%,rgba(147,184,189,0.8) 20%,rgb(125, 195, 204) 53%,rgba(147,184,189,0.8) 79%,rgba(147,184,189,0) 100%); 
-    background: linear-gradient(left, rgba(147,184,189,0) 0%,rgba(147,184,189,0.8) 20%,rgb(2, 155, 175) 53%,rgba(147,184,189,0.8) 79%,rgba(147,184,189,0) 100%); 
-  }
+@import "../css/padrao.css";
 
 /*--table--*/
 .btn-dark {
@@ -78,84 +29,7 @@ h1, h2{
     padding: 4px 10px 4px;
 
 }
-
-
-
-/*--menu--*/
-.navbar {
-    display: flex;
-    font-family: 'Ubuntu', sans-serif;  
-    font-size: 20px;
-   
-}
-.navbar-nav {
-  display: flex;
-  color: white;
-  display: flex;
-  flex-wrap: wrap;
-  font-family: 'Ubuntu', sans-serif; 
-}
-  
-.nav-item li {
-  margin-left: 10px;
-}
-
-.nav-item > li{
-  border-left: red;
-  border-right: red;
-}
-  
-.nav-item li a{
-  display: block;
-  padding: 10px;
-  color: white;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-/*--Botão de logout tem que ajeitar--*/
-
-/*#logout{
-
-  padding: right !important;
-  color: black !important;
-  font-size: 20px;
-  text-align: center;
-}
-
-li > a#logout:hover{
- 
-  cursor: pointer;
-
-}
-*/
-/*--botao perfil--*/
-.dropdown{
-  text-align: center;
-}
-.dropdown-menu{
-  background-color: rgba(91, 94, 95, 0.5);
-  color: black;
-}
-.dropdown-item{
-  color: black;
-}
-.dropdown-item:hover{
-  background-color: rgba(194, 195, 195, 0.5);
-  color: rgba(91, 94, 95, 1);
-} 
-
-/*
-.conteudo{ 
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  align-content: center;
-  width: 100px;
-  height: 100px;
-}
-
-*/
+/*--Card--*/
 .card {
   background: #fff;
   border-radius: 10px;
@@ -174,5 +48,8 @@ img{
 a{
   text-decoration: none;
   cursor: pointer;
-  
+}
+.text{
+  padding: 10% 1.5% 0 1.5%;
+  margin: 0 0 0 0;
 }

@@ -2,21 +2,12 @@ package controllers
 
 import (
 	"net/http"
-	"net/url"
 
 	"github.com/gin-gonic/gin"
 )
 
-// Redirects the user to the login page
-func LoginRedirect() gin.HandlerFunc {
-	return func(ctx *gin.Context) {
-		location := url.URL{Path: "/login"}
-		ctx.Redirect(http.StatusFound, location.RequestURI())
-	}
-}
-
 // Serves "login" page
-func LoginGET() gin.HandlerFunc {
+func GetLoginPage() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		ctx.HTML(http.StatusOK, "login.html", nil)
 	}

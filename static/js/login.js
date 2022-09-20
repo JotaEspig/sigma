@@ -40,12 +40,10 @@ $(document).ready(function () {
                 },
                 401: function() {
                     $("#Erro").html("Usuário e/ou senha incorretos");
-                    $("#username_login").val("");
                     $("#senha_login").val("");
                 },
                 502: function() {
                     alert("Ocorreu um erro no servidor. Tente novamente.");
-                    $("$username_login").val("");
                     $("#senha_login").val("");
                 }
             },

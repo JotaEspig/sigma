@@ -3,10 +3,10 @@ $(document).ready(function () {
     $("#cadastroForm").submit(function (e) { 
         e.preventDefault();
 
-        var name = $("#nome_cad").val();
-        var username = $("#username_cad").val();
-        var password = $("#senha_cad").val();
-        var confirmPassword = $("#confirmar_senha_cad").val();
+        var name = document.getElementById("nome_cad").value;
+        var username = document.getElementById("username_cad").value;
+        var password = document.getElementById("senha_cad").value;
+        var confirmPassword = document.getElementById("confirmar_senha_cad").value;
 
         //if the name is too short
         if(name.length < 4){
@@ -18,6 +18,7 @@ $(document).ready(function () {
             });
             $("#senha_cad").val("");
             $("#confirmar_senha_cad").val("");
+            $("#name").val("");
             return
 
         }
@@ -90,12 +91,16 @@ $(document).ready(function () {
                     .then(() => {
                         $("#senha_cad").val("");
                         $("#confirmar_senha_cad").val("");
+                        $("#username").val("");
+                        $("#name").val("");
                     });
                 },
                 500: function() {
                     alert("Ocorreu um erro interno inesperado. Tente novamente!");
                     $("#senha_cad").val("");
                     $("#confirmar_senha_cad").val("");
+                    $("#username").val("");
+                    $("#name").val("");
                 }
             }
         });

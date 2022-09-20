@@ -1,7 +1,9 @@
 package main
 
+import "sigma/server"
+
 func main() {
 	// Creates and runs the router
-	router := createRouter()
+	router := server.CreateRouter()
 	router.Run()
 }

@@ -8,7 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// Gets the values from the form, creates a user and inserts it in the database
+// SignupPOST gets the values from the form, creates a user and inserts it in the database
 func SignupPOST() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		usern := ctx.PostForm("username")
@@ -19,7 +19,7 @@ func SignupPOST() gin.HandlerFunc {
 
 		u := user.InitUser(usern, email, name, surname, passwd)
 
-		err := user.AddUser(config.DB, u)
+		err := config.DB.Create(u).Error
 		if err != nil {
 			ctx.Status(http.StatusConflict)
 			return
