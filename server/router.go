@@ -138,6 +138,7 @@ func CreateRouter() *gin.Engine {
 
 // CreateTestRouter creates a "testing" router to be used in Test functions
 func CreateTestRouter() *gin.Engine {
+	gin.SetMode(gin.ReleaseMode)
 	router := gin.New()
 	router.Use(gin.Recovery())
 
