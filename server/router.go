@@ -1,8 +1,10 @@
-package main
+package server
 
 import (
+	"io"
 	"net/http"
 	"os"
+	"sigma/config"
 	"sigma/controllers"
 	"sigma/middlewares"
 
@@ -33,10 +35,13 @@ func getRouterEngine() *gin.Engine {
 	routerMode := os.Getenv("ROUTER_MODE")
 	if routerMode == "release" {
 		gin.SetMode(gin.ReleaseMode)
-		router := gin.New()
-		router.Use(gin.Recovery())
-		// Don't use logs middleware
-		return router
+		gin.DisableConsoleColor()
+
+		// Logging to a file.
+		f, _ := os.Create("gin.log")
+		gin.DefaultWriter = io.MultiWriter(f)
+
+		return gin.Default()
 	}
 
 	if routerMode == "staging" {
@@ -50,15 +55,24 @@ func getRouterEngine() *gin.Engine {
 
 // Set the routes to a router
 func setRoutes(router *gin.Engine) {
+	router.NoRoute(func(ctx *gin.Context) {
+		ctx.HTML(http.StatusNotFound, "404.html", nil)
+	})
+
 	// Login
-	router.GET("/", controllers.LoginRedirect())
-	router.GET("/login", controllers.LoginGET())
-	router.POST("/login", controllers.LoginPOST())
+	router.GET("/", func(ctx *gin.Context) {
+		ctx.Redirect(http.StatusFound, "/login")
+	})
+	router.GET("/login", controllers.GetLoginPage())
+	router.POST("/login", controllers.Login())
 	router.GET("/login/validate", controllers.IsLogged())
+	router.GET("/logout", controllers.Logout())
 
 	// Cadastro
 	router.GET("/cadastro", controllers.SignupGET())
 	router.POST("/cadastro", controllers.SignupPOST())
+
+	router.GET("/search/users/:username", controllers.SearchUsers())
 
 	// User group
 	user := router.Group("/usuario", middlewares.AuthMiddleware())
@@ -91,28 +105,52 @@ func setRoutes(router *gin.Engine) {
 	// Admin tools group
 	adminTools := admin.Group("/tools")
 
+	// Admin tools to manage classrooms
+	adminToolsForClassroom := adminTools.Group("/classroom")
+	adminToolsForClassroom.POST("/add", controllers.AddClassroom())
+	adminToolsForClassroom.GET("/get", controllers.GetAllClassroomsInfo())
+	adminToolsForClassroom.GET("/:id/get", controllers.GetClassroomInfo())
+
 	// Admin tools to manage others admins
-	adminToolsForAdmin := adminTools.Group("/admin/:target",
+	adminToolsForAdmin := adminTools.Group("/admin",
 		middlewares.IsSuperAdminMiddleware())
-	adminToolsForAdmin.PUT("/update", controllers.UpdateTargetAdmin())
-	adminToolsForAdmin.DELETE("/delete", controllers.DeleteTargetAdmin())
+	adminToolsForAdmin.POST("/add", controllers.AddAdmin())
+	adminToolsForAdmin.GET("/:username/get", controllers.GetAdminInfo())
+	adminToolsForAdmin.PUT("/:username/update", controllers.UpdateAdmin())
+	adminToolsForAdmin.DELETE("/:username/delete", controllers.DeleteAdmin())
 }
 
-func createRouter() *gin.Engine {
+// CreateRouter creates a normal router to running the program
+func CreateRouter() *gin.Engine {
 	router := getRouterEngine()
 
-	router.LoadHTMLGlob("static/html/*.html")
+	router.LoadHTMLGlob("static/html/**/*.html")
 
 	// Loads the img, css and js folders
 	router.Static("css/", "static/css/")
 	router.Static("js/", "static/js/")
 	router.Static("img/", "static/img/")
 
-	router.NoRoute(func(ctx *gin.Context) {
-		ctx.HTML(http.StatusNotFound, "404.html", nil)
-	})
+	setRoutes(router)
+	createSuperAdmin(config.DB)
+	return router
+}
+
+// CreateTestRouter creates a "testing" router to be used in Test functions
+func CreateTestRouter() *gin.Engine {
+	gin.SetMode(gin.ReleaseMode)
+	router := gin.New()
+	router.Use(gin.Recovery())
+
+	// Using different paths for files
+	router.LoadHTMLGlob("../static/html/**/*.html")
+
+	// Loads the img, css and js folders
+	router.Static("css/", "../static/css/")
+	router.Static("js/", "../static/js/")
+	router.Static("img/", "../static/img/")
 
 	setRoutes(router)
-
+	createSuperAdmin(config.DB)
 	return router
 }

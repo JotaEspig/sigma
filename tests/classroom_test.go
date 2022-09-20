@@ -1,163 +1,109 @@
 package tests
 
 import (
+	"bytes"
+	"encoding/json"
+	"fmt"
+	"net/http"
+	"net/http/httptest"
 	"sigma/config"
 	"sigma/models/classroom"
-	"sigma/models/student"
-	"sigma/models/user"
+	"sigma/server"
+	"strings"
 	"testing"
-)
 
-const (
-	defClassroomName = "TestClassroom"
-	defClassroomYear = 1
+	"github.com/stretchr/testify/assert"
 )
 
 func TestAddClassroom(t *testing.T) {
-	c, err := classroom.InitClassroom(defClassroomName, defClassroomYear)
-	if err != nil {
-		t.Errorf("initializing classroom: %s", err)
-	}
+	router := server.CreateTestRouter()
 
-	err = classroom.AddClassroom(config.DB, c)
-	if err != nil {
-		t.Errorf("adding legit classroom: %s", err)
-	}
+	token, ok := getToken(router, "admin", "admin")
+	assert.Equal(t, true, ok)
 
-	// repeating the same action to check 'unique' columns
-	err = classroom.AddClassroom(config.DB, c)
-	if err == nil {
-		t.Errorf("adding repeated classroom (it's not supposed to happen): %s", err)
-	}
+	w := httptest.NewRecorder()
+	req, _ := http.NewRequest(
+		"POST",
+		"/admin/tools/classroom/add",
+		bytes.NewBuffer([]byte(
+			"name="+strings.ReplaceAll(defClassroomName, " ", "+")+
+				"&year="+fmt.Sprint(defClassroomYear),
+		)),
+	)
+	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
+	req.AddCookie(&http.Cookie{
+		Name:  "auth",
+		Value: token,
+	})
 
-	err = classroom.RmClassroom(config.DB, c.ID)
-	if err != nil {
-		t.Errorf("removing legit classroom: %s", err)
-	}
+	router.ServeHTTP(w, req)
+	assert.Equal(t, 200, w.Code)
+
+	err := config.DB.Unscoped().Delete(&classroom.Classroom{}, "name = ?", defClassroomName).Error
+	assert.Equal(t, nil, err)
 }
 
 func TestGetClassroom(t *testing.T) {
-	c, err := classroom.InitClassroom(defClassroomName, defClassroomYear)
-	if err != nil {
-		t.Errorf("initializing classroom: %s", err)
-	}
+	router := server.CreateTestRouter()
 
-	err = classroom.AddClassroom(config.DB, c)
-	if err != nil {
-		t.Errorf("adding legit classroom: %s", err)
-	}
+	c, _ := classroom.InitClassroom(defClassroomName, defClassroomYear)
+	err := config.DB.Create(c).Error
+	assert.Equal(t, nil, err)
 
-	c, err = classroom.GetClassroom(config.DB, c.ID)
-	if err != nil {
-		t.Errorf("getting legit classroom: %s", err)
-	}
-	if c.ID == 0 {
-		t.Errorf("getting legit classroom: classroom id is null")
-	}
+	token, ok := getToken(router, "admin", "admin")
+	assert.Equal(t, true, ok)
 
-	// adding students to classroom
-	u := user.InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
-	err = user.AddUser(config.DB, u)
-	if err != nil {
-		t.Errorf("adding legit user: %s", err)
-	}
+	err = config.DB.Where("name = ? AND year = ?", defClassroomName, defClassroomYear).
+		Select("id").First(c).Error
+	assert.Equal(t, nil, err)
 
-	s, err := student.InitStudent(u)
-	if err != nil {
-		t.Errorf("initializing student: %s", err)
-	}
+	w := httptest.NewRecorder()
+	req, _ := http.NewRequest(
+		"GET",
+		"/admin/tools/classroom/"+fmt.Sprint(c.ID)+"/get",
+		nil,
+	)
+	req.AddCookie(&http.Cookie{
+		Name:  "auth",
+		Value: token,
+	})
 
-	s.ClassroomID = c.ID
-	err = student.AddStudent(config.DB, s)
-	if err != nil {
-		t.Errorf("adding legit student: %s", err)
+	router.ServeHTTP(w, req)
+	jsonResponse := map[string]classroom.Classroom{
+		"classroom": {},
 	}
+	json.Unmarshal(w.Body.Bytes(), &jsonResponse)
+	assert.Equal(t, defClassroomName, jsonResponse["classroom"].Name)
+	assert.Equal(t, defClassroomYear, jsonResponse["classroom"].Year)
 
-	c, err = classroom.GetClassroom(config.DB, c.ID)
-	if err != nil {
-		t.Errorf("getting legit classroom: %s", err)
-	}
-	if len(c.Students) != 1 {
-		t.Errorf("getting legit classroom: students count is not 1")
-	}
-
-	// removing students and users after test
-	err = student.RmStudent(config.DB, defUsername)
-	if err != nil {
-		t.Errorf("removing legit student: %s", err)
-	}
-
-	err = user.RmUser(config.DB, defUsername)
-	if err != nil {
-		t.Errorf("removing legit user: %s", err)
-	}
-
-	// Gets parcial info of classroom
-	c, err = classroom.GetClassroom(config.DB, c.ID, "name")
-	if err != nil {
-		t.Errorf("getting parcial info of classroom: %s", err)
-	}
-	if c.Name == "" {
-		t.Errorf("getting parcial info of classroom: classroom name is empty")
-	}
-
-	// Gets non-existent classroom
-	_, err = classroom.GetClassroom(config.DB, 0)
-	if err == nil {
-		t.Errorf("getting non-existent classroom (it's not supposed to work): %s", err)
-	}
-
-	err = classroom.RmClassroom(config.DB, c.ID)
-	if err != nil {
-		t.Errorf("removing legit classroom: %s", err)
-	}
+	err = config.DB.Unscoped().Delete(&classroom.Classroom{}, "name = ?", defClassroomName).Error
+	assert.Equal(t, nil, err)
 }
 
-func TestUpdateClassroom(t *testing.T) {
-	c, err := classroom.InitClassroom(defClassroomName, defClassroomYear)
-	if err != nil {
-		t.Errorf("initializing classroom: %s", err)
-	}
+func TestGetAllClassrooms(t *testing.T) {
+	router := server.CreateTestRouter()
 
-	err = classroom.AddClassroom(config.DB, c)
-	if err != nil {
-		t.Errorf("adding legit classroom: %s", err)
-	}
+	c, _ := classroom.InitClassroom(defClassroomName, defClassroomYear)
+	err := config.DB.Create(c).Error
+	assert.Equal(t, nil, err)
 
-	c.Name = "different classroom name"
-	err = classroom.UpdateClassroom(config.DB, c)
-	if err != nil {
-		t.Errorf("updating legit classroom: %s", err)
-	}
+	token, ok := getToken(router, "admin", "admin")
+	assert.Equal(t, true, ok)
 
-	c, err = classroom.GetClassroom(config.DB, c.ID)
-	if err != nil {
-		t.Errorf("getting legit classroom: %s", err)
-	}
-	if c.Name != "different classroom name" {
-		t.Errorf("updating legit classroom: classroom name is not updated")
-	}
+	w := httptest.NewRecorder()
+	req, _ := http.NewRequest("GET", "/admin/tools/classroom/get", nil)
+	req.AddCookie(&http.Cookie{
+		Name:  "auth",
+		Value: token,
+	})
 
-	err = classroom.RmClassroom(config.DB, c.ID)
-	if err != nil {
-		t.Errorf("removing legit classroom: %s", err)
+	router.ServeHTTP(w, req)
+	jsonResponse := map[string][]classroom.Classroom{
+		"classrooms": {},
 	}
+	json.Unmarshal(w.Body.Bytes(), &jsonResponse)
+	assert.GreaterOrEqual(t, len(jsonResponse["classrooms"]), 1)
 
-}
-
-func TestRmClassroom(t *testing.T) {
-	c, err := classroom.InitClassroom(defClassroomName, defClassroomYear)
-	if err != nil {
-		t.Errorf("initializing classroom: %s", err)
-	}
-
-	err = classroom.AddClassroom(config.DB, c)
-	if err != nil {
-		t.Errorf("adding legit classroom: %s", err)
-	}
-
-	err = classroom.RmClassroom(config.DB, c.ID)
-	if err != nil {
-		t.Errorf("removing legit classroom: %s", err)
-	}
+	err = config.DB.Unscoped().Delete(&classroom.Classroom{}, "name = ?", defClassroomName).Error
+	assert.Equal(t, nil, err)
 }
