@@ -1,8 +1,14 @@
 package tests
 
 import (
+	"net/http"
+	"net/http/httptest"
+	"sigma/config"
 	"sigma/models/user"
+	"sigma/server"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestUserValidate(t *testing.T) {
@@ -20,8 +26,38 @@ func TestUserValidate(t *testing.T) {
 	}
 }
 
-func TestGetUser(t *testing.T) {
-	t.Skip("not implemented yet")
+func TestSearchUsers(t *testing.T) {
+	router := server.CreateTestRouter()
+
+	usernForTest := "admin"
+	w := httptest.NewRecorder()
+	req, _ := http.NewRequest(
+		"GET",
+		"/search/users/"+usernForTest,
+		nil,
+	)
+
+	router.ServeHTTP(w, req)
+	assert.Equal(t, 200, w.Code)
+}
+
+func TestGetPublicUser(t *testing.T) {
+	router := server.CreateTestRouter()
+
+	u := user.InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
+	config.DB.Create(u)
+
+	w := httptest.NewRecorder()
+	req, _ := http.NewRequest(
+		"GET",
+		"/"+defUsername+"/get",
+		nil,
+	)
+
+	router.ServeHTTP(w, req)
+	assert.Equal(t, 200, w.Code)
+
+	config.DB.Delete(u)
 }
 
 func TestUpdateUser(t *testing.T) {
