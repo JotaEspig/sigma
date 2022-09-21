@@ -69,7 +69,8 @@ $(document).ready(function () {
 
 function addClassroomOnTable(id, name, year) {
     $("#corpo_tabela").append(`
-        <tr id='${id}'>
+        
+        <tr id='${id}' class='clickable-row' data-href='/admin/tools/classroom/${id}'>
             <td scope="row" id='name'></td>
             <td id='year'></td>
             <td class="td-acoes">
@@ -79,6 +80,10 @@ function addClassroomOnTable(id, name, year) {
             </td>
         </tr>
     `);
+   
+    $(".clickable-row").click(function() {      
+        window.location = $(this).data("href");
+    }); 
 
     let classroomTable = $("#corpo_tabela").find("#"+id);
     classroomTable.find("#name").text(name);
