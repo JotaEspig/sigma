@@ -63,42 +63,42 @@ func setRoutes(router *gin.Engine) {
 	router.GET("/", func(ctx *gin.Context) {
 		ctx.Redirect(http.StatusFound, "/login")
 	})
-	router.GET("/login", controllers.GetLoginPage())
+	router.GET("/login", controllers.ServePage("login.html"))
 	router.POST("/login", controllers.Login())
 	router.GET("/login/validate", controllers.IsLogged())
 	router.GET("/logout", controllers.Logout())
 
 	// Cadastro
-	router.GET("/cadastro", controllers.SignupGET())
+	router.GET("/cadastro", controllers.ServePage("cadastro.html"))
 	router.POST("/cadastro", controllers.SignupPOST())
 
 	router.GET("/search/users/:username", controllers.SearchUsers())
 
 	// User group
 	user := router.Group("/usuario", middlewares.AuthMiddleware())
-	user.GET("", controllers.GetProfilePage())
+	user.GET("", controllers.ServePage("profile.html"))
 	user.GET("/get", controllers.GetAllUserInfo())
 	user.PUT("/update", controllers.UpdateUser())
 
 	// Public user group (everyone can access this)
 	publicUser := router.Group("/:username")
-	publicUser.GET("", controllers.GetUserPage())
+	publicUser.GET("", controllers.ServePage("user.html"))
 	publicUser.GET("/get", controllers.GetPublicUserInfo())
 
 	// Student group
 	student := router.Group("/aluno", middlewares.IsStudentMiddleware())
-	student.GET("", controllers.GetStudentPage())
+	student.GET("", controllers.ServePage("aluno.html"))
 	student.GET("/get", controllers.GetStudentInfo())
 
 	// Teacher group
 	teacher := router.Group("/professor", middlewares.IsTeacherMiddleware())
-	teacher.GET("", controllers.GetTeacherPage())
+	teacher.GET("", controllers.ServePage("teacher.html"))
 	teacher.GET("/get", controllers.GetTeacherInfo())
 	teacher.GET("/update", controllers.UpdateTeacher())
 
 	// Admin group
 	admin := router.Group("/admin", middlewares.IsAdminMiddleware())
-	admin.GET("", controllers.GetAdminPage())
+	admin.GET("", controllers.ServePage("admin.html"))
 	admin.GET("/get", controllers.GetAdminInfo())
 	admin.PUT("/update", controllers.UpdateAdmin())
 
