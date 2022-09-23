@@ -44,7 +44,12 @@ func GetTeacherInfo() gin.HandlerFunc {
 			return
 		}
 
-		ctx.JSON(http.StatusOK, t.ToMap())
+		ctx.JSON(
+			http.StatusOK,
+			gin.H{
+				"teacher": t.ToMap(),
+			},
+		)
 	}
 }
 
@@ -61,14 +66,14 @@ func UpdateTeacher() gin.HandlerFunc {
 			return
 		}
 
-		err = config.DB.Preload("User").Where("id = ?", u.ID).First(&t).Error
+		err = config.DB.Where("id = ?", u.ID).First(&t).Error
 		if err != nil {
 			ctx.AbortWithStatus(http.StatusNotFound)
 			return
 		}
 
-		ctx.ShouldBindJSON(&newValues)
 		newValues.UID = t.UID
+		newValues.Education = ctx.PostForm("education")
 		err = config.DB.Model(t).Omit("id").Updates(t).Error
 		if err != nil {
 			ctx.AbortWithStatus(http.StatusInternalServerError)
