@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 	"sigma/config"
 	"sigma/models/user"
@@ -22,6 +23,7 @@ func SignupPOST() gin.HandlerFunc {
 		err := config.DB.Create(u).Error
 		if err != nil {
 			ctx.Status(http.StatusConflict)
+			fmt.Printf(err.Error())
 			return
 		}
 
