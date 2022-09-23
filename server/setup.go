@@ -12,7 +12,10 @@ func createSuperAdmin(db *gorm.DB) {
 	// creates defaults values in database
 	u := user.InitUser("admin", "admin@gmail.com",
 		"admin", "admin", "admin")
-	db.Create(u)
+	err := db.Create(u).Error
+	if err != nil {
+		return
+	}
 
 	a, err := admin.InitAdmin(u)
 	if err != nil {
