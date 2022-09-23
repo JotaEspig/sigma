@@ -109,6 +109,7 @@ func setRoutes(router *gin.Engine) {
 	adminToolsForClassroom := adminTools.Group("/classroom")
 	adminToolsForClassroom.POST("/add", controllers.AddClassroom())
 	adminToolsForClassroom.GET("/get", controllers.GetAllClassroomsInfo())
+	adminToolsForClassroom.GET("/:id", controllers.ServePage("turmaAdm.html"))
 	adminToolsForClassroom.GET("/:id/get", controllers.GetClassroomInfo())
 
 	// Admin tools to manage others admins
