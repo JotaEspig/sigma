@@ -87,14 +87,14 @@ func UpdateAdmin() gin.HandlerFunc {
 			return
 		}
 
-		err = config.DB.Preload("User").Where("id = ?", u.ID).First(&a).Error
+		err = config.DB.Where("id = ?", u.ID).First(&a).Error
 		if err != nil {
 			ctx.AbortWithStatus(http.StatusNotFound)
 			return
 		}
 
-		ctx.ShouldBindJSON(&newValues)
 		newValues.UID = a.UID
+		newValues.Role = ctx.PostForm("role")
 		err = config.DB.Model(a).Omit("id").Updates(a).Error
 		if err != nil {
 			ctx.AbortWithStatus(http.StatusInternalServerError)
