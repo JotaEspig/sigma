@@ -101,7 +101,7 @@ func UpdateClassroom() gin.HandlerFunc {
 		c.Name = ctx.PostForm("name")
 		year, err := strconv.Atoi(ctx.PostForm("year"))
 		if err != nil {
-			ctx.AbortWithStatus(http.StatusBadGateway)
+			ctx.AbortWithStatus(http.StatusBadRequest)
 			return
 		}
 
