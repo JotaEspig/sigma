@@ -63,7 +63,7 @@ func GetAdminInfo() gin.HandlerFunc {
 			return
 		}
 
-		err = config.DB.Preload("User").Where("id = ?", u.ID).First(&a).Error
+		err = config.DB.Preload("User").First(&a, u.ID).Error
 		if err != nil {
 			ctx.AbortWithStatus(http.StatusNotFound)
 			return
@@ -78,7 +78,6 @@ func GetAdminInfo() gin.HandlerFunc {
 func UpdateAdmin() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		username := getUsername(ctx)
-		newValues := admin.Admin{}
 		u := user.User{}
 		a := admin.Admin{}
 		err := config.DB.Select("id").Where("username = ?", username).First(&u).Error
@@ -87,15 +86,14 @@ func UpdateAdmin() gin.HandlerFunc {
 			return
 		}
 
-		err = config.DB.Where("id = ?", u.ID).First(&a).Error
+		err = config.DB.Select("id").First(&a, u.ID).Error
 		if err != nil {
 			ctx.AbortWithStatus(http.StatusNotFound)
 			return
 		}
 
-		newValues.UID = a.UID
-		newValues.Role = ctx.PostForm("role")
-		err = config.DB.Model(a).Omit("id").Updates(a).Error
+		a.Role = ctx.PostForm("role")
+		err = config.DB.Omit("id").Updates(a).Error
 		if err != nil {
 			ctx.AbortWithStatus(http.StatusInternalServerError)
 			return
@@ -122,7 +120,7 @@ func DeleteAdmin() gin.HandlerFunc {
 				return err
 			}
 
-			return config.DB.Unscoped().Delete(&admin.Admin{}, "id = ?", u.ID).Error
+			return config.DB.Unscoped().Delete(&admin.Admin{}, u.ID).Error
 		})
 		if err != nil {
 			ctx.AbortWithStatus(http.StatusInternalServerError)
