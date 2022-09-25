@@ -86,6 +86,30 @@ func GetClassroomInfo() gin.HandlerFunc {
 	}
 }
 
+// UpdateClassroom updates the values of name and year of a classroom
+func UpdateClassroom() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		id := ctx.Param("id")
+		c := classroom.Classroom{}
+
+		err := config.DB.First(&c, id).Error
+		if err != nil {
+			ctx.AbortWithStatus(http.StatusNotFound)
+			return
+		}
+
+		c.Name = ctx.PostForm("name")
+		year, err := strconv.Atoi(ctx.PostForm("year"))
+		if err != nil {
+			ctx.AbortWithStatus(http.StatusBadGateway)
+			return
+		}
+
+		c.Year = uint16(year)
+		err = config.DB.Updates(&c).Error
+	}
+}
+
 // DeleteClassroom deletes a classroom from the database
 func DeleteClassroom() gin.HandlerFunc {
 	return func(ctx *gin.Context) {

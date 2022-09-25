@@ -93,7 +93,7 @@ func UpdateAdmin() gin.HandlerFunc {
 		}
 
 		a.Role = ctx.PostForm("role")
-		err = config.DB.Omit("id").Updates(a).Error
+		err = config.DB.Updates(a).Error
 		if err != nil {
 			ctx.AbortWithStatus(http.StatusInternalServerError)
 			return
