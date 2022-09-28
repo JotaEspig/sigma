@@ -5,7 +5,7 @@ $(document).ready(function () {
         url: window.location.href + "/get",
         statusCode: {
             404: function(){
-                alert("All of my change I spent on you")
+                alert("Não encontrado")
             },
             200: function(dados){
                 classroom = dados["classroom"]
