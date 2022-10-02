@@ -105,6 +105,13 @@ func setRoutes(router *gin.Engine) {
 	// Admin tools group
 	adminTools := admin.Group("/tools")
 
+	// Admin tools to manage students
+	adminToolsForStudent := adminTools.Group("/student/:username")
+	adminToolsForStudent.POST("/add", controllers.AddStudent())
+	adminToolsForStudent.GET("/get", controllers.GetStudentInfo())
+	adminToolsForStudent.PUT("/update", controllers.UpdateStudent())
+	// TODO make a controller to DELETE a student (removing the user type field)
+
 	// Admin tools to manage classrooms
 	adminToolsForClassroom := adminTools.Group("/classroom")
 	adminToolsForClassroom.POST("/add", controllers.AddClassroom())
@@ -115,12 +122,12 @@ func setRoutes(router *gin.Engine) {
 	adminToolsForClassroom.DELETE("/:id/delete", controllers.DeleteClassroom())
 
 	// Admin tools to manage others admins
-	adminToolsForAdmin := adminTools.Group("/admin",
+	adminToolsForAdmin := adminTools.Group("/admin/:username",
 		middlewares.IsSuperAdminMiddleware())
 	adminToolsForAdmin.POST("/add", controllers.AddAdmin())
-	adminToolsForAdmin.GET("/:username/get", controllers.GetAdminInfo())
-	adminToolsForAdmin.PUT("/:username/update", controllers.UpdateAdmin())
-	adminToolsForAdmin.DELETE("/:username/delete", controllers.DeleteAdmin())
+	adminToolsForAdmin.GET("/get", controllers.GetAdminInfo())
+	adminToolsForAdmin.PUT("/update", controllers.UpdateAdmin())
+	adminToolsForAdmin.DELETE("/delete", controllers.DeleteAdmin())
 }
 
 // CreateRouter creates a normal router to running the program
