@@ -61,7 +61,7 @@ func UpdateTeacher() gin.HandlerFunc {
 			return
 		}
 
-		err = config.DB.Preload("User").Where("id = ?", u.ID).First(&t).Error
+		err = config.DB.Select("id").Where("id = ?", u.ID).First(&t).Error
 		if err != nil {
 			ctx.AbortWithStatus(http.StatusNotFound)
 			return
