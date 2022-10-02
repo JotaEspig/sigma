@@ -3,26 +3,22 @@ package tests
 import (
 	"sigma/auth"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestGenerateAndValidate(t *testing.T) {
 	// Correct way of using
 	jwtServ := auth.JWTAuthService()
 	eToken, err := jwtServ.GenerateToken("JotaEspig", "")
-	if err != nil {
-		t.Errorf("Error in generating token: %s", err)
-	}
+	assert.Equal(t, nil, err)
 
 	_, err = jwtServ.ValidateToken(eToken)
-	if err != nil {
-		t.Errorf("Error in validating token: %s", err)
-	}
+	assert.Equal(t, nil, err)
 
 	// testing with random digits
 	_, err = jwtServ.ValidateToken("dad8i123131")
-	if err == nil {
-		t.Error("Error in validating a fake token")
-	}
+	assert.NotEqual(t, nil, err)
 
 	// Testing with other secret key
 	fakeJWTServ := &auth.JWTService{
@@ -30,11 +26,8 @@ func TestGenerateAndValidate(t *testing.T) {
 		Issuer:    "Other",
 	}
 	eToken, err = fakeJWTServ.GenerateToken("JotaEspig", "")
-	if err != nil {
-		t.Errorf("Error in generating fake token (other secret key): %s", err)
-	}
+	assert.Equal(t, nil, err)
 	dToken, err := jwtServ.ValidateToken(eToken) // Trying to validate token made with the fake
-	if dToken.Valid || err == nil {
-		t.Errorf("Error in validating fake token (other secret key): %s", err)
-	}
+	assert.NotEqual(t, true, dToken.Valid)
+	assert.NotEqual(t, nil, err)
 }
