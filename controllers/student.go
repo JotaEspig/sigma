@@ -76,6 +76,35 @@ func GetStudentInfo() gin.HandlerFunc {
 	}
 }
 
+// UpdateStudent updates the teacher that is logged in
+func UpdateStudent() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		username := getUsername(ctx)
+		u := user.User{}
+		s := student.Student{}
+		err := config.DB.Select("id").Where("username = ?", username).First(&u).Error
+		if err != nil {
+			ctx.AbortWithStatus(http.StatusNotFound)
+			return
+		}
+
+		err = config.DB.Select("id").Where("id = ?", u.ID).First(&s).Error
+		if err != nil {
+			ctx.AbortWithStatus(http.StatusNotFound)
+			return
+		}
+
+		s.Status = ctx.PostForm("status")
+		err = config.DB.Model(s).Omit("id").Updates(s).Error
+		if err != nil {
+			ctx.AbortWithStatus(http.StatusInternalServerError)
+			return
+		}
+
+		ctx.Status(http.StatusOK)
+	}
+}
+
 // AutoMigrate the student table
 func init() {
 	config.DB.AutoMigrate(&student.Student{})
