@@ -78,7 +78,6 @@ func GetAdminInfo() gin.HandlerFunc {
 func UpdateAdmin() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		username := getUsername(ctx)
-		newValues := admin.Admin{}
 		u := user.User{}
 		a := admin.Admin{}
 		err := config.DB.Select("id").Where("username = ?", username).First(&u).Error
@@ -93,9 +92,8 @@ func UpdateAdmin() gin.HandlerFunc {
 			return
 		}
 
-		ctx.ShouldBindJSON(&newValues)
-		newValues.UID = a.UID
-		err = config.DB.Model(a).Omit("id").Updates(a).Error
+		a.Role = ctx.PostForm("role")
+		err = config.DB.Omit("id").Updates(a).Error
 		if err != nil {
 			ctx.AbortWithStatus(http.StatusInternalServerError)
 			return
