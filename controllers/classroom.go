@@ -101,6 +101,9 @@ func UpdateClassroom() gin.HandlerFunc {
 
 		c.Name = ctx.PostForm("name")
 		yearStr := ctx.PostForm("year")
+		if yearStr == "" {
+			yearStr = "0" // To prevent BadRequest Error since user may send it empty
+		}
 		year, err := strconv.Atoi(yearStr)
 		if err != nil {
 			ctx.AbortWithStatus(http.StatusBadRequest)
@@ -122,6 +125,7 @@ func UpdateClassroom() gin.HandlerFunc {
 func DeleteClassroom() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		id := ctx.Param("id")
+		// TODO Update classroom_id from students !!!
 		err := config.DB.Unscoped().Delete(&classroom.Classroom{}, id).Error
 		if err != nil {
 			ctx.AbortWithStatus(http.StatusNotFound)
