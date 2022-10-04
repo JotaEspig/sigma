@@ -9,7 +9,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// AddClassroom adds a classroom to the database
+// AddClassroom adds a classroom to the database. It receives "name" and "year" (uint16)
+// as x-www-form-urlencoded
 func AddClassroom() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		name := ctx.PostForm("name")
@@ -60,7 +61,7 @@ func GetAllClassroomsInfo() gin.HandlerFunc {
 	}
 }
 
-// GetClassroomInfo gets all information about a classroom
+// GetClassroomInfo gets all information about a classroom. It receives "id" (int) from URL
 func GetClassroomInfo() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		id := ctx.Param("id")
@@ -86,10 +87,41 @@ func GetClassroomInfo() gin.HandlerFunc {
 	}
 }
 
-// DeleteClassroom deletes a classroom from the database
+// UpdateClassroom updates a classroom in the database. It receives "id" (int) from URL
+// and "name" and "year" (uint16) as x-www-form-urlencoded
+func UpdateClassroom() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		id := ctx.Param("id")
+		c := classroom.Classroom{}
+		err := config.DB.Select("id").First(&c, id).Error
+		if err != nil {
+			ctx.AbortWithStatus(http.StatusNotFound)
+			return
+		}
+
+		c.Name = ctx.PostForm("name")
+		yearStr := ctx.PostForm("year")
+		year, err := strconv.Atoi(yearStr)
+		if err != nil {
+			ctx.AbortWithStatus(http.StatusBadRequest)
+			return
+		}
+
+		c.Year = uint16(year)
+		err = config.DB.Updates(c).Error
+		if err != nil {
+			ctx.AbortWithStatus(http.StatusInternalServerError)
+			return
+		}
+
+		ctx.Status(http.StatusOK)
+	}
+}
+
+// DeleteClassroom deletes a classroom from the database. It receives "id" (int) from URL
 func DeleteClassroom() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		id := ctx.PostForm("id")
+		id := ctx.Param("id")
 		err := config.DB.Unscoped().Delete(&classroom.Classroom{}, id).Error
 		if err != nil {
 			ctx.AbortWithStatus(http.StatusNotFound)
