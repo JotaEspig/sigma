@@ -63,7 +63,7 @@ func GetAdminInfo() gin.HandlerFunc {
 			return
 		}
 
-		err = config.DB.Preload("User").Where("id = ?", u.ID).First(&a).Error
+		err = config.DB.Preload("User").First(&a, u.ID).Error
 		if err != nil {
 			ctx.AbortWithStatus(http.StatusNotFound)
 			return
@@ -86,14 +86,14 @@ func UpdateAdmin() gin.HandlerFunc {
 			return
 		}
 
-		err = config.DB.First(&a, u.ID).Error
+		err = config.DB.Select("id").First(&a, u.ID).Error
 		if err != nil {
 			ctx.AbortWithStatus(http.StatusNotFound)
 			return
 		}
 
 		a.Role = ctx.PostForm("role")
-		err = config.DB.Omit("id").Updates(a).Error
+		err = config.DB.Updates(a).Error
 		if err != nil {
 			ctx.AbortWithStatus(http.StatusInternalServerError)
 			return
