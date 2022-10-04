@@ -86,7 +86,7 @@ func UpdateAdmin() gin.HandlerFunc {
 			return
 		}
 
-		err = config.DB.Preload("User").Where("id = ?", u.ID).First(&a).Error
+		err = config.DB.First(&a, u.ID).Error
 		if err != nil {
 			ctx.AbortWithStatus(http.StatusNotFound)
 			return
@@ -115,12 +115,12 @@ func DeleteAdmin() gin.HandlerFunc {
 			}
 
 			// Updates the type of the user to be empty
-			err = config.DB.Model(u).Update("type", "").Error
+			err = config.DB.Model(&u).Update("type", "").Error
 			if err != nil {
 				return err
 			}
 
-			return config.DB.Unscoped().Delete(&admin.Admin{}, "id = ?", u.ID).Error
+			return config.DB.Unscoped().Delete(&admin.Admin{}, u.ID).Error
 		})
 		if err != nil {
 			ctx.AbortWithStatus(http.StatusInternalServerError)
