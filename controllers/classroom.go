@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"sigma/config"
 	"sigma/models/classroom"
+	"sigma/models/student"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -125,7 +126,9 @@ func UpdateClassroom() gin.HandlerFunc {
 func DeleteClassroom() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		id := ctx.Param("id")
-		// TODO Update classroom_id from students !!!
+		config.DB.Model(student.Student{}).Where("classroom_id = ?", id).
+			Update("classroom_id", nil)
+
 		err := config.DB.Unscoped().Delete(&classroom.Classroom{}, id).Error
 		if err != nil {
 			ctx.AbortWithStatus(http.StatusNotFound)

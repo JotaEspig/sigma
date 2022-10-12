@@ -8,6 +8,8 @@ import (
 	"net/http/httptest"
 	"sigma/config"
 	"sigma/models/classroom"
+	"sigma/models/student"
+	"sigma/models/user"
 	"sigma/server"
 	"strings"
 	"testing"
@@ -151,6 +153,16 @@ func TestDeleteClassroom(t *testing.T) {
 	err := config.DB.Create(c).Error
 	assert.Equal(t, nil, err)
 
+	u := user.InitUser(defUsername, defEmail, defName, defSurname, defPasswd)
+	err = config.DB.Create(u).Error
+	assert.Equal(t, nil, err)
+
+	s, err := student.InitStudent(u)
+	assert.Equal(t, nil, err)
+	s.ClassroomID = c.ID
+	err = config.DB.Create(s).Error
+	assert.Equal(t, nil, err)
+
 	token, ok := getToken(router, "admin", "admin")
 	assert.Equal(t, true, ok)
 
@@ -167,4 +179,9 @@ func TestDeleteClassroom(t *testing.T) {
 
 	router.ServeHTTP(w, req)
 	assert.Equal(t, 200, w.Code)
+
+	err = config.DB.Unscoped().Delete(s).Error
+	assert.Equal(t, nil, err)
+	err = config.DB.Unscoped().Delete(u).Error
+	assert.Equal(t, nil, err)
 }
