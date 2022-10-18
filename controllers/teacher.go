@@ -7,24 +7,47 @@ import (
 	"sigma/models/user"
 
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 )
 
-/*
-return db.Transaction(func(tx *gorm.DB) error {
-		t.User.Type = "teacher"
-		err := db.Model(t.User).Omit("username", "password", "type").Updates(t.User).Error
+// AddTeacher is a controller that changes the user type to "teacher"
+// and adds a teacher row to the database if it doesn't already exists
+func AddTeacher() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		username := getUsername(ctx)
+		u := user.User{}
+		err := config.DB.Select("id").Where("username = ?", username).First(&u).Error
 		if err != nil {
-			return err
+			ctx.AbortWithStatus(http.StatusNotFound)
+			return
 		}
 
-		err = tx.Create(t).Error
-		if err != nil {
-			return err
-		}
+		err = config.DB.Transaction(func(tx *gorm.DB) error {
+			u.Type = "teacher"
+			err := tx.Updates(&u).Error
+			if err != nil {
+				return err
+			}
 
-		return nil
-	})
-*/
+			// Checks if a teacher already exists with this ID.
+			// If it exists, it doesn't create another one
+			// because the admin may have committed an error
+			// when changing the type of the user
+			t := &teacher.Teacher{}
+			tx.First(t, u.ID)
+			if t.UID != 0 {
+				return nil
+			}
+
+			t, err = teacher.InitTeacher(&u)
+			if err != nil {
+				return err
+			}
+
+			return tx.Create(t).Error
+		})
+	}
+}
 
 // GetTeacherInfo is a controller that gets teacher info according to the username
 func GetTeacherInfo() gin.HandlerFunc {
