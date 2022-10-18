@@ -102,7 +102,6 @@ func SearchUsers() gin.HandlerFunc {
 // UpdateUser updates a logged user's info WITH RESTRICTIONS
 func UpdateUser() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		newValues := user.User{}
 		username := getUsername(ctx)
 		u := user.User{}
 		err := config.DB.Select("id").Where("username = ?", username).First(&u).Error
@@ -111,12 +110,11 @@ func UpdateUser() gin.HandlerFunc {
 			return
 		}
 
-		newValues.ID = u.ID
-		newValues.Email = ctx.PostForm("email")
-		newValues.Name = ctx.PostForm("name")
-		newValues.Surname = ctx.PostForm("surname")
+		u.Email = ctx.PostForm("email")
+		u.Name = ctx.PostForm("name")
+		u.Surname = ctx.PostForm("surname")
 
-		err = config.DB.Model(u).Updates(&newValues).Error
+		err = config.DB.Updates(&u).Error
 		if err != nil {
 			ctx.AbortWithStatus(http.StatusInternalServerError)
 			return
