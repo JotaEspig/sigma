@@ -10,8 +10,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// AddClassroom adds a classroom to the database. It receives "name" and "year" (uint16)
-// as x-www-form-urlencoded
+// AddClassroom is a controller that adds a classroom to the database.
+// It receives "name" and "year" (uint16) as x-www-form-urlencoded
 func AddClassroom() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		name := ctx.PostForm("name")
@@ -38,7 +38,7 @@ func AddClassroom() gin.HandlerFunc {
 	}
 }
 
-// GetAllClassroomsInfo gets parcial information about every classroom
+// GetAllClassroomsInfo is a controller that gets parcial information about every classroom
 func GetAllClassroomsInfo() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		classrooms := []classroom.Classroom{}
@@ -62,7 +62,8 @@ func GetAllClassroomsInfo() gin.HandlerFunc {
 	}
 }
 
-// GetClassroomInfo gets all information about a classroom. It receives "id" (int) from URL
+// GetClassroomInfo is a controller that gets all information about a classroom.
+// It receives "id" (int) from URL
 func GetClassroomInfo() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		id := ctx.Param("id")
@@ -88,8 +89,8 @@ func GetClassroomInfo() gin.HandlerFunc {
 	}
 }
 
-// UpdateClassroom updates a classroom in the database. It receives "id" (int) from URL
-// and "name" and "year" (uint16) as x-www-form-urlencoded
+// UpdateClassroom is a controller that updates a classroom in the database.
+// It receives "id" (int) from URL and "name" and "year" (uint16) as x-www-form-urlencoded
 func UpdateClassroom() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		id := ctx.Param("id")
@@ -122,7 +123,8 @@ func UpdateClassroom() gin.HandlerFunc {
 	}
 }
 
-// DeleteClassroom deletes a classroom from the database. It receives "id" (int) from URL
+// DeleteClassroom is a controller that deletes a classroom from the database.
+// It receives "id" (int) from URL
 func DeleteClassroom() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		id := ctx.Param("id")

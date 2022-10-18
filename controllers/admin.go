@@ -10,7 +10,7 @@ import (
 	"gorm.io/gorm"
 )
 
-// AddAdmin adds an admin to the database
+// AddAdmin is a controller that adds an admin to the database
 func AddAdmin() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		username := getUsername(ctx)
@@ -50,8 +50,8 @@ func AddAdmin() gin.HandlerFunc {
 	}
 }
 
-// GetAdminInfo gets an admin from the database using username store in the context
-// (if not found, then from parameter at url)
+// GetAdminInfo is a controller that gets an admin from the database using username
+// stored in the context (if not found, then from parameter at url)
 func GetAdminInfo() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		username := getUsername(ctx)
@@ -73,8 +73,8 @@ func GetAdminInfo() gin.HandlerFunc {
 	}
 }
 
-// UpdateAdmin updates an admin from the database using username store in the context
-// (if not found, then from parameter at url)
+// UpdateAdmin is a controller that updates an admin from the database using username
+// stored in the context (if not found, then from parameter at url)
 func UpdateAdmin() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		username := getUsername(ctx)
@@ -103,7 +103,7 @@ func UpdateAdmin() gin.HandlerFunc {
 	}
 }
 
-// DeleteAdmin deletes an admin from the database
+// DeleteAdmin is a controller that deletes an admin from the database
 func DeleteAdmin() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		username := getUsername(ctx)

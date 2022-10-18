@@ -15,7 +15,7 @@ type userImpl interface {
 	ToMap() map[string]interface{}
 }
 
-// GetPublicUserInfo is a generic route for user, gets PUBLIC info of
+// GetPublicUserInfo is a controller that gets PUBLIC info of
 // either user or its children (student, admin)
 func GetPublicUserInfo() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
@@ -44,7 +44,7 @@ func GetPublicUserInfo() gin.HandlerFunc {
 	}
 }
 
-// GetAllUserInfo is a generic route for user, gets ALL info of
+// GetAllUserInfo is a controller that gets ALL info of
 // either user or its children (student, admin)
 func GetAllUserInfo() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
@@ -73,7 +73,7 @@ func GetAllUserInfo() gin.HandlerFunc {
 	}
 }
 
-// SearchUsers searchs for user using ILIKE clause
+// SearchUsers is a controller that searchs for user using ILIKE clause
 func SearchUsers() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		users := []user.User{}
@@ -99,7 +99,7 @@ func SearchUsers() gin.HandlerFunc {
 	}
 }
 
-// UpdateUser updates a logged user's info WITH RESTRICTIONS
+// UpdateUser is a controller that updates a logged user's info WITH RESTRICTIONS
 func UpdateUser() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		username := getUsername(ctx)
