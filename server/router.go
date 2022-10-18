@@ -70,7 +70,7 @@ func setRoutes(router *gin.Engine) {
 
 	// Cadastro
 	router.GET("/cadastro", controllers.ServePage("cadastro.html"))
-	router.POST("/cadastro", controllers.SignupPOST())
+	router.POST("/cadastro", controllers.Signup())
 
 	router.GET("/search/users/:username", controllers.SearchUsers())
 

@@ -10,8 +10,8 @@ import (
 	"gorm.io/gorm"
 )
 
-// AddStudent changes the user type to "student" and adds a student row to the
-// database if it doesn't already exists
+// AddStudent is a controller that changes the user type to "student"
+// and adds a student row to the database if it doesn't already exists
 func AddStudent() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		username := getUsername(ctx)
@@ -49,7 +49,7 @@ func AddStudent() gin.HandlerFunc {
 	}
 }
 
-// GetStudentInfo gets student info according to the username
+// GetStudentInfo is a controller that gets student info according to the username
 func GetStudentInfo() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		username := getUsername(ctx)
@@ -76,7 +76,7 @@ func GetStudentInfo() gin.HandlerFunc {
 	}
 }
 
-// UpdateStudent updates the teacher that is logged in
+// UpdateStudent is a controller that updates the student status
 func UpdateStudent() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		username := getUsername(ctx)

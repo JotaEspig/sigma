@@ -26,7 +26,7 @@ return db.Transaction(func(tx *gorm.DB) error {
 	})
 */
 
-// GetTeacherInfo gets teacher info according to the username
+// GetTeacherInfo is a controller that gets teacher info according to the username
 func GetTeacherInfo() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		username := getUsername(ctx)
@@ -53,7 +53,7 @@ func GetTeacherInfo() gin.HandlerFunc {
 	}
 }
 
-// UpdateTeacher updates the teacher that is logged in
+// UpdateTeacher is a controller that updates the teacher that is logged in
 func UpdateTeacher() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		username := getUsername(ctx)

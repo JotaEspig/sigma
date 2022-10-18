@@ -8,8 +8,9 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// SignupPOST gets the values from the form, creates a user and inserts it in the database
-func SignupPOST() gin.HandlerFunc {
+// Signup is a controller that gets the values from the form,
+// creates a user and inserts it in the database
+func Signup() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		usern := ctx.PostForm("username")
 		email := ctx.PostForm("email")
