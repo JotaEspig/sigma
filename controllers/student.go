@@ -103,6 +103,34 @@ func UpdateStudent() gin.HandlerFunc {
 	}
 }
 
+// DeleteStudent is a controller that deletes a student from the database
+func DeleteStudent() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		username := getUsername(ctx)
+		u := user.User{}
+		err := config.DB.Select("id").Where("username = ?", username).First(&u).Error
+		if err != nil {
+			ctx.AbortWithStatus(http.StatusNotFound)
+			return
+		}
+
+		err = config.DB.Transaction(func(tx *gorm.DB) error {
+			err = config.DB.Model(&u).Update("type", "").Error
+			if err != nil {
+				return err
+			}
+
+			return config.DB.Unscoped().Delete(&student.Student{}, u.ID).Error
+		})
+		if err != nil {
+			ctx.AbortWithStatus(http.StatusInternalServerError)
+			return
+		}
+
+		ctx.Status(http.StatusOK)
+	}
+}
+
 // AutoMigrate the student table
 func init() {
 	config.DB.AutoMigrate(&student.Student{})
