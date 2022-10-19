@@ -163,6 +163,11 @@ func TestDeleteClassroom(t *testing.T) {
 	err = config.DB.Create(s).Error
 	assert.Equal(t, nil, err)
 
+	err = config.DB.Preload("Students.User").First(c, c.ID).Error
+	assert.Equal(t, nil, err)
+	assert.Equal(t, 1, len(c.Students))
+	assert.Equal(t, defUsername, c.Students[0].User.Username)
+
 	token, ok := getToken(router, "admin", "admin")
 	assert.Equal(t, true, ok)
 
@@ -179,6 +184,10 @@ func TestDeleteClassroom(t *testing.T) {
 
 	router.ServeHTTP(w, req)
 	assert.Equal(t, 200, w.Code)
+
+	err = config.DB.Select("id", "classroom_id").First(s, s.UID).Error
+	assert.Equal(t, nil, err)
+	assert.Equal(t, uint(0), s.ClassroomID)
 
 	err = config.DB.Unscoped().Delete(s).Error
 	assert.Equal(t, nil, err)
