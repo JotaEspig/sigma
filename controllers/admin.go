@@ -107,13 +107,14 @@ func UpdateAdmin() gin.HandlerFunc {
 func DeleteAdmin() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		username := getUsername(ctx)
-		err := config.DB.Transaction(func(tx *gorm.DB) error {
-			u := user.User{}
-			err := config.DB.Select("id").Where("username = ?", username).First(&u).Error
-			if err != nil {
-				return err
-			}
+		u := user.User{}
+		err := config.DB.Select("id").Where("username = ?", username).First(&u).Error
+		if err != nil {
+			ctx.AbortWithStatus(http.StatusNotFound)
+			return
+		}
 
+		err = config.DB.Transaction(func(tx *gorm.DB) error {
 			// Updates the type of the user to be empty
 			err = config.DB.Model(&u).Update("type", "").Error
 			if err != nil {
