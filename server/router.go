@@ -110,7 +110,7 @@ func setRoutes(router *gin.Engine) {
 	adminToolsForStudent.POST("/add", controllers.AddStudent())
 	adminToolsForStudent.GET("/get", controllers.GetStudentInfo())
 	adminToolsForStudent.PUT("/update", controllers.UpdateStudent())
-	// TODO make a controller to DELETE a student (removing the user type field)
+	adminToolsForStudent.DELETE("/delete", controllers.DeleteStudent())
 
 	// Admin tools to manage teacher
 	adminToolsForTeacher := adminTools.Group("/teacher/:username")
