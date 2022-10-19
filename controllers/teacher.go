@@ -31,8 +31,6 @@ func AddTeacher() gin.HandlerFunc {
 
 			// Checks if a teacher already exists with this ID.
 			// If it exists, it doesn't create another one
-			// because the admin may have committed an error
-			// when changing the type of the user
 			t := &teacher.Teacher{}
 			tx.First(t, u.ID)
 			if t.UID != 0 {

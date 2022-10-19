@@ -31,8 +31,6 @@ func AddStudent() gin.HandlerFunc {
 
 			// Checks if a student already exists with this ID.
 			// If it exists, it doesn't create another one
-			// because the admin may have committed an error
-			// when changing the type of the user
 			s := &student.Student{}
 			tx.First(s, u.ID)
 			if s.UID != 0 {
