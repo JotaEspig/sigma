@@ -103,6 +103,34 @@ func UpdateTeacher() gin.HandlerFunc {
 	}
 }
 
+// DeleteTeacher is a controller that deletes a teacher from the database
+func DeleteTeacher() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		username := getUsername(ctx)
+		u := user.User{}
+		err := config.DB.Select("id").Where("username = ?", username).First(&u).Error
+		if err != nil {
+			ctx.AbortWithStatus(http.StatusNotFound)
+			return
+		}
+
+		err = config.DB.Transaction(func(tx *gorm.DB) error {
+			err = config.DB.Model(&u).Update("type", "").Error
+			if err != nil {
+				return err
+			}
+
+			return config.DB.Unscoped().Delete(&teacher.Teacher{}, u.ID).Error
+		})
+		if err != nil {
+			ctx.AbortWithStatus(http.StatusInternalServerError)
+			return
+		}
+
+		ctx.Status(http.StatusOK)
+	}
+}
+
 func init() {
 	config.DB.AutoMigrate(&teacher.Teacher{})
 }

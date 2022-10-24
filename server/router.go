@@ -117,6 +117,7 @@ func setRoutes(router *gin.Engine) {
 	adminToolsForTeacher.POST("/add", controllers.AddTeacher())
 	adminToolsForTeacher.GET("/get", controllers.GetTeacherInfo())
 	adminToolsForTeacher.PUT("/update", controllers.UpdateTeacher())
+	adminToolsForTeacher.DELETE("/delete", controllers.DeleteTeacher())
 
 	// Admin tools to manage classrooms
 	adminToolsForClassroom := adminTools.Group("/classroom")
